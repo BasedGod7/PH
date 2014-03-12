@@ -221,6 +221,28 @@ var commands = exports.commands = {
 		if (!atLeastOne) this.sendReply("No results found.");
 	},
 
+	roomkick: function (target, room, user) {
+		target = toId(target);
+		targetUser = Users.get(target);
+		if (!targetUser || !targetUser.connected) return this.sendReply('Ese usuario no existe o no esta activo');
+		if (user.can('ban', targetUser)) var allowed = true;
+		if (room.auth && (room.auth[user.userid] === '%' || room.auth[user.userid] === '#')) var allowed = true;
+		if (!allowed) return this.sendReply('No tienes suficiente poder para utilizar este comando');
+		if (!room.users[target]) return this.sendReply('Ese usuario no esta en esta sala');
+		targetUser.leaveRoom(room);
+		room.addRaw(user.name + ' ha expulsado a ' + targetUser.name + ' del canal.');
+	},
+
+	kickall: function (target, room, user) {
+		target = toId(target);
+		targetUser = Users.get(target);
+		if (!targetUser || !targetUser.connected) return this.sendReply('Ese usuario no existe o no esta activo');
+		if (!user.can('ban', targetUser)) return this.sendReply('No tienes suficiente poder para utilizar este comando');
+		targetUser.disconnectAll();
+		room.addRaw(user.name + ' ha expulsado a ' + targetUser.name + ' del servidor.');
+		if (Rooms.rooms.staff) Rooms.rooms.staff.addRaw(user.name + ' ha expulsado a ' + targetUser.name + ' del servidor.');
+	},
+
 	/*********************************************************
 	 * Comandos de la liga
 	 *********************************************************/
