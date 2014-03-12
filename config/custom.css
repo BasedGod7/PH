@@ -1,0 +1,119 @@
+/**
+ * Custom CSS declarations
+ *
+ * If your server is registered, you can create a file named `custom.css`
+ * in the `config` directory and populate it with CSS rules to override the
+ * normal client styles, when the client is connected to your server. In
+ * other words, you can use this facility to introduce a custom theme for
+ * your server.
+ */
+.mainmenuwrapper {
+	color: rgb(11, 31, 63);
+	font-size: 11pt;
+	font-family: Verdana,Helvetica,Arial,sans-serif;
+	/*
+			old garchomp bg
+			background: url("http://images3.wikia.nocookie.net/__cb20101105024122/dialgapoke/es/images/e/e4/Garchomp.png") no-repeat scroll right top rgb(250, 180, 28);
+	*/
+	/*
+			old latios bg
+			background: black url("http://i.imgur.com/FwTiKqt.png") no-repeat scroll right top rgb(250, 180, 28);
+	*/
+	        
+	background: black url("http://i.imgur.com/AiugDMW.png") no-repeat scroll right top rgb(250, 180, 28);
+}
+.chat-log {
+	font-size: 10pt;
+	/*
+			old logo
+			background: rgb(229, 225, 247) url("http://oi44.tinypic.com/es693b.jpg") no-repeat scroll right bottom;
+	*/
+	background: rgb(229, 225, 247) url("http://i43.tinypic.com/25k5xte.jpg") no-repeat scroll right top;
+	color: rgb(0, 0, 0);
+	overflow: auto;
+}
+.userlist
+.userlist li
+{
+	display: block;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+.userlist
+{
+	border-left: 1px solid #D5DDE4;
+	min-height: 100%;
+	background: #B7B7E7;
+}
+.userlist li
+{
+	border-bottom: 1px solid #a066aa;
+	height: 19px;
+	font: 10pt Verdana, sans-serif;
+	white-space: nowrap;
+}
+.userlist li em.group
+{
+	font-style: normal;
+	font-size: 8pt;
+	color: #a066aa;
+	display: block;
+	float: left;
+	text-align: center;
+	padding: 1px 0 0 1px;
+	width: 14px;
+}
+.userlist li button
+{
+	box-sizing: border-box;
+	display: block;
+	height: auto;
+	background: transparent;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	height: 19px;
+	width: 100%;
+	white-space: nowrap;
+	font: 10pt Verdana, sans-serif;
+	text-align: left;
+	cursor: pointer;
+}
+.userlist li button:hover
+{
+	background: #62A9FA;
+}
+.userlist li button:active
+{
+	background: #62A9FA;
+}
+.userlist li.cur
+{
+	background: ##62A9FA;
+}
+.userlist li.cur button,
+.userlist li.cur button:hover
+{
+	background: #62A9FA;
+	margin: 0 0 0 -1px;
+}
+#header {
+	background: url(http://i.imgur.com/MW5Ctmw.png);
+}
+.userbar {
+	border: 1px solid #b6b6b6;
+	padding: 5px;
+	background: #EBEBEB;
+	margin-top: -5px;
+}
+.ps-room {
+	background: rgb(212, 207, 255);
+}
+.menugroup .button {
+	background: #33278B;
+}
+.menugroup .button:hover {
+	background: #250FC7;
+}
