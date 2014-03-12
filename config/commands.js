@@ -222,6 +222,308 @@ var commands = exports.commands = {
 	},
 
 	/*********************************************************
+	 * Comandos de la liga
+	 *********************************************************/
+
+	lideres: 'liga',
+	liga: function (target, room, user) {
+		if (!this.canBroadcast()) return;
+		var path = 'http://pokemon-hispano.comxa.com/showthread.php?tid=';
+		var buffer = '';
+		buffer += '<b><font color="red">CAMPEÓN DE LA LIGA POKÉMON HISPANO</font></b><br>';
+		buffer += 'N/A<br><br>';
+		buffer += '<a href=' + path + 252 + '><button>ALTO MANDO</button></a><br>';
+		buffer += 'davidness: Psiquico<br>';
+		buffer += 'Based Hispano: Lucha<br>';
+		buffer += 'Raichy: Siniestro<br>';
+		buffer += 'Pokebasket: Fantasma<br><br>';
+		buffer += '<b><font color="red">LÍDERES DE GIMNASIOS</font></b><br>';
+		buffer += '<a href=' + path + 272 + '><button>(CF) Tegetege: Bicho</button></a>   ';
+		buffer += '<a href=' + path + 361 + '><button>(LoD) Tyrana♥: Roca</button></a>   ';
+		buffer += '<a href=' + path + 276 + '><button>(ADC) Crazy: Hielo</button></a>   ';
+		buffer += '<a href=' + path + 366 + '><button>El Fantasma Erick: Veneno</button></a>   ';
+		buffer += '<a href=' + path + 284 + '><button>(LoD)Marcos: Acero</button></a>   ';
+		buffer += '<a href=' + path + 353 + '><button>Ryu-za Beilschmidt: Siniestro</button></a>   ';
+		buffer += '<a href=' + path + 347 + '><button>(HT) Liam: Fuego</button></a>   ';
+		buffer += '<a href=' + path + 197 + '><button>AM Emily :3 : Normal</button></a>   ';
+		buffer += '<a href=' + path + 217 + '><button>♡Arii★BO♡: Agua</button></a>   ';
+		buffer += '<a href=' + path + 368 + '><button>AM karloshm: Dragon</button></a>   ';
+		buffer += '<a href=' + path + 251 + '><button>AndyE: Volador</button></a>   ';
+		buffer += '<a href=' + path + 367 + '><button>(AM) Red Maximus: Fantasma</button></a>   ';
+		buffer += '<a href=' + path + 344 + '><button>(CH) Inkum: Lucha</button></a>   ';
+		buffer += '<a href=' + path + 283 + '><button>(AM) RicHydreigon: Eléctrico</button></a>   ';
+		buffer += '<a href=' + path + 340 + '><button>Seinege: Tierra</button></a>   ';
+		buffer += '<a href=' + path + 338 + '><button>(CH) LuisCarlos707: Planta</button></a>   ';
+		buffer += '<a href=' + path + 237 + '><button>CH Leo Calderon: Psíquico</button></a>   ';
+		buffer += '<a href=' + path + 359 + '><button>(EG)Nicole ü: Hada</button></a><br><br>';
+		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=250/">Cómo desafiar la liga.</a><br><br>';
+		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35/">Información detallada sobre la Liga Pokémon Hispano.</a><br><br>';
+		buffer += '<b><font color="purple">No se acepta nuevos líderes de gimnasio.</font></b>';
+		return this.sendReplyBox(buffer);
+	},
+
+	opengym: 'abrirliga',
+	abrirgimnasio: 'abrirliga',
+	abrirliga: function (target, room, user) {
+		var auxlider = tour.lideres().indexOf(user.userid);
+		var auxelite = tour.altomando().indexOf(user.userid);
+		if (auxlider > -1) {
+			user.gymopen = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			return this.sendReply('Ahora estas disponible para desafios. Utiliza el comando /retos para ver quienes quieren luchar contra ti y en que orden.');
+		} else if (auxelite > -1) {
+			user.gymopen = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+		} else {
+			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+		}
+	},
+
+	opengym: 'abrirliga',
+	abrirgimnasio: 'abrirliga',
+	abrirliga: function (target, room, user) {
+		var auxlider = tour.lideres().indexOf(user.userid);
+		var auxelite = tour.altomando().indexOf(user.userid);
+		if (auxlider > -1) {
+			user.gymopen = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			return this.sendReply('Ahora estas disponible para desafios. Utiliza el comando /retos para ver quienes quieren luchar contra ti y en que orden.');
+		} else if (auxelite > -1) {
+			user.gymopen = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+		} else {
+			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+		}
+	},
+
+	closegym: 'cerrarliga',
+	cerrargimnasio: 'cerrarliga',
+	cerrarliga: function (target, room, user) {
+		var auxlider = tour.lideres().indexOf(user.userid);
+		var auxelite = tour.altomando().indexOf(user.userid);
+		if (auxlider > -1) {
+			user.gymopen = false;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para  desafios.</b>');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para desafios.</b>');
+		} else if (auxelite > -1) {
+			user.gymopen = false;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta  disponible para  desafios.</b>');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ',  Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta disponible para   desafios.</b>');
+		} else {
+			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+		}
+	},
+
+	lideresid: function (target, room, user) {
+		if (!this.canBroadcast()) return;
+		return this.sendReply('Los siguientes son los ID oficiales de lideres de gimnasio: ' + tour.lideres().toString() + '. Cualquier variante que no cambie letras ni numeros es un nombre oficial.')
+	},
+
+	retarliga: 'lideresdisponibles',
+	retarlider: 'lideresdisponibles',
+	retarlideres: 'lideresdisponibles',
+	lideresdisponibles: function (target, room, user) {
+		var disponibles = [];
+		for (var i = 0; i < tour.lideres().length; i++) {
+			var loopuser = Users.get(tour.lideres()[i]);
+			if (loopuser && loopuser.gymopen) {
+				disponibles.push(loopuser.name);
+			}
+		}
+		if (!target) {
+			if (!this.canBroadcast()) return;
+			if (disponibles.length === 1) {
+				return this.sendReply('Solo ' + disponibles[0] + ' esta aceptando desafios ahora.');
+			} else if (disponibles.length) {
+				return this.sendReply('Los siguientes lideres estan aceptando desafios ahora: ' + disponibles.toString());
+			} else {
+				return this.sendReply('Ningun lider esta aceptando desafios.');
+			}
+		} else {
+			target = toId(target);
+			for (var i = 0; i < disponibles.length; i++) {
+				if (toId(disponibles[i]) === target) {
+					var matched = true;
+					break;
+				}
+			}
+			if (!matched) {
+				return this.sendReply('El lider que quieres retar no esta disponible o no existe. Para consultar los lideres existentes, escribe /lideres. Para ver los lideres disponibles, escribe /retarlider');
+			} else {
+				var retado = Users.get(target);
+				if (!retado) return this.sendReply('Ocurrio un error al intentar enviar el desafio.');
+				if (!retado.challengers) retado.challengers = [];
+				var index = retado.challengers.indexOf(user.userid);
+				if (index === -1) {
+					if (retado.noinscription) return this.sendReply('El lider que quieres desafiar tiene una larga lista de retadores y ha decidido cerrar la inscripcion a su gimnasio por hoy');
+					retado.challengers.push(user.userid);
+					return this.sendReply('Has enviado tu desafio al lider ' + retado.name + '. Tu turno es: ' + retado.challengers.length);
+				} else {
+					return this.sendReply('Tu desafio ya ha sido enviado. Espera pacientemente. Tu turno es: ' + (index + 1) + '. Si deseas cancelar tu desafio, utiliza el comando /cancelardesafio ' + retado.name);
+				}
+			}
+		}
+	},
+
+	faqliga: function (target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox("Haz click <a href='http://pokemon-hispano.comxa.com/showthread.php?tid=250'>aqui</a> para ver como desafiar a la liga.");
+	},
+
+	retos: function (target, room, user) {
+		if (!user.challengers || user.challengers === []) return this.sendReply('Nadie te ha desafiado. El estado de tu gimnasio es ' + (user.gymopen ? 'abierto.' : 'cerrado.'));
+		var nombres = [];
+		for (var i = 0; i < user.challengers.length; i++) {
+			nombres[i] = tour.username(user.challengers[i]);
+		}
+		return this.sendReply('Los siguientes usuarios te han desafiado, del mas antiguo al mas reciente: ' + nombres.toString());
+	},
+
+	apelar: 'appeal',
+	appeal: function (target, room, user) {
+		if (!config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
+		if (!room.decision) return this.sendReply('Solo es posible utilizar este comando en una sala de batalla');
+		if (!room.league) return this.sendReply('Esta no es una batalla oficial de liga.');
+		if (room.challenged === user.userid) {
+			room.appealed = true;
+			return this.sendReply('El equipo de tu oponente sera revelado al terminar la batalla para verificar su legalidad.');
+		} else {
+			return this.sendReply('No tienes autoridad para usar este comando');
+		}
+	},
+
+	desapelar: 'unappeal',
+	unappeal: function (target, room, user) {
+		if (!config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
+		if (!room.decision) return this.sendReply('Solo es posible utilizar este comando en una sala de batalla');
+		if (!room.league) return this.sendReply('Esta no es una batalla oficial de liga');
+		if (room.challenged === user.userid) {
+			room.appealed = false;
+			return this.sendReply('El equipo de tu oponente ya no sera revelado al terminar la batalla.');
+		} else {
+			return this.sendReply('No tienes autoridad para usar este comando');
+		}
+	},
+
+	cancelardesafio: 'cancelarreto',
+	cancelarreto: function (target, room, user) {
+		if (!user.gymopen) {
+			target = toId(target);
+			var targetUser = Users.get(target);
+			if (!targetUser) return this.sendReply('Ese usuario no existe o no esta presente.');
+			var challengers = targetUser.challengers;
+			if (!challengers) return this.sendReply('Este usuario no tiene retadores.');
+			var index = challengers.indexOf(user.userid);
+			if (index === -1) {
+				return this.sendReply('No estabas desafiando a ' + targetUser.name);
+			} else {
+				challengers.splice(index, 1);
+				return this.sendReply('Has cancelado tu desafio a ' + targetUser.name);
+			}
+		} else {
+			target = toId(target);
+			if (!user.challengers || user.challengers === []) return this.sendReply('Nadie te estaba desafiando');
+			var index = user.challengers.indexOf(target);
+			if (index === -1) return this.sendReply(target + ' no te estaba desafiando. Revisa tu lista de espera con el comando /retos');
+			var targetUser = Users.get(target);
+			var unfound = (!targetUser || !targetUser.connected);
+			if (unfound) {
+				user.challengers.splice(index, 1);
+				return this.sendReply('El usuario ' + target + ' ha sido eliminado de tu lista de espera');
+			} else {
+				return this.sendReply('Ese usuario todavia esta en el servidor. Si deseas, puedes cederle el turno a otro de tus retadores hasta que regrese.');
+			}
+		}
+	},
+
+	nuevalista: 'clearlist',
+	limpiarlista: 'clearlist',
+	clearlist: function (target, room, user) {
+		if (!user.challengers || user.challengers === []) return this.sendReply('Nadie te estaba desafiando');
+		if (!target) {
+			var cleared = [];
+			for (var i = 0; i < user.challengers.length;) {
+				var loopid = user.challengers[i];
+				var loopuser = Users.get(loopid);
+				var unfound = (!loopuser || !loopuser.connected);
+				if (unfound) {
+					cleared.push(loopid);
+					user.challengers.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+			if (cleared === []) return this.sendReply('Ninguno de tus retadores estaba inactivo.');
+			return this.sendReply('Los siguientes retadores han sido eliminados de tu lista de espera: ' + cleared.toString());
+		} else if (target === 'all') {
+			user.challengers = [];
+			return this.sendReply('Tu lista de espera ha sido vaciada');
+		} else {
+			return this.sendReply(target + ' no es un parametro valido. Si deseas eliminar toda tu lista de espera, utiliza el comando /clearlist all. Si quieres eliminar de tu lista a un retador en particular, utiliza el comando /cancelardesafio [nombre]');
+		}
+	},
+
+	gymkick: function (target, room, user) {
+		if (!room.decision) return this.sendReply('Solo es posible utilizar este comando en una sala de batalla');
+		if (!room.league) return this.sendReply('Esta no es una batalla oficial de liga');
+		if (room.challenged !== user.userid) return this.sendReply('No tienes autoridad para usar este comando');
+		target = toId(target);
+		if (target === room.challenged || target === room.challenger) return this.sendReply('No abuses de este comando');
+		targetUser = Users.get(target);
+		if (room.users[target]) {
+			targetUser.leaveRoom(room);
+			targetUser.popup(user.name + ' te ha expulsado de su gimnasio.');
+			return this.sendReply('El espectador ' + targetUser.name + ' ha sido expulsado de esta sala de batalla. Si te habia desafiado y deseas anular su reto, utiliza el comando /cancelardesafio ' + targetUser.name);
+		} else {
+			return this.sendReply('Ese usuario no esta observando la batalla.');
+		}
+	},
+
+	cerrarinscripciones: 'closereg',
+	cerrarinscripcion: 'closereg',
+	closereg: function (target, room, user) {
+		var auxlider = tour.lideres().indexOf(user.userid);
+		var auxelite = tour.altomando().indexOf(user.userid);
+		if (auxlider > -1 || auxelite > -1) {
+			user.noinscription = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', solo luchara contra aquellos que se han inscrito apropiadamente hasta ahora.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', solo luchara contra aquellos que se han  inscrito apropiadamente hasta ahora.');
+			return this.sendReply('Has cerrado la inscripcion para luchar en tu gimnasio. Si deseas reabrirla, utiliza el comando /abririnscripcion');
+		} else if (auxelite > -1) {
+			user.noinscription = true;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, solo luchara contra aquellos que se han inscrito apropiadamente hasta ahora.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, solo luchara contra aquellos que se han inscrito apropiadamente hasta ahora.');
+			return this.sendReply('Has cerrado la inscripcion para luchar contra ti. Si deseas reabrirla, utiliza el comando /abririnscripcion');
+		} else {
+			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta  registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+		}
+	},
+
+	abririnscripciones: 'openreg',
+	abririnscripcion: 'openreg',
+	openreg: function (target, room, user) {
+		var auxlider = tour.lideres().indexOf(user.userid);
+		var auxelite = tour.altomando().indexOf(user.userid);
+		if (auxlider > -1 || auxelite > -1) {
+			user.noinscription = false;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ha reabierto la inscripcion para luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ha reabierto la inscripcion para luchar contra el.');
+			return this.sendReply('Has abierto la inscripcion para luchar en tu gimnasio. Si deseas cerrarla, utiliza el comando /cerrarinscripcion');
+		} else if (auxelite > -1) {
+			user.noinscription = false;
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, ha reabierto la inscripcion para luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ',  Miembro del Alto Mando de la Liga Pokemon Hispano, ha reabierto la inscripcion para luchar contra el.');
+			return this.sendReply('Has abierto la inscripcion para luchar contra ti.  Si deseas cerrarla, utiliza el comando /cerrarinscripcion');
+		} else {
+			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+		}
+	},
+
+	/*********************************************************
 	 * Shortcuts
 	 *********************************************************/
 
@@ -351,7 +653,7 @@ var commands = exports.commands = {
 		var dex = {};
 		for (var pokemon in Tools.data.Pokedex) {
 			var template = Tools.getTemplate(pokemon);
-			if (template.tier !== 'Unreleased' && template.tier !== 'Illegal' && (template.tier !== 'CAP' || (searches['tier'] && searches['tier']['cap'])) && 
+			if (template.tier !== 'Unreleased' && template.tier !== 'Illegal' && (template.tier !== 'CAP' || (searches['tier'] && searches['tier']['cap'])) &&
 				(megaSearch === null || (megaSearch === true && template.isMega) || (megaSearch === false && !template.isMega))) {
 				dex[pokemon] = template;
 			}
@@ -657,7 +959,7 @@ var commands = exports.commands = {
 	smogonintro: 'smogintro',
 	smogintro: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('Welcome to Smogon\'s Official Pokémon Showdown server! The Mentoring room can be found ' + 
+		this.sendReplyBox('Welcome to Smogon\'s Official Pokémon Showdown server! The Mentoring room can be found ' +
 			'<a href="http://play.pokemonshowdown.com/mentoring">here</a> or by using /join mentoring.<br /><br />' +
 			'Here are some useful links to Smogon\'s Mentorship Program to help you get integrated into the community:<br />' +
 			'- <a href="http://www.smogon.com/mentorship/primer">Smogon Primer: A brief introduction to Smogon\'s subcommunities</a><br />' +
