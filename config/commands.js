@@ -1604,9 +1604,9 @@ var commands = exports.commands = {
 			matched = true;
 			this.sendReply('/kickbattle [username], [reason] - Kicks an user from a battle with reason. Requires: % @ & ~');
 		}
-		if (target === "%" || target === 'warn' || target === 'k') {
+		if (target === "%" || target === 'warn') {
 			matched = true;
-			this.sendReply('/warn OR /k [username], [reason] - Warns a user showing them the Pokemon Showdown Rules and [reason] in an overlay. Requires: % @ & ~');
+			this.sendReply('/warn [username], [reason] - Warns a user showing them the Pokemon Showdown Rules and [reason] in an overlay. Requires: % @ & ~');
 		}
 		if (target === '%' || target === 'mute' || target === 'm') {
 			matched = true;
