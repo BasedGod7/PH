@@ -1457,6 +1457,12 @@ var commands = exports.commands = {
 		this.sendReplyBox('Toda la información de nuestra liga puede ser encontrada <a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35" target="_BLANK">aquí</a>.');
 	},
 
+	rule: 'reglas',
+	reglas: function (target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('Por favor sigue las siguientes reglas:<br /><a href="http://pastebin.com/CSWuasXc" target="_blank">Reglas</a> en Español<br /><a href="http://pastebin.com/eZ3dtX2c">Regras</a> em Português (<b>Gracias a Dlinkoto</b>)<br />');
+	},
+
 	/*********************************************************
 	 * Help commands
 	 *********************************************************/
