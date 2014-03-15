@@ -1467,6 +1467,7 @@ var commands = exports.commands = {
 	 * Help commands
 	 *********************************************************/
 
+	comandos: 'help',
 	commands: 'help',
 	h: 'help',
 	'?': 'help',
@@ -1773,19 +1774,19 @@ var commands = exports.commands = {
 			this.sendReply('/help OR /h OR /? - Gives you help.');
 		}
 		if (!target) {
-			this.sendReply('COMMANDS: /msg, /reply, /ignore, /ip, /rating, /nick, /avatar, /rooms, /whois, /help, /away, /back, /timestamps, /highlight');
-			this.sendReply('INFORMATIONAL COMMANDS: /data, /dexsearch, /groups, /opensource, /avatars, /faq, /rules, /intro, /tiers, /othermetas, /learn, /analysis, /calc (replace / with ! to broadcast. (Requires: + % @ & ~))');
-			this.sendReply('For details on all room commands, use /roomhelp');
-			this.sendReply('For details on all commands, use /help all');
+			this.sendReply('COMANDOS: /msg, /reply, /ignore, /ip, /rating, /nick, /avatar, /rooms, /whois, /help, /away, /back, /timestamps, /highlight');
+			this.sendReply('COMANDOS DE INFORMACIÓN: /data, /dexsearch, /groups, /opensource, /avatars, /faq, /rules, /intro, /tiers, /othermetas, /learn, /analysis, /calc (reemplaza / con ! para vocear. (Requires: + % @ & ~))');
+			this.sendReply('Para los detalles de los comandos de los chatroom, use /roomhelp');
+			this.sendReply('Para detalles de todos los comandos, use /help all');
 			if (user.group !== config.groupsranking[0]) {
-				this.sendReply('DRIVER COMMANDS: /mute, /unmute, /announce, /modlog, /forcerename, /alts');
-				this.sendReply('MODERATOR COMMANDS: /ban, /unban, /unbanall, /ip, /redirect, /kick');
-				this.sendReply('LEADER COMMANDS: /promote, /demote, /forcewin, /forcetie, /declare');
-				this.sendReply('For details on all moderator commands, use /help @');
+				this.sendReply('COMANDOS DE DRIVER: /mute, /unmute, /announce, /modlog, /forcerename, /alts');
+				this.sendReply('COMANDOS DE MODERADOR: /ban, /unban, /unbanall, /ip, /redirect, /kick');
+				this.sendReply('COMANDOS DE LEADER: /promote, /demote, /forcewin, /forcetie, /declare');
+				this.sendReply('Para todos los detalles de los comandos de moderador, use /help @');
 			}
-			this.sendReply('For details of a specific command, use something like: /help data');
+			this.sendReply('Para detalles de un comando específico usa: /Help data');
 		} else if (!matched) {
-			this.sendReply('The command "/'+target+'" was not found. Try /help for general help');
+			this.sendReply('El comando "/'+target+'" no se encontró. Digita /Try oara ayuda general');
 		}
 	},
 
