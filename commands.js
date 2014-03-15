@@ -363,6 +363,9 @@ var commands = exports.commands = {
 		if (!user.joinRoom(targetRoom || room, connection)) {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
 		}
+		if (target === 'lobby') {
+			connection.sendTo('lobby','|html|<div class=\"broadcast-red\"><center><br><img src="http://i.imgur.com/aTpSGwf.png" height="100" width="100"><img src="http://pokemon-hispano.comxa.com/images/EvaBlack/logo.png"><img src="http://i.imgur.com/Lb5IwHb.png" height="100" width="100"></br><font size=4><center><b>BIENVENIDOS A POKÉMON HISPANO!!!</b></font><br></center>- Visita nuestro <a href=\"http://pokemon-hispano.comxa.com/\" target=\"_BLANK\">Foro</a></br><br>- Únete a nuestra página en <a href=\"https://www.facebook.com/groups/PokemonHispanoShowdown/\">Facebook</a></br><br> - Vísita nuestro <a href=\"http://www.twitch.tv/pokemonhispano/\">Livestream</a></br><br>- Para ver la lista de comandos del server escribe <b>/comandos</b>.<br>- Recuerda leer las reglas escribiendo <b>/reglas</b> para no tener ningún problema con ningún usuario y mucho menos con un miembro del Staff.<br>- Escribe <b>/lideres</b> para ver los lideres y alto mando de nuestra liga.</br> <br><center><br>Si tienes algún problema o duda no dudes en contactar a los miembros del staff ya sean <b>(+)Voices</b>, <b>(%)Drivers</b>, <b>(@)Moderadores</b>, <b>(&)Leaders</b> y en caso de ser un grave problema a los <b>(~)Administradores</b>.</div>');
+		}
 	},
 
 	rb: 'roomban',
