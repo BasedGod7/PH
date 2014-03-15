@@ -1429,7 +1429,7 @@ var commands = exports.commands = {
 
 	radio: function (target, room, user, connection) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<div class="infobox"><center><a href="http://plug.dj/hispanops/ "><img src="http://i.imgur.com/2olrf6c.gif" height="100" width="100"></a><br><font size=3><b><font color="blue">Radio de Pokémon Hispano');
+		this.sendReplyBox('<div class="infobox"><center><a href="http://plug.dj/pokemon-hispano-3/"><img src="http://i.imgur.com/2olrf6c.gif" height="100" width="100"></a><br><font size=3><b><font color="blue">Radio de Pokémon Hispano');
 	},
 
 	funciones: function (target, room, user, connection) {
