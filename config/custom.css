@@ -1,33 +1,11 @@
-/**
- * Custom CSS declarations
- *
- * If your server is registered, you can create a file named `custom.css`
- * in the `config` directory and populate it with CSS rules to override the
- * normal client styles, when the client is connected to your server. In
- * other words, you can use this facility to introduce a custom theme for
- * your server.
- */
 .mainmenuwrapper {
 	color: rgb(11, 31, 63);
 	font-size: 11pt;
 	font-family: Verdana,Helvetica,Arial,sans-serif;
-	/*
-			old garchomp bg
-			background: url("http://images3.wikia.nocookie.net/__cb20101105024122/dialgapoke/es/images/e/e4/Garchomp.png") no-repeat scroll right top rgb(250, 180, 28);
-	*/
-	/*
-			old latios bg
-			background: black url("http://i.imgur.com/FwTiKqt.png") no-repeat scroll right top rgb(250, 180, 28);
-	*/
-	        
 	background: black url("http://i.imgur.com/AiugDMW.png") no-repeat scroll right top rgb(250, 180, 28);
 }
 .chat-log {
 	font-size: 10pt;
-	/*
-			old logo
-			background: rgb(229, 225, 247) url("http://oi44.tinypic.com/es693b.jpg") no-repeat scroll right bottom;
-	*/
 	background: rgb(229, 225, 247) url("http://i43.tinypic.com/25k5xte.jpg") no-repeat scroll right top;
 	color: rgb(0, 0, 0);
 	overflow: auto;
