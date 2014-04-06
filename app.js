@@ -436,3 +436,4 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 global.Spamroom = require('./spamroom.js');
 
 global.tour = new (require('./tour.js').tour)();
+global.hangman = new (require('./hangman.js').hangman)();
