@@ -627,8 +627,8 @@ var commands = {
 	}
 };
 
-CommandParser.commands.tour = 'tournament';
-CommandParser.commands.tours = 'tournament';
+//CommandParser.commands.tour = 'tournament';
+//CommandParser.commands.tours = 'tournament';
 CommandParser.commands.tournaments = 'tournament';
 CommandParser.commands.tournament = function (paramString, room, user) {
 	var cmdParts = paramString.split(' ');
