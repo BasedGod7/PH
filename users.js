@@ -23,7 +23,9 @@
  * @license MIT license
  */
 
-var THROTTLE_DELAY = 600;
+const THROTTLE_DELAY = 600;
+const THROTTLE_BUFFER_LIMIT = 6;
+const THROTTLE_MULTILINE_WARN = 4;
 
 var users = {};
 var prevUsers = {};
@@ -167,53 +169,40 @@ function socketReceive(worker, workerid, socketid, message) {
 	// the `data` event handler, the user will be disconnected on the next
 	// `data` event. To prevent this, we log exceptions and prevent them
 	// from propagating out of this function.
-	try {
-		// drop legacy JSON messages
-		if (message.substr(0,1) === '{') return;
 
-		// drop invalid messages without a pipe character
-		var pipeIndex = message.indexOf('|');
-		if (pipeIndex < 0) return;
+	// drop legacy JSON messages
+	if (message.substr(0,1) === '{') return;
 
-		var roomid = message.substr(0, pipeIndex);
-		var lines = message.substr(pipeIndex + 1);
-		var room = Rooms.get(roomid);
-		if (!room) room = Rooms.lobby || Rooms.global;
-		var user = connection.user;
-		if (!user) return;
-		if (lines.substr(0,3) === '>> ' || lines.substr(0,4) === '>>> ') {
-			user.chat(lines, room, connection);
-			return;
-		}
-		lines = lines.split('\n');
-		// Emergency logging
-		if (config.emergency) {
-			fs.appendFile('logs/emergency.log', '['+ user + ' (' + connection.ip + ')] ' + message + '\n', function(err){
-				if (err) {
-					console.log('!! Error in emergency log !!');
-					throw err;
-				}
-			});
-		}
-		for (var i=0; i<lines.length; i++) {
-			if (user.chat(lines[i], room, connection) === false) break;
-		}
-	} catch (e) {
-		var stack = e.stack + '\n\n';
-		stack += 'Additional information:\n';
-		stack += 'user = ' + user + '\n';
-		stack += 'ip = ' + connection.ip + '\n';
-		stack += 'roomid = ' + roomid + '\n';
-		stack += 'message = ' + message;
-		var err = {stack: stack};
-		if (config.crashguard) {
-			try {
-				connection.sendTo(roomid||'lobby', '|html|<div class="broadcast-red"><b>Something crashed!</b><br />Don\'t worry, we\'re working on fixing it.</div>');
-			} catch (e) {} // don't crash again...
-			process.emit('uncaughtException', err);
-		} else {
-			throw err;
-		}
+	// drop invalid messages without a pipe character
+	var pipeIndex = message.indexOf('|');
+	if (pipeIndex < 0) return;
+
+	var roomid = message.substr(0, pipeIndex);
+	var lines = message.substr(pipeIndex + 1);
+	var room = Rooms.get(roomid);
+	if (!room) room = Rooms.lobby || Rooms.global;
+	var user = connection.user;
+	if (!user) return;
+	if (lines.substr(0,3) === '>> ' || lines.substr(0,4) === '>>> ') {
+		user.chat(lines, room, connection);
+		return;
+	}
+	lines = lines.split('\n');
+	if (lines.length >= THROTTLE_MULTILINE_WARN) {
+		connection.popup("You're sending too many lines at once. Try using a paste service like [[Pastebin]].");
+		return;
+	}
+	// Emergency logging
+	if (config.emergency) {
+		fs.appendFile('logs/emergency.log', '['+ user + ' (' + connection.ip + ')] ' + message + '\n', function(err){
+			if (err) {
+				console.log('!! Error in emergency log !!');
+				throw err;
+			}
+		});
+	}
+	for (var i=0; i<lines.length; i++) {
+		if (user.chat(lines[i], room, connection) === false) break;
 	}
 }
 
@@ -971,9 +960,13 @@ var User = (function () {
 		LoginServer.request('mmr', {
 			format: formatid,
 			user: this.userid
-		}, function(data) {
-			var mmr = 1000, error = true;
+		}, function(data, statusCode, error) {
+			var mmr = 1000, error = (error || true);
 			if (data) {
+				if (data.errorip) {
+					self.popup("This server's request IP "+data.errorip+" is not a registered server.");
+					return;
+				}
 				mmr = parseInt(data,10);
 				if (!isNaN(mmr)) {
 					error = false;
@@ -1274,7 +1267,7 @@ var User = (function () {
 
 		if (this.chatQueueTimeout) {
 			if (!this.chatQueue) this.chatQueue = []; // this should never happen
-			if (this.chatQueue.length > 6) {
+			if (this.chatQueue.length >= THROTTLE_BUFFER_LIMIT-1) {
 				connection.sendTo(room, '|raw|' +
 					"<strong class=\"message-throttle-notice\">Your message was not sent because you've been typing too quickly.</strong>"
 				);
@@ -1461,6 +1454,7 @@ function unlock(name, unlocked, noRecurse) {
 	for (var id in lockedUsers) {
 		if (lockedUsers[id] === userid || id === userid) {
 			delete lockedUsers[id];
+			unlocked = unlocked || {};
 			unlocked[name] = 1;
 		}
 	}

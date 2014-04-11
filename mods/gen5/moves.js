@@ -56,6 +56,10 @@ exports.BattleMovedex = {
 		inherit: true,
 		pp: 30
 	},
+	bind: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move. Makes contact."
+	},
 	blizzard: {
 		inherit: true,
 		basePower: 120
@@ -86,6 +90,10 @@ exports.BattleMovedex = {
 			chance: 10,
 			volatileStatus: 'confusion'
 		}
+	},
+	clamp: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move. Makes contact."
 	},
 	copycat: {
 		inherit: true,
@@ -155,6 +163,10 @@ exports.BattleMovedex = {
 			}
 			return 50;
 		}
+	},
+	firespin: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move."
 	},
 	flamethrower: {
 		inherit: true,
@@ -333,6 +345,10 @@ exports.BattleMovedex = {
 			}
 		}
 	},
+	infestation: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move."
+	},
 	knockoff: {
 		inherit: true,
 		basePower: 20,
@@ -359,6 +375,7 @@ exports.BattleMovedex = {
 	},
 	magmastorm: {
 		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move.",
 		basePower: 120
 	},
 	meteormash: {
@@ -389,6 +406,7 @@ exports.BattleMovedex = {
 	},
 	minimize: {
 		inherit: true,
+		desc: "Raises the user's evasion by 2 stages. After using this move, Stomp and Steamroller will have their power doubled if used against the user while it is active.",
 		pp: 20,
 		effect: {
 			noCopy: true,
@@ -402,6 +420,35 @@ exports.BattleMovedex = {
 	moonlight: {
 		inherit: true,
 		type: "Normal"
+	},
+	mudsport: {
+		num: 300,
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Until the user is no longer active, all Electric-type attacks used by any active Pokemon have their power reduced to 0.33x. Fails if this move is already in effect; not stackable.",
+		shortDesc: "Weakens Electric-type attacks to 1/3 their power.",
+		id: "mudsport",
+		name: "Mud Sport",
+		pp: 15,
+		priority: 0,
+		volatileStatus: 'mudsport',
+		onTryHitField: function(target, source) {
+			if (source.volatiles['mudsport']) return false;
+		},
+		effect: {
+			noCopy: true,
+			onStart: function(pokemon) {
+				this.add("-start", pokemon, 'Mud Sport');
+			},
+			onBasePowerPriority: 1,
+			onAnyBasePower: function(basePower, user, target, move) {
+				if (move.type === 'Electric') return this.chainModify([0x548, 0x1000]); // The Mud Sport modifier is slightly higher than the usual 0.33 modifier (0x547)
+			}
+		},
+		secondary: false,
+		target: "all",
+		type: "Ground"
 	},
 	muddywater: {
 		inherit: true,
@@ -504,6 +551,10 @@ exports.BattleMovedex = {
 		accuracy: 80,
 		basePower: 50,
 		pp: 10
+	},
+	sandtomb: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move."
 	},
 	sacredsword: {
 		inherit: true,
@@ -663,6 +714,35 @@ exports.BattleMovedex = {
 			return 50;
 		}
 	},
+	watersport: {
+		num: 346,
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Until the user is no longer active, all Fire-type attacks used by any active Pokemon have their power reduced to 0.33x. Fails if this move is already in effect; not stackable.",
+		shortDesc: "Weakens Fire-type attacks to 1/3 their power.",
+		id: "watersport",
+		name: "Water Sport",
+		pp: 15,
+		priority: 0,
+		volatileStatus: 'watersport',
+		onTryHitField: function(target, source) {
+			if (source.volatiles['watersport']) return false;
+		},
+		effect: {
+			noCopy: true,
+			onStart: function(pokemon) {
+				this.add("-start", pokemon, 'move: Water Sport');
+			},
+			onBasePowerPriority: 1,
+			onAnyBasePower: function(basePower, user, target, move) {
+				if (move.type === 'Fire') return this.chainModify([0x548, 0x1000]); // The Water Sport modifier is slightly higher than the usual 0.33 modifier (0x547)
+			}
+		},
+		secondary: false,
+		target: "all",
+		type: "Water"
+	},
 	whirlwind: {
 		inherit: true,
 		accuracy: 100,
@@ -679,6 +759,10 @@ exports.BattleMovedex = {
 			source.addVolatile('stall');
 		},
 	},
+	whirlpool: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Power doubles if the target is using Dive. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move."
+	},
 	willowisp: {
 		inherit: true,
 		accuracy: 75
@@ -686,5 +770,9 @@ exports.BattleMovedex = {
 	wonderroom: {
 		inherit: true,
 		priority: -7
+	},
+	wrap: {
+		inherit: true,
+		desc: "Deals damage to one adjacent target and prevents it from switching for four or five turns; seven turns if the user is holding Grip Claw. Causes damage to the target equal to 1/16 of its maximum HP (1/8 if the user is holding Binding Band), rounded down, at the end of each turn during effect. The target can still switch out if it is holding Shed Shell or uses Baton Pass, U-turn, or Volt Switch. The effect ends if either the user or the target leaves the field, or if the target uses Rapid Spin. This effect is not stackable or reset by using this or another partial-trapping move. Makes contact."
 	}
 };

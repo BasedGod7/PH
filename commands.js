@@ -19,7 +19,7 @@ var commands = exports.commands = {
 
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b> <small>(<a href="http://pokemonshowdown.com/versions#' + CommandParser.serverVersion + '">' + CommandParser.serverVersion.substr(0,10) + '</a>)</small>');
+		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b>');
 	},
 
 	me: function(target, room, user, connection) {
@@ -1068,9 +1068,27 @@ var commands = exports.commands = {
 
 				CommandParser.uncacheTree('./tour.js');
 				global.tour = new (require('./tour.js').tour)(tour);
+
+				var runningTournaments = Tournaments.tournaments;
+				CommandParser.uncacheTree('./tournaments/frontend.js');
+				Tournaments = require('./tournaments/frontend.js');
+				Tournaments.tournaments = runningTournaments;
+
 				return this.sendReply('Chat commands have been hot-patched.');
 			} catch (e) {
 				return this.sendReply('Something failed while trying to hotpatch chat: \n' + e.stack);
+			}
+
+		} else if (target === 'tournaments') {
+
+			try {
+				var runningTournaments = Tournaments.tournaments;
+				CommandParser.uncacheTree('./tournaments/frontend.js');
+				Tournaments = require('./tournaments/frontend.js');
+				Tournaments.tournaments = runningTournaments;
+				return this.sendReply("Tournaments have been hot-patched.");
+			} catch (e) {
+				return this.sendReply('Something failed while trying to hotpatch tournaments: \n' + e.stack);
 			}
 
 		} else if (target === 'battles') {
@@ -1282,7 +1300,7 @@ var commands = exports.commands = {
 			if (error) {
 				if (error.code === 1) {
 					// The working directory or index have local changes.
-					cmd = 'git stash;' + cmd + ';git stash pop';
+					cmd = 'git stash && ' + cmd + ' && git stash pop';
 				} else {
 					// The most likely case here is that the user does not have
 					// `git` on the PATH (which would be error.code === 127).
@@ -1480,6 +1498,10 @@ var commands = exports.commands = {
 			p2: room.p2.name,
 			format: room.format
 		}, function(success) {
+			if (success && success.errorip) {
+				connection.popup("This server's request IP "+success.errorip+" is not a registered server.");
+				return;
+			}
 			connection.send('|queryresponse|savereplay|'+JSON.stringify({
 				log: data,
 				id: room.id.substr(7)
