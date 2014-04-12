@@ -174,13 +174,13 @@ exports.tour = function(t) {
 			return true;
 		},
 		lideres: function() {
-			return ['cftegetege','lodmarcos','htliam','ariibo','adccrazy','chinkum','elfantasmaerick','ryuzabeilschmidt','chleocalderon','chluiscarlos707','amrichydreigon','amredmaximus','amkarloshm','amemily3','andye','lodtyrana','seinege','egnicole'];
+			return ['m4r4ud3r','chtheflygon','spiritvirgo','lodshelian','ccrangerarthur','andye','cclyndis','modairwind','nsweetposho','ccmrpoke','watermisty','chkaast'];
 		},
 		cargos: function() {
-			return ['Lider del Gimnasio Bicho','Lider del Gimnasio Acero','Lider del Gimnasio Fuego','Lider del Gimnasio Agua','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Veneno','Lider del Gimnasio Siniestro','Lider del Gimnasio Psiquico','Lider del Gimnasio Planta','Lider del Gimnasio Electrico','Lider de Gimnasio Fantasma','Lider del Gimnasio Dragon','Lider del Gimnasio Normal','Lider del Gimnasio Volador','Lider del Gimnasio Roca','Lider del Gimnasio Tierra','Lider del Gimnasio Hada','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
+			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
 		},
 		altomando: function() {
-			return ['davidness','basedhispano','raichy','pokebasket'];
+			return ['lodtyrana','shinygiratinao','disponible','chleocalderon','lodmarcos'];
 		},
 		lose: function(uid, rid) {
 			/*
@@ -1042,7 +1042,7 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	}
 
 	  //liga
-	  if (!rated && formaturlid === 'pokebankoubeta') {
+	  if (!rated && formaturlid === 'ou') {
 	      if (p1.gymopen && !p2.gymopen) {
 		  newRoom.challenger = p2.userid;
 		  newRoom.challenged = p1.userid;
