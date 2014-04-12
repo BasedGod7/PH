@@ -1400,12 +1400,6 @@ var commands = exports.commands = {
 		}
 	},
 
-	a: function(target, room, user) {
-		if (!this.can('battlemessage')) return false;
-		// secret sysop command
-		room.add(target);
-	},
-
 	/*********************************************************
 	 * Custom commands
 	 *********************************************************/
