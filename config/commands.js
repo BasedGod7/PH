@@ -263,7 +263,7 @@ var commands = exports.commands = {
 		buffer += '<b><font color="red">LÍDERES DE GIMNASIOS</font></b><br>';
 		buffer += '<a href=' + path + 502 + '><button>M4R4UD3R: Normal</button></a>   ';
 		buffer += '<a href=' + path + 507 + '><button>(CH) TheFlygon: Hielo</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>CH Kaast: Agua</button></a>   ';
+		buffer += '<a href=' + path + 512 + '><button>CH Kaast: Agua</button></a>   ';
 		buffer += '<a href=' + path + 000 + '><button>Spirit Virgo: Lucha</button></a>   ';
 		buffer += '<a href=' + path + 505 + '><button>(LoD) Shelian: Bicho</button></a>   ';
 		buffer += '<a href=' + path + 510 + '><button>(CC) Ranger Arthur: Roca</button></a>   ';
