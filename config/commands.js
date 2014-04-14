@@ -1471,10 +1471,6 @@ var commands = exports.commands = {
 		this.sendReplyBox('Por favor sigue las siguientes reglas:<br /><a href="http://pastebin.com/CSWuasXc" target="_blank">Reglas</a> en Español<br /><a href="http://pastebin.com/eZ3dtX2c">Regras</a> em Português (<b>Gracias a Dlinkoto</b>)<br />');
 	},
 
-	/*********************************************************
-	 * Custom commands
-	 *********************************************************/
-
 	spam: 'spamroom',
 	spamroom: function (target, room, user) {
 		if (!target) return this.sendReply("Please specify a user.");
@@ -1509,10 +1505,6 @@ var commands = exports.commands = {
 		}
 		this.privateModCommand("(" + user.name + " has removed from the spamroom user list: " + targets.join(", ") + ")");
 	},
-
-	/*********************************************************
-	 * Custom commands
-	 *********************************************************/
 
 	customavatars: 'customavatar',
 	customavatar: (function() {
