@@ -1105,6 +1105,8 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 		}
 	}
 	//fin tour
+
+	return newRoom;
 };
 
 Rooms.BattleRoom.prototype.joinBattle = function(user, team) {
