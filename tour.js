@@ -174,13 +174,13 @@ exports.tour = function(t) {
 			return true;
 		},
 		lideres: function() {
-			return ['m4r4ud3r','chtheflygon','spiritvirgo','lodshelian','ccrangerarthur','andye','cclyndis','modairwind','nsweetposho','ccmrpoke','watermisty','chkaast'];
+			return ['m4r4ud3r','chtheflygon','spiritvirgo','lodshelian','ccrangerarthur','nickii','cclyndis','modairwind','nsweetposho','ccmrpoke','lodred','chkaast'];
 		},
 		cargos: function() {
 			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
 		},
 		altomando: function() {
-			return ['lodtyrana','shinygiratinao','disponible','chleocalderon','lodmarcos'];
+			return ['lodtyrana','shinygiratinao','basedhispano','jcaldern','lodmarcos'];
 		},
 		lose: function(uid, rid) {
 			/*
