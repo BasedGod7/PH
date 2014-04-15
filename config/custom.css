@@ -95,3 +95,7 @@
 .menugroup .button:hover {
 	background: #250FC7;
 }
+.welcome-message {
+	background: url('http://hispano.xiaotai.org/welcome.png') center no-repeat;
+	background-color: #66669c;
+}
