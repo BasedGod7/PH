@@ -1047,6 +1047,9 @@ var commands = exports.commands = {
 				CommandParser.uncacheTree('./tour.js');
 				global.tour = new (require('./tour.js').tour)(tour);
 
+				CommandParser.uncacheTree('./hangman.js');
+				global.hangman = new (require('./hangman.js').hangman)(hangman);
+
 				var runningTournaments = Tournaments.tournaments;
 				CommandParser.uncacheTree('./tournaments/frontend.js');
 				Tournaments = require('./tournaments/frontend.js');
