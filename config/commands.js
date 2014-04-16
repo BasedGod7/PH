@@ -268,11 +268,11 @@ var commands = exports.commands = {
 		buffer += '<a href=' + path + 505 + '><button>(LoD) Shelian: Bicho</button></a>   ';
 		buffer += '<a href=' + path + 510 + '><button>(CC) Ranger Arthur: Roca</button></a>   ';
 		buffer += '<a href=' + path + 513 + '><button>Nickii♡: Hada</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>(CC) lyndis: Volador</button></a>   ';
-		buffer += '<a href=' + path + 504 + '><button>(MoD) Airwind: Fantasma</button></a>   ';
+		buffer += '<a href=' + path + 000 + '><button>Thunder God Laxus: Volador</button></a>   ';
+		buffer += '<a href=' + path + 504 + '><button>Kizzu: Fantasma</button></a>   ';
 		buffer += '<a href=' + path + 503 + '><button>ŠN? ?SweetPosho: Tierra</button></a>   ';
 		buffer += '<a href=' + path + 508 + '><button>(CC)Mr.Poke: Siniestro</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>(LoD)Red: Veneno</button></a>   ';
+		buffer += '<a href=' + path + 517 + '><button>(LoD)Red: Veneno</button></a>   ';
 		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=250/">Cómo desafiar la liga.</a><br><br>';
 		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35/">Información detallada sobre la Liga Pokémon Hispano.</a><br><br>';
 		buffer += '<b><font color="purple">No se acepta nuevos líderes de gimnasio.</font></b>';
