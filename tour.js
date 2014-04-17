@@ -94,19 +94,19 @@ exports.tour = function(t) {
 		},
 		highauth: function(user) {
 			//room auth is not enough
-			if (!config.tourhighauth && user.can('ban')) return true;
-			if (config.tourhighauth && config.groupsranking.indexOf(user.group) >= config.groupsranking.indexOf(config.tourhighauth)) return true;
+			if (!Config.tourhighauth && user.can('ban')) return true;
+			if (Config.tourhighauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourhighauth)) return true;
 			return false;
 		},
 		midauth: function(user, room) {
-			if (!config.tourmidauth && user.can('broadcast')) return true;
-			if (config.tourmidauth && config.groupsranking.indexOf(user.group) >= config.groupsranking.indexOf(config.tourmidauth)) return true;
+			if (!Config.tourmidauth && user.can('broadcast')) return true;
+			if (Config.tourmidauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourmidauth)) return true;
 			if (room.auth && room.auth[user.userid]) return true;
 			return false;
 		},
 		lowauth: function(user, room) {
-			if (!config.tourlowauth && user.can('broadcast')) return true;
-			if (config.tourlowauth && config.groupsranking.indexOf(user.group) >= config.groupsranking.indexOf(config.tourlowauth)) return true;
+			if (!Config.tourlowauth && user.can('broadcast')) return true;
+			if (Config.tourlowauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourlowauth)) return true;
 			if (room.auth && room.auth[user.userid]) return true;
 			return false;
 		},
@@ -148,7 +148,7 @@ exports.tour = function(t) {
 			for (var i=0; i<players.length; i++) {
 				if (players[i] == uid) return false;
 			}
-			if (!config.tourallowalts){
+			if (!Config.tourallowalts){
 				for (var i=0; i<players.length; i++) {
 					if (players[i] == uid) return false;
 				}
@@ -737,7 +737,7 @@ var cmds = {
 		if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 		if (tour[room.id] == undefined) return this.sendReply('No hay un torneo activo en esta sala.');
 		if (tour[room.id].status < 2) return this.sendReply('No hay un torneo fuera de la fase de inscripcion.');
-		if (config.tourdqguard) {
+		if (Config.tourdqguard) {
 			var stop = false;
 			for (var x in tour[room.id].round) {
 				if (tour[room.id].round[x][2] === -1) {
@@ -775,7 +775,7 @@ var cmds = {
 		if (!tour.midauth(user,room)) return this.sendReply('No tienes suficiente poder para utilizar este comando.');
 		if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 		if (tour[room.id] == undefined || tour[room.id].status != 2) return this.sendReply('No hay un torneo aca o esta en su fase de inscripcion. Reemplazar participantes solo es posible en la mitad del torneo.');
-		if (tour[room.id].roundNum > 1 && !config.tourunlimitreplace) return this.sendReply('Debido a la configuracion actual, reemplazar participantes solo esta permitido en la primera ronda de un torneo.');
+		if (tour[room.id].roundNum > 1 && !Config.tourunlimitreplace) return this.sendReply('Debido a la configuracion actual, reemplazar participantes solo esta permitido en la primera ronda de un torneo.');
 		if (!target) return this.sendReply('El comando correcto es: /replace reemplazado, sustituto.');
 		var t = tour.splint(target);
 		if (!t[1]) return this.sendReply('El comando correcto es: /replace reemplazado, sustituto.');
@@ -891,27 +891,27 @@ var cmds = {
 
 	toursettings: function(target, room, user) {
 		if (!tour.maxauth(user)) return this.sendReply('No tienes suficiente poder para utilizar este comando.');
-		if (target === 'replace on') return config.tourunlimitreplace = true;
-		if (target === 'replace off') return config.tourunlimitreplace = false;
-		if (target === 'alts on') return config.tourallowalts = true;
-		if (target === 'alts off') return config.tourallowalts = false;
-		if (target === 'dq on') return config.tourdqguard = false;
-		if (target === 'dq off') return config.tourdqguard = true;
-		if ((target.substr(0,6) === 'margin') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) >= 0) return config.tourtimemargin = parseInt(target.substr(7));
-		if ((target.substr(0,6) === 'period') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) > 0) return config.tourtimeperiod = parseInt(target.substr(7));
-		if (target.substr(0,7) === 'lowauth' && config.groupsranking.indexOf(target.substr(8,1)) != -1) return config.tourlowauth = target.substr(8,1);
-		if (target.substr(0,7) === 'midauth' && config.groupsranking.indexOf(target.substr(8,1)) != -1) return config.tourmidauth = target.substr(8,1);
-		if (target.substr(0,8) === 'highauth' && config.groupsranking.indexOf(target.substr(9,1)) != -1) return config.tourhighauth = target.substr(9,1);
+		if (target === 'replace on') return Config.tourunlimitreplace = true;
+		if (target === 'replace off') return Config.tourunlimitreplace = false;
+		if (target === 'alts on') return Config.tourallowalts = true;
+		if (target === 'alts off') return Config.tourallowalts = false;
+		if (target === 'dq on') return Config.tourdqguard = false;
+		if (target === 'dq off') return Config.tourdqguard = true;
+		if ((target.substr(0,6) === 'margin') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) >= 0) return Config.tourtimemargin = parseInt(target.substr(7));
+		if ((target.substr(0,6) === 'period') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) > 0) return Config.tourtimeperiod = parseInt(target.substr(7));
+		if (target.substr(0,7) === 'lowauth' && Config.groupsranking.indexOf(target.substr(8,1)) != -1) return Config.tourlowauth = target.substr(8,1);
+		if (target.substr(0,7) === 'midauth' && Config.groupsranking.indexOf(target.substr(8,1)) != -1) return Config.tourmidauth = target.substr(8,1);
+		if (target.substr(0,8) === 'highauth' && Config.groupsranking.indexOf(target.substr(9,1)) != -1) return Config.tourhighauth = target.substr(9,1);
 		if (target === 'view' || target === 'show' || target === 'display') {
 			var msg = '';
-			msg = msg + 'Es posible reemplazar participantes luego de la primera ronda? ' + new Boolean(config.tourunlimitreplace) + '.<br>';
-			msg = msg + 'Puede un jugador participar en un torneo con varias cuentas? ' + new Boolean(config.tourallowalts) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel bajo? ' + (!config.tourlowauth ? '+' : (config.tourlowauth === ' ' ? 'Ninguno' : config.tourlowauth)) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel medio? ' + (!config.tourmidauth ? '+' : (config.tourmidauth === ' ' ? 'Ninguno, lo cual es poco recomendado' : config.tourmidauth)) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel alto? ' + (!config.tourhighauth ? '@' : (config.tourhighauth === ' ' ? 'Ninguno, lo cual es muy poco recomendado' : config.tourhighauth)) + '.<br>';
-			msg = msg + 'Es posible descalificar participantes si hay batallas en curso? ' + (!config.tourdqguard) + '.<br>';
-			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia indidualmente hasta que ' + (!isNaN(config.tourtimemargin) ? config.tourtimemargin : 3) + ' se hayan unido.<br>';
-			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia en grupos de ' + (config.tourtimeperiod ? config.tourtimeperiod : 4) + ' participantes.';
+			msg = msg + 'Es posible reemplazar participantes luego de la primera ronda? ' + new Boolean(Config.tourunlimitreplace) + '.<br>';
+			msg = msg + 'Puede un jugador participar en un torneo con varias cuentas? ' + new Boolean(Config.tourallowalts) + '.<br>';
+			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel bajo? ' + (!Config.tourlowauth ? '+' : (Config.tourlowauth === ' ' ? 'Ninguno' : Config.tourlowauth)) + '.<br>';
+			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel medio? ' + (!Config.tourmidauth ? '+' : (Config.tourmidauth === ' ' ? 'Ninguno, lo cual es poco recomendado' : Config.tourmidauth)) + '.<br>';
+			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel alto? ' + (!Config.tourhighauth ? '@' : (Config.tourhighauth === ' ' ? 'Ninguno, lo cual es muy poco recomendado' : Config.tourhighauth)) + '.<br>';
+			msg = msg + 'Es posible descalificar participantes si hay batallas en curso? ' + (!Config.tourdqguard) + '.<br>';
+			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia indidualmente hasta que ' + (!isNaN(Config.tourtimemargin) ? Config.tourtimemargin : 3) + ' se hayan unido.<br>';
+			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia en grupos de ' + (Config.tourtimeperiod ? Config.tourtimeperiod : 4) + ' participantes.';
 			return this.sendReplyBox(msg);
 		}
 		return this.sendReply('Son argumentos validos para este comando: view, replace on/off, alts on/off, invalidate on/off, dq on/off, lowauth/midauth/highauth SIMBOLO, margin NUMERO, period NUMERO');
@@ -1037,7 +1037,7 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	newRoom.joinBattle(p2, p2team);
 	this.cancelSearch(p1, true);
 	this.cancelSearch(p2, true);
-	if (config.reportbattles) {
+	if (Config.reportbattles) {
 		Rooms.rooms.lobby.add('|b|'+newRoom.id+'|'+p1.getIdentity()+'|'+p2.getIdentity());
 	}
 
@@ -1248,7 +1248,7 @@ Rooms.BattleRoom.prototype.win = function(winner) {
 		var p2 = rated.p2;
 		if (Users.getExact(rated.p2)) p2 = Users.getExact(rated.p2).name;
 
-		//update.updates.push('[DEBUG] uri: '+config.loginserver+'action.php?act=ladderupdate&serverid='+config.serverid+'&p1='+encodeURIComponent(p1)+'&p2='+encodeURIComponent(p2)+'&score='+p1score+'&format='+toId(rated.format)+'&servertoken=[token]');
+		//update.updates.push('[DEBUG] uri: '+Config.loginserver+'action.php?act=ladderupdate&serverid='+Config.serverid+'&p1='+encodeURIComponent(p1)+'&p2='+encodeURIComponent(p2)+'&score='+p1score+'&format='+toId(rated.format)+'&servertoken=[token]');
 
 		if (!rated.p1 || !rated.p2) {
 			this.push('|raw|ERROR: El ladder no fue actualizado: uno de los jugadores no existe.');

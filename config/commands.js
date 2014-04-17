@@ -402,7 +402,7 @@ var commands = exports.commands = {
 
 	apelar: 'appeal',
 	appeal: function (target, room, user) {
-		if (!config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
+		if (!Config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
 		if (!room.decision) return this.sendReply('Solo es posible utilizar este comando en una sala de batalla');
 		if (!room.league) return this.sendReply('Esta no es una batalla oficial de liga.');
 		if (room.challenged === user.userid) {
@@ -415,7 +415,7 @@ var commands = exports.commands = {
 
 	desapelar: 'unappeal',
 	unappeal: function (target, room, user) {
-		if (!config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
+		if (!Config.allowappeal) return this.sendReply('Esta funcion esta deshabilitada');
 		if (!room.decision) return this.sendReply('Solo es posible utilizar este comando en una sala de batalla');
 		if (!room.league) return this.sendReply('Esta no es una batalla oficial de liga');
 		if (room.challenged === user.userid) {
@@ -1407,11 +1407,11 @@ var commands = exports.commands = {
 	hide: 'hideauth',
 	hideauth: function(target, room, user) {
 		if (!this.can('hideauth')) return false;
-		target = target || config.groupsranking[0];
-		if (!config.groups[target]) {
-			target = config.groupsranking[0];
+		target = target || Config.groupsranking[0];
+		if (!Config.groups[target]) {
+			target = Config.groupsranking[0];
 			this.sendReply("You have picked an invalid group, defaulting to '" + target + "'.");
-		} else if (config.groups[target].rank >= config.groups[user.group].rank)
+		} else if (Config.groups[target].rank >= Config.groups[user.group].rank)
 			return this.sendReply("The group you have chosen is either your current group OR one of higher rank. You cannot hide like that.");
 
 		user.getIdentity = function (roomid) {
@@ -1536,8 +1536,8 @@ var commands = exports.commands = {
 
 			if (cmd in {'':1, show:1, view:1, display:1}) {
 				var message = "";
-				for (var a in config.customavatars)
-					message += "<strong>" + sanitize(a) + ":</strong> " + sanitize(config.customavatars[a]) + "<br />";
+				for (var a in Config.customavatars)
+					message += "<strong>" + sanitize(a) + ":</strong> " + sanitize(Config.customavatars[a]) + "<br />";
 				return this.sendReplyBox(message);
 			}
 
@@ -1550,7 +1550,7 @@ var commands = exports.commands = {
 					var avatar = parts.slice(2).join(',').trim();
 
 					if (!userid) return this.sendReply("You didn't specify a user.");
-					if (config.customavatars[userid]) return this.sendReply(userid + " already has a custom avatar.");
+					if (Config.customavatars[userid]) return this.sendReply(userid + " already has a custom avatar.");
 
 					var hash = require('crypto').createHash('sha512').update(userid + '\u0000' + avatar).digest('hex').slice(0, 8);
 					pendingAdds[hash] = {userid: userid, avatar: avatar};
@@ -1585,14 +1585,14 @@ var commands = exports.commands = {
 
 				case 'delete':
 					var userid = toUserid(parts[1]);
-					if (!config.customavatars[userid]) return this.sendReply(userid + " does not have a custom avatar.");
+					if (!Config.customavatars[userid]) return this.sendReply(userid + " does not have a custom avatar.");
 
-					if (config.customavatars[userid].toString().split('.').slice(0, -1).join('.') !== userid)
-						return this.sendReply(userid + "'s custom avatar (" + config.customavatars[userid] + ") cannot be removed with this script.");
-					fs.unlink('./config/avatars/' + config.customavatars[userid], (function (e) {
-						if (e) return this.sendReply(userid + "'s custom avatar (" + config.customavatars[userid] + ") could not be removed: " + e.toString());
+					if (Config.customavatars[userid].toString().split('.').slice(0, -1).join('.') !== userid)
+						return this.sendReply(userid + "'s custom avatar (" + Config.customavatars[userid] + ") cannot be removed with this script.");
+					fs.unlink('./config/avatars/' + Config.customavatars[userid], (function (e) {
+						if (e) return this.sendReply(userid + "'s custom avatar (" + Config.customavatars[userid] + ") could not be removed: " + e.toString());
 
-						delete config.customavatars[userid];
+						delete Config.customavatars[userid];
 						this.sendReply(userid + "'s custom avatar removed successfully");
 					}).bind(this));
 					break;
