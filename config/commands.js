@@ -153,7 +153,7 @@ var commands = exports.commands = {
 	alts: 'whois',
 	getalts: 'whois',
 	whois: function(target, room, user) {
-		var targetUser = this.targetUserOrSelf(target);
+		var targetUser = this.targetUserOrSelf(target, user.group === ' ');
 		if (!targetUser) {
 			return this.sendReply('User '+this.targetUsername+' not found.');
 		}
@@ -182,8 +182,8 @@ var commands = exports.commands = {
 				if (output) this.sendReply('Previous names: '+output);
 			}
 		}
-		if (config.groups[targetUser.group] && config.groups[targetUser.group].name) {
-			this.sendReply('Group: ' + config.groups[targetUser.group].name + ' (' + targetUser.group + ')');
+		if (Config.groups[targetUser.group] && Config.groups[targetUser.group].name) {
+			this.sendReply('Group: ' + Config.groups[targetUser.group].name + ' (' + targetUser.group + ')');
 		}
 		if (targetUser.isSysop) {
 			this.sendReply('(Pok\xE9mon Showdown System Operator)');
@@ -1340,8 +1340,8 @@ var commands = exports.commands = {
 	potd: function(target, room, user) {
 		if (!this.can('potd')) return false;
 
-		config.potd = target;
-		Simulator.SimulatorProcess.eval('config.potd = \''+toId(target)+'\'');
+		Config.potd = target;
+		Simulator.SimulatorProcess.eval('Config.potd = \''+toId(target)+'\'');
 		if (target) {
 			if (Rooms.lobby) Rooms.lobby.addRaw('<div class="broadcast-blue"><b>The Pokemon of the Day is now '+target+'!</b><br />This Pokemon will be guaranteed to show up in random battles.</div>');
 			this.logModCommand('The Pokemon of the Day was changed to '+target+' by '+user.name+'.');
@@ -1913,7 +1913,7 @@ var commands = exports.commands = {
 			this.sendReply('COMANDOS DE INFORMACIÓN: /data, /dexsearch, /groups, /opensource, /avatars, /faq, /rules, /intro, /tiers, /othermetas, /learn, /analysis, /calc (reemplaza / con ! para vocear. (Requires: + % @ & ~))');
 			this.sendReply('Para los detalles de los comandos de los chatroom, use /roomhelp');
 			this.sendReply('Para detalles de todos los comandos, use /help all');
-			if (user.group !== config.groupsranking[0]) {
+			if (user.group !== Config.groupsranking[0]) {
 				this.sendReply('COMANDOS DE DRIVER: /mute, /unmute, /announce, /modlog, /forcerename, /alts');
 				this.sendReply('COMANDOS DE MODERADOR: /ban, /unban, /unbanall, /ip, /redirect, /kick');
 				this.sendReply('COMANDOS DE LEADER: /promote, /demote, /forcewin, /forcetie, /declare');

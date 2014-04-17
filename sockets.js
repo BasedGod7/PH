@@ -12,7 +12,7 @@
  */
 
 //var cluster = require('cluster');
-var config = require('./config/config');
+var Config = require('./config/config');
 var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 /*if (cluster.isMaster) {
@@ -24,7 +24,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 	var workers = exports.workers = {};
 
 	var spawnWorker = exports.spawnWorker = function() {
-		var worker = fakeProcess.server; //cluster.fork({PSPORT: config.port});
+		var worker = fakeProcess.server; //cluster.fork({PSPORT: Config.port});
 		var id = worker.id;
 		workers[id] = worker;
 		worker.on('message', function(data) {
@@ -50,7 +50,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 		});
 	};
 
-	//var workerCount = config.workers || 1;
+	//var workerCount = Config.workers || 1;
 	//for (var i=0; i<workerCount; i++) {
 		spawnWorker();
 	//}
@@ -109,7 +109,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 //} else {
 	// is worker
 
-	if (process.env.PSPORT) config.port = +process.env.PSPORT;
+	if (process.env.PSPORT) Config.port = +process.env.PSPORT;
 
 	// ofe is optional
 	// if installed, it will heap dump if the process runs out of memory
@@ -126,7 +126,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 	var Cidr = require('./cidr');
 
-	/*if (config.crashguard) {
+	/*if (Config.crashguard) {
 		// graceful crash
 		process.on('uncaughtException', function(err) {
 			require('./crashlogger.js')(err, 'Socket process '+cluster.worker.id+' ('+process.pid+')');
@@ -135,8 +135,8 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 	var app = require('http').createServer();
 	var appssl;
-	if (config.ssl) {
-		appssl = require('https').createServer(config.ssl.options);
+	if (Config.ssl) {
+		appssl = require('https').createServer(Config.ssl.options);
 	}
 	try {
 		(function() {
@@ -147,8 +147,8 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			var staticRequestHandler = function(request, response) {
 				request.resume();
 				request.addListener('end', function() {
-					if (config.customhttpresponse &&
-							config.customhttpresponse(request, response)) {
+					if (Config.customhttpresponse &&
+							Config.customhttpresponse(request, response)) {
 						return;
 					}
 					var server;
@@ -192,19 +192,14 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			if (severity === 'error') console.log('ERROR: '+message);
 		},
 		prefix: '/showdown',
-		websocket: !config.disablewebsocket
+		websocket: !Config.disablewebsocket
 	});
-
-	// Make `app`, `appssl`, and `server` available to the console.
-	global.App = app;
-	global.AppSSL = appssl;
-	global.Server = server;
 
 	var sockets = {};
 	var channels = {};
 
 	// Deal with phantom connections.
-	global.sweepClosedSockets = function() {
+	var sweepClosedSockets = function() {
 		for (var s in sockets) {
 			if (sockets[s].protocol === 'xhr-streaming' &&
 				sockets[s]._session &&
@@ -225,11 +220,9 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			}
 		}
 	};
-	if (!config.herokuhack) {
-		global.sweepClosedSocketsInterval = setInterval(
-			sweepClosedSockets,
-			1000 * 60 * 10
-		);
+	var interval;
+	if (!Config.herokuhack) {
+		interval = setInterval(sweepClosedSockets, 1000*60*10);
 	}
 
 	fakeProcess.client.on('message', function(data) {
@@ -300,7 +293,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 	});
 
 	// this is global so it can be hotpatched if necessary
-	var isTrustedProxyIp = Cidr.checker(config.proxyip);
+	var isTrustedProxyIp = Cidr.checker(Config.proxyip);
 	var socketCounter = 0;
 	server.on('connection', function(socket) {
 		if (!socket) {
@@ -334,7 +327,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 		// console.log('CONNECT: '+socket.remoteAddress+' ['+socket.id+']');
 		var interval;
-		if (config.herokuhack) {
+		if (Config.herokuhack) {
 			// see https://github.com/sockjs/sockjs-node/issues/57#issuecomment-5242187
 			interval = setInterval(function() {
 				try {
@@ -361,21 +354,21 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			fakeProcess.client.send('!'+socketid);
 
 			delete sockets[socketid];
-			for (channelid in channels) {
+			for (var channelid in channels) {
 				delete channels[channelid][socketid];
 			}
 		});
 	});
 	server.installHandlers(app, {});
-	app.listen(config.port);
-	console.log('Worker '/*+cluster.worker.id*/+' now listening on port ' + config.port);
+	app.listen(Config.port);
+	console.log('Worker '/*+cluster.worker.id*/+' now listening on port ' + Config.port);
 
 	if (appssl) {
 		server.installHandlers(appssl, {});
-		appssl.listen(config.ssl.port);
-		console.log('Worker '/*+cluster.worker.id*/+' now listening for SSL on port ' + config.ssl.port);
+		appssl.listen(Config.ssl.port);
+		console.log('Worker '/*+cluster.worker.id*/+' now listening for SSL on port ' + Config.ssl.port);
 	}
 
-	console.log('Test your server at http://localhost:' + config.port);
+	console.log('Test your server at http://localhost:' + Config.port);
 
 //}

@@ -17,9 +17,9 @@ if (!('existsSync' in fs)) {
 	// for compatibility with ancient versions of node
 	fs.existsSync = require('path').existsSync;
 }
-global.config = require('./config/config.js');
+global.Config = require('./config/config.js');
 
-/*if (config.crashguard) {
+/*if (Config.crashguard) {
 	// graceful crash - allow current battles to finish before restarting
 	process.on('uncaughtException', function (err) {
 		require('./crashlogger.js')(err, 'A simulator process');*/
@@ -28,7 +28,7 @@ global.config = require('./config/config.js');
 			Rooms.lobby.addRaw('<div><b>THE SERVER HAS CRASHED:</b> '+stack+'<br />Please restart the server.</div>');
 			Rooms.lobby.addRaw('<div>You will not be able to talk in the lobby or start new battles until the server restarts.</div>');
 		}
-		config.modchat = 'crash';
+		Config.modchat = 'crash';
 		Rooms.global.lockdown = true; */
 	/*});
 }*/
@@ -452,7 +452,7 @@ var BattlePokemon = (function() {
 
 		// base stat
 		var stat = this.stats[statName];
-		
+
 		// stat boosts
 		if (!unboosted) {
 			var boost = this.boosts[statName];
@@ -1015,6 +1015,14 @@ var BattlePokemon = (function() {
 	BattlePokemon.prototype.getItem = function() {
 		return this.battle.getItem(this.item);
 	};
+	BattlePokemon.prototype.hasItem = function(item) {
+		if (this.ignore['Item']) return false;
+		var ownItem = this.item;
+		if (!Array.isArray(item)) {
+			return ownItem === toId(item);
+		}
+		return (item.map(toId).indexOf(ownItem) >= 0);
+	};
 	BattlePokemon.prototype.clearItem = function() {
 		return this.setItem('');
 	};
@@ -1035,6 +1043,14 @@ var BattlePokemon = (function() {
 	};
 	BattlePokemon.prototype.getAbility = function() {
 		return this.battle.getAbility(this.ability);
+	};
+	BattlePokemon.prototype.hasAbility = function(ability) {
+		if (this.ignore['Ability']) return false;
+		var ownAbility = this.ability;
+		if (!Array.isArray(ability)) {
+			return ownAbility === toId(ability);
+		}
+		return (ability.map(toId).indexOf(ownAbility) >= 0);
 	};
 	BattlePokemon.prototype.clearAbility = function() {
 		return this.setAbility('');
@@ -2856,22 +2872,22 @@ var Battle = (function() {
 
 		var atkBoosts = move.useTargetOffensive ? defender.boosts[attackStat] : attacker.boosts[attackStat];
 		var defBoosts = move.useSourceDefensive ? attacker.boosts[defenseStat] : defender.boosts[defenseStat];
-		
+
 		var ignoreNegativeOffensive = !!move.ignoreNegativeOffensive;
 		var ignorePositiveDefensive = !!move.ignorePositiveDefensive;
-		
+
 		if (move.crit) {
 			ignoreNegativeOffensive = true;
 			ignorePositiveDefensive = true;
 		}
-		
+
 		if (move.ignoreOffensive || (ignoreNegativeOffensive && atkBoosts < 0)) {
 			var ignoreOffensive = true;
 		}
 		if (move.ignoreDefensive || (ignorePositiveDefensive && defBoosts > 0)) {
 			var ignoreDefensive = true;
 		}
-		
+
 		if (ignoreOffensive) {
 			this.debug('Negating (sp)atk boost/penalty.');
 			atkBoosts = 0;
@@ -2883,10 +2899,10 @@ var Battle = (function() {
 
 		if (move.useTargetOffensive) attack = defender.calculateStat(attackStat, atkBoosts);
 		else attack = attacker.calculateStat(attackStat, atkBoosts);
-		
+
 		if (move.useSourceDefensive) defense = attacker.calculateStat(defenseStat, defBoosts);
 		else defense = defender.calculateStat(defenseStat, defBoosts);
-		
+
 		// Apply Stat Modifiers
 		attack = this.runEvent('Modify'+statTable[attackStat], attacker, defender, move, attack);
 		defense = this.runEvent('Modify'+statTable[defenseStat], defender, attacker, move, defense);
