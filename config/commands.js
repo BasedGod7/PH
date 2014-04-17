@@ -268,7 +268,7 @@ var commands = exports.commands = {
 		buffer += '<a href=' + path + 505 + '><button>(LoD) Shelian: Bicho</button></a>   ';
 		buffer += '<a href=' + path + 510 + '><button>(CC) Ranger Arthur: Roca</button></a>   ';
 		buffer += '<a href=' + path + 513 + '><button>Nickii♡: Hada</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>Thunder God Laxus: Volador</button></a>   ';
+		buffer += '<a href=' + path + 000 + '><button>Haayato: Volador</button></a>   ';
 		buffer += '<a href=' + path + 504 + '><button>Kizzu: Fantasma</button></a>   ';
 		buffer += '<a href=' + path + 503 + '><button>ŠN? ?SweetPosho: Tierra</button></a>   ';
 		buffer += '<a href=' + path + 508 + '><button>(CC)Mr.Poke: Siniestro</button></a>   ';
