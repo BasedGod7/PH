@@ -276,7 +276,7 @@ var commands = exports.commands = {
 		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=250/">Cómo desafiar la liga.</a><br><br>';
 		buffer += '<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35/">Información detallada sobre la Liga Pokémon Hispano.</a><br><br>';
 		buffer += '<b><font color="purple">No se acepta nuevos líderes de gimnasio.</font></b>';
-		return this.sendReplyBox(buffer);
+		return this.sendReply('|raw|<div class="infobox league-info">' + buffer + '</div>');
 	},
 
 	opengym: 'abrirliga',
