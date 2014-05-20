@@ -574,7 +574,7 @@ var BattleRoom = (function () {
 				result = "lost";
 
 			var war = Clans.findWarFromClan(Clans.findClanFromMember(this.p1));
-			Clans.getWarRoom(war[0]).add('|raw|<div class="clans-war-battle-result">(' + sanitize(war[0]) + " vs " + sanitize(war[1]) + ") " + sanitize(this.p1) + " has " + result + " the clan war battle against " + sanitize(this.p2) + '</div>');
+			Clans.getWarRoom(war[0]).add('|raw|<div class="clans-war-battle-result">(' + Tools.escapeHTML(war[0]) + " vs " + Tools.escapeHTML(war[1]) + ") " + Tools.escapeHTML(this.p1) + " has " + result + " the clan war battle against " + Tools.escapeHTML(this.p2) + '</div>');
 
 			var room = Clans.getWarRoom(war[0]);
 			var warEnd = Clans.isWarEnded(war[0]);
@@ -585,9 +585,9 @@ var BattleRoom = (function () {
 				else if (warEnd.result === 0)
 					result = "lost";
 				room.add('|raw|' +
-					'<div class="clans-war-end">' + sanitize(war[0]) + " has " + result + " the clan war against " + sanitize(war[1]) + '</div>' +
-					'<strong>' + sanitize(war[0]) + ':</strong> ' + warEnd.oldRatings[0] + " &rarr; " + warEnd.newRatings[0] + " (" + Clans.ratingToName(warEnd.newRatings[0]) + ")<br />" +
-					'<strong>' + sanitize(war[1]) + ':</strong> ' + warEnd.oldRatings[1] + " &rarr; " + warEnd.newRatings[1] + " (" + Clans.ratingToName(warEnd.newRatings[1]) + ")"
+					'<div class="clans-war-end">' + Tools.escapeHTML(war[0]) + " has " + result + " the clan war against " + Tools.escapeHTML(war[1]) + '</div>' +
+					'<strong>' + Tools.escapeHTML(war[0]) + ':</strong> ' + warEnd.oldRatings[0] + " &rarr; " + warEnd.newRatings[0] + " (" + Clans.ratingToName(warEnd.newRatings[0]) + ")<br />" +
+					'<strong>' + Tools.escapeHTML(war[1]) + ':</strong> ' + warEnd.oldRatings[1] + " &rarr; " + warEnd.newRatings[1] + " (" + Clans.ratingToName(warEnd.newRatings[1]) + ")"
 				);
 			}
 		}
@@ -654,13 +654,13 @@ var BattleRoom = (function () {
 							var acre = Math.round(data.p1rating.acre);
 							var reasons = '' + (acre - oldacre) + ' for ' + (p1score > 0.99 ? 'winning' : (p1score < 0.01 ? 'losing' : 'tying'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw(sanitize(p1) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw(Tools.escapeHTML(p1) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							oldacre = Math.round(data.p2rating.oldacre);
 							acre = Math.round(data.p2rating.acre);
 							reasons = '' + (acre - oldacre) + ' for ' + (p1score > 0.99 ? 'losing' : (p1score < 0.01 ? 'winning' : 'tying'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw(sanitize(p2) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw(Tools.escapeHTML(p2) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							Users.get(p1).cacheMMR(rated.format, data.p1rating);
 							Users.get(p2).cacheMMR(rated.format, data.p2rating);

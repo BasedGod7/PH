@@ -932,13 +932,16 @@ exports.BattleMovedex = {
 			},
 			onBeforeMove: function (pokemon) {
 				if (this.effectData.duration === 1) {
+					this.add('-end', pokemon, 'Bide');
 					if (!this.effectData.totalDamage) {
-						this.add('-end', pokemon, 'Bide');
 						this.add('-fail', pokemon);
 						return false;
 					}
-					this.add('-end', pokemon, 'Bide');
 					var target = this.effectData.sourceSide.active[this.effectData.sourcePosition];
+					if (!target) {
+						this.add('-fail', pokemon);
+						return false;
+					}
 					if (!target.runImmunity('Normal')) {
 						this.add('-immune', target, '[msg]');
 						return false;
@@ -2116,22 +2119,22 @@ exports.BattleMovedex = {
 		pp: 10,
 		priority: 3,
 		stallingMove: true, // Note: stallingMove is not used anywhere.
-		volatileStatus: 'craftyshield',
-		onTryHit: function (target, source, move) {
-			return !!this.willAct() && this.runEvent('StallMove', target);
+		sideCondition: 'craftyshield',
+		onTryHitSide: function (side, source) {
+			return !!this.willAct() && this.runEvent('StallMove', source);
 		},
-		onHit: function (pokemon) {
-			pokemon.addVolatile('stall');
+		onHitSide: function (side, source) {
+			source.addVolatile('stall');
 		},
 		effect: {
 			duration: 1,
-			onStart: function (target) {
-				this.add('-singleturn', target, 'Crafty Shield');
+			onStart: function (target, source) {
+				this.add('-singleturn', source, 'Crafty Shield');
 			},
 			onTryHitPriority: 3,
 			onTryHit: function (target, source, move) {
 				if (move.breaksProtect) {
-					target.removeVolatile('Crafty Shield');
+					target.side.removeSideCondition('craftyshield');
 					return;
 				}
 				if (move && (move.target === 'self' || move.category !== 'Status')) return;
@@ -2140,7 +2143,7 @@ exports.BattleMovedex = {
 			}
 		},
 		secondary: false,
-		target: "self",
+		target: "allySide",
 		type: "Fairy"
 	},
 	"crosschop": {
@@ -10100,6 +10103,9 @@ exports.BattleMovedex = {
 		onTryHitSide: function (side, source) {
 			return this.willAct();
 		},
+		onHitSide: function (side, source) {
+			source.addVolatile('stall');
+		},
 		effect: {
 			duration: 1,
 			onStart: function (target, source) {
@@ -11813,7 +11819,7 @@ exports.BattleMovedex = {
 				return false;
 			}
 			if (defender.weightkg >= 200) {
-				this.add('-fail', defender, '[heavy]');
+				this.add('-fail', defender, 'move: Sky Drop', '[heavy]');
 				return null;
 			}
 			if (defender.volatiles['protect']) {
@@ -14736,6 +14742,9 @@ exports.BattleMovedex = {
 		sideCondition: 'wideguard',
 		onTryHitSide: function (side, source) {
 			return this.willAct();
+		},
+		onHitSide: function (side, source) {
+			source.addVolatile('stall');
 		},
 		effect: {
 			duration: 1,
