@@ -997,89 +997,51 @@ for (var i in cmds) CommandParser.commands[i] = cmds[i];
 /*********************************************************
  * Events
  *********************************************************/
+Rooms.global._startBattle = Rooms.global.startBattle;
 Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
-	var newRoom;
-	p1 = Users.get(p1);
-	p2 = Users.get(p2);
+	var newRoom = this._startBattle(p1, p2, format, rated, p1team, p2team);
+	if (!newRoom) return;
+	var formaturlid = format.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
-	if (!p1 || !p2) {
-		// most likely, a user was banned during the battle start procedure
-		this.cancelSearch(p1, true);
-		this.cancelSearch(p2, true);
-		return;
-	}
-	if (p1 === p2) {
-		this.cancelSearch(p1, true);
-		this.cancelSearch(p2, true);
-		p1.popup("No puedes pelear contra ti mismo.");
-		return;
-	}
-
-	if (this.lockdown) {
-		this.cancelSearch(p1, true);
-		this.cancelSearch(p2, true);
-		p1.popup("El servidor se esta apagando, no es posible iniciar batallas ahora.");
-		p2.popup("El servidor se esta apagando, no es posible iniciar batallas ahora.");
-		return;
-	}
-
-	//console.log('BATTLE START BETWEEN: '+p1.userid+' '+p2.userid);
-	var i = this.lastBattle+1;
-	var formaturlid = format.toLowerCase().replace(/[^a-z0-9]+/g,'');
-	while(Rooms.rooms['battle-'+formaturlid+i]) {
-		i++;
-	}
-	this.lastBattle = i;
-	newRoom = this.addRoom('battle-'+formaturlid+'-'+i, format, p1, p2, this.id, rated);
-	p1.joinRoom(newRoom);
-	p2.joinRoom(newRoom);
-	newRoom.joinBattle(p1, p1team);
-	newRoom.joinBattle(p2, p2team);
-	this.cancelSearch(p1, true);
-	this.cancelSearch(p2, true);
-	if (Config.reportbattles) {
-		Rooms.rooms.lobby.add('|b|'+newRoom.id+'|'+p1.getIdentity()+'|'+p2.getIdentity());
-	}
-
-	  //liga
-	  if (!rated && formaturlid === 'ou') {
-	      if (p1.gymopen && !p2.gymopen) {
-		  newRoom.challenger = p2.userid;
-		  newRoom.challenged = p1.userid;
-		  newRoom.league = true;
-		  var challengerteam = newRoom.p2.team
-	      }
-	      if (p2.gymopen && !p1.gymopen) {
-		  newRoom.challenger = p1.userid;
-		  newRoom.challenged = p2.userid;
-		  newRoom.league = true;
-		  var challengerteam = newRoom.p1.team
-	      }
-	       if (newRoom.league) {
-		      var index = tour.lideres().indexOf(newRoom.challenged);
-		      if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
-		      if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
-		      var challengerlist = Users.get(newRoom.challenged).challengers;
-		      if (challengerlist) {
-			      var index = challengerlist.indexOf(newRoom.challenger);
-			      if (index !== -1) challengerlist.splice(index, 1);
-		      }
-		var text = '';
-		for (var i=0; i < challengerteam.length; i++) {
-			text += ('<b>' + challengerteam[i].species + '</b><br>');
-			text += (challengerteam[i].item + '<br>');
-			text += (challengerteam[i].ability + '<br>');
-			/*
-			for (var j=0; j<challengerteam[i].moves.length; j++) {
-				text += ((j + 1) + '. ' + challengerteam[i].moves[j] + '<br>');
-			}
-			*/
-			text += '<br>';
+	//liga
+	if (!rated && formaturlid === 'ou') {
+		if (p1.gymopen && !p2.gymopen) {
+			newRoom.challenger = p2.userid;
+			newRoom.challenged = p1.userid;
+			newRoom.league = true;
+			var challengerteam = newRoom.p2.team
 		}
-		newRoom.challengerset = text;
-	      }
-	  }
-	  //fin liga
+		if (p2.gymopen && !p1.gymopen) {
+			newRoom.challenger = p1.userid;
+			newRoom.challenged = p2.userid;
+			newRoom.league = true;
+			var challengerteam = newRoom.p1.team
+		}
+		if (newRoom.league) {
+			var index = tour.lideres().indexOf(newRoom.challenged);
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
+			var challengerlist = Users.get(newRoom.challenged).challengers;
+			if (challengerlist) {
+				var index = challengerlist.indexOf(newRoom.challenger);
+				if (index !== -1) challengerlist.splice(index, 1);
+			}
+			var text = '';
+			for (var i=0; i < challengerteam.length; i++) {
+				text += ('<b>' + challengerteam[i].species + '</b><br>');
+				text += (challengerteam[i].item + '<br>');
+				text += (challengerteam[i].ability + '<br>');
+				/*
+				for (var j=0; j<challengerteam[i].moves.length; j++) {
+					text += ((j + 1) + '. ' + challengerteam[i].moves[j] + '<br>');
+				}
+				*/
+				text += '<br>';
+			}
+			newRoom.challengerset = text;
+		}
+	}
+	//fin liga
 
 	//tour
 	if (!rated) {
@@ -1109,43 +1071,8 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	return newRoom;
 };
 
-Rooms.BattleRoom.prototype.joinBattle = function(user, team) {
-	var slot = undefined;
-	if (this.rated) {
-		if (this.rated.p1 === user.userid) {
-			slot = 0;
-		} else if (this.rated.p2 === user.userid) {
-			slot = 1;
-		} else {
-			return;
-		}
-	}
-
-	if (this.tournament || this.league) {
-		if (this.p1.userid === user.userid) {
-			slot = 0;
-		} else if (this.p2.userid === user.userid) {
-			slot = 1;
-		} else {
-			return;
-		}
-	}
-
-	this.battle.join(user, slot, team);
-	Rooms.global.battleCount += (this.battle.active?1:0) - (this.active?1:0);
-	this.active = this.battle.active;
-	if (this.active) {
-		this.title = ""+this.battle.p1+" vs. "+this.battle.p2;
-		this.send('|title|'+this.title);
-	}
-	this.update();
-
-	if (this.parentid) {
-		Rooms.get(this.parentid).updateRooms();
-	}
-};
+Rooms.BattleRoom.prototype._win = Rooms.BattleRoom.prototype.win;
 Rooms.BattleRoom.prototype.win = function(winner) {
-
 	//liga
 	if (this.league) {
 		var winnerid = toId(winner);
@@ -1231,133 +1158,5 @@ Rooms.BattleRoom.prototype.win = function(winner) {
 	}
 	//fin tour
 
-	if (this.rated) {
-		var winnerid = toId(winner);
-		var rated = this.rated;
-		this.rated = false;
-		var p1score = 0.5;
-
-		if (winnerid === rated.p1) {
-			p1score = 1;
-		} else if (winnerid === rated.p2) {
-			p1score = 0;
-		}
-
-		var p1 = rated.p1;
-		if (Users.getExact(rated.p1)) p1 = Users.getExact(rated.p1).name;
-		var p2 = rated.p2;
-		if (Users.getExact(rated.p2)) p2 = Users.getExact(rated.p2).name;
-
-		//update.updates.push('[DEBUG] uri: '+Config.loginserver+'action.php?act=ladderupdate&serverid='+Config.serverid+'&p1='+encodeURIComponent(p1)+'&p2='+encodeURIComponent(p2)+'&score='+p1score+'&format='+toId(rated.format)+'&servertoken=[token]');
-
-		if (!rated.p1 || !rated.p2) {
-			this.push('|raw|ERROR: El ladder no fue actualizado: uno de los jugadores no existe.');
-		} else {
-			var winner = Users.get(winnerid);
-			if (winner && !winner.authenticated) {
-				this.send('|askreg|' + winner.userid, winner);
-			}
-			var p1rating, p2rating;
-			// update rankings
-			this.push('|raw|Ladder actualizandose...');
-			var self = this;
-			LoginServer.request('ladderupdate', {
-				p1: p1,
-				p2: p2,
-				score: p1score,
-				format: toId(rated.format)
-			}, function(data, statusCode, error) {
-				if (!self.battle) {
-					console.log('room expired before ladder update was received');
-					return;
-				}
-				if (!data) {
-					self.addRaw('Ladder probablemente actualizado, no se pudo leer el resultado ('+error+').');
-					self.update();
-					// log the battle anyway
-					if (!Tools.getFormat(self.format).noLog) {
-						self.logBattle(p1score);
-					}
-					return;
-				} else {
-					try {
-						p1rating = data.p1rating;
-						p2rating = data.p2rating;
-
-						//self.add("Ladder updated.");
-
-						var oldacre = Math.round(data.p1rating.oldacre);
-						var acre = Math.round(data.p1rating.acre);
-						var reasons = ''+(acre-oldacre)+' for '+(p1score>.99?'winning':(p1score<.01?'losing':'tying'));
-						if (reasons.substr(0,1) !== '-') reasons = '+'+reasons;
-						self.addRaw(sanitize(p1)+'\'s rating: '+oldacre+' &rarr; <strong>'+acre+'</strong><br />('+reasons+')');
-
-						var oldacre = Math.round(data.p2rating.oldacre);
-						var acre = Math.round(data.p2rating.acre);
-						var reasons = ''+(acre-oldacre)+' for '+(p1score>.99?'losing':(p1score<.01?'winning':'tying'));
-						if (reasons.substr(0,1) !== '-') reasons = '+'+reasons;
-						self.addRaw(sanitize(p2)+'\'s rating: '+oldacre+' &rarr; <strong>'+acre+'</strong><br />('+reasons+')');
-
-						Users.get(p1).cacheMMR(rated.format, data.p1rating);
-						Users.get(p2).cacheMMR(rated.format, data.p2rating);
-						self.update();
-					} catch(e) {
-						self.addRaw('Error al calcular rating.');
-						self.update();
-					}
-
-					if (!Tools.getFormat(self.format).noLog) {
-						self.logBattle(p1score, p1rating, p2rating);
-					}
-				}
-			});
-		}
-	}
-	Rooms.global.battleCount += 0 - (this.active?1:0);
-	this.active = false;
-	this.update();
-};
-Rooms.BattleRoom.prototype.requestKickInactive = function(user, force) {
-	if (this.resetTimer) {
-		this.send('|inactive|El timer de batalla esta encendido.', user);
-		return false;
-	}
-	if (user) {
-		if (!force && this.battle.getSlot(user) < 0) return false;
-		this.resetUser = user.userid;
-		this.send('|inactive|Timer de batalla ENCENDIDO: el jugador inactivo sera descalificado. (Solicitado por: '+user.name+')');
-	}
-
-	// a tick is 10 seconds
-
-	var maxTicksLeft = 15; // 2 minutes 30 seconds
-	if (!this.battle.p1 || !this.battle.p2) {
-		// if a player has left, don't wait longer than 6 ticks (1 minute)
-		maxTicksLeft = 6;
-	}
-	if (!this.rated && !this.tournament && !this.league) maxTicksLeft = 30;
-
-	this.sideTurnTicks = [maxTicksLeft, maxTicksLeft];
-
-	var inactiveSide = this.getInactiveSide();
-	if (inactiveSide < 0) {
-		// add 10 seconds to bank if they're below 160 seconds
-		if (this.sideTicksLeft[0] < 16) this.sideTicksLeft[0]++;
-		if (this.sideTicksLeft[1] < 16) this.sideTicksLeft[1]++;
-	}
-	this.sideTicksLeft[0]++;
-	this.sideTicksLeft[1]++;
-	if (inactiveSide != 1) {
-		// side 0 is inactive
-		var ticksLeft0 = Math.min(this.sideTicksLeft[0] + 1, maxTicksLeft);
-		this.send('|inactive|Tienes '+(ticksLeft0*10)+' segundos para tomar una decision.', this.battle.getPlayer(0));
-	}
-	if (inactiveSide != 0) {
-		// side 1 is inactive
-		var ticksLeft1 = Math.min(this.sideTicksLeft[1] + 1, maxTicksLeft);
-		this.send('|inactive|Tienes '+(ticksLeft1*10)+' segundos para tomar una decision.', this.battle.getPlayer(1));
-	}
-
-	this.resetTimer = setTimeout(this.kickInactive.bind(this), 10*1000);
-	return true;
+	this._win(winner);
 };
