@@ -174,7 +174,7 @@ exports.tour = function(t) {
 			return true;
 		},
 		lideres: function() {
-			return ['m4r4ud3r','chtheflygon','spiritvirgo','lodshelian','ccrangerarthur','nickii','haayato','kizzu','nsweetposho','ccmrpoke','lodred','chkaast'];
+			return ['nsaigonthrasher','2020victini2','spiritvirgo','lodshelian','ccrangerarthur','nickii','amroy','cssdedenneitor','sidaaaaa','ccmrpoke','smorales','chkaast'];
 		},
 		cargos: function() {
 			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
@@ -433,7 +433,7 @@ var cmds = {
 		tour[rid].status = 1;
 		tour[rid].players = new Array();
 
-		Rooms.rooms[rid].addRaw('<hr /><h2><font color="green">' + Tools.escapeHTML(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="green">.</font></h2><b><font color="blueviolet">Jugadores:</font></b> ' + targets[1] + '<br /><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
+		Rooms.rooms[rid].addRaw('<hr /><h2><font color="green">' + sanitize(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="green">.</font></h2><b><font color="blueviolet">Jugadores:</font></b> ' + targets[1] + '<br /><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
 		if (tour.timers[rid]) Rooms.rooms[rid].addRaw('<i>El torneo empezara en ' + tour.timers[rid].time + ' minuto' + (tour.timers[rid].time == 1 ? '' : 's') + '.<i>');
 	},
 
