@@ -1690,7 +1690,7 @@ var commands = exports.commands = {
 
 	deleteclan: function (target) {
 		if (!this.can('clans')) return false;
-		if (!Clans.createClan(target))
+		if (!Clans.deleteClan(target))
 			this.sendReply("Could not delete the clan. Does it exist or is it currently in a war?");
 		else
 			this.sendReply("Clan: " + target + " successfully deleted.");
