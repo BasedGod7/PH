@@ -997,7 +997,7 @@ for (var i in cmds) CommandParser.commands[i] = cmds[i];
 /*********************************************************
  * Events
  *********************************************************/
-Rooms.global._startBattle = Rooms.global.startBattle;
+if (!Rooms.global._startBattle) Rooms.global._startBattle = Rooms.global.startBattle;
 Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	var newRoom = this._startBattle(p1, p2, format, rated, p1team, p2team);
 	if (!newRoom) return;
@@ -1071,7 +1071,7 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	return newRoom;
 };
 
-Rooms.BattleRoom.prototype._win = Rooms.BattleRoom.prototype.win;
+if (!Rooms.BattleRoom.prototype._win) Rooms.BattleRoom.prototype._win = Rooms.BattleRoom.prototype.win;
 Rooms.BattleRoom.prototype.win = function(winner) {
 	//liga
 	if (this.league) {
