@@ -1047,7 +1047,6 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 	if (!rated) {
 		var name1 = p1.name;
 		var name2 = p2.name;
-		var battleid = i;
 		for (var i in tour) {
 			var c = tour[i];
 			if (c.status == 2) {
@@ -1056,7 +1055,7 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 						if (!c.round[x][2] && c.round[x][2] != -1) {
 							if (format == c.tier.toLowerCase()) {
 								newRoom.tournament = true;
-								c.battles[x] = "battle-" + formaturlid + "-" + battleid;
+								c.battles[x] = newRoom.id;
 								c.round[x][2] = -1;
 								Rooms.rooms[i].addRaw("<a href=\"/" + c.battles[x] + "\" class=\"ilink\"><b>La batalla de torneo entre " + p1.name + " y " + p2.name + " ha comenzado.</b></a>");
 							}
