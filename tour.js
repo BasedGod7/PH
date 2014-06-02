@@ -1019,8 +1019,8 @@ Rooms.global.startBattle = function(p1, p2, format, rated, p1team, p2team) {
 		}
 		if (newRoom.league) {
 			var index = tour.lideres().indexOf(newRoom.challenged);
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw("<a href=\"/" + "battle-" + formaturlid + "-" + i + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw("<a href=\"/" + newRoom.id + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw("<a href=\"/" + newRoom.id + "\" class=\"ilink\"><b>" + tour.username(newRoom.challenger) + " ha desafiado a " + tour.username(newRoom.challenged) + ", " + (index === -1 ? "Miembro del Alto Mando" : tour.cargos()[index]) + ", a una batalla oficial de liga.</b></a>");
 			var challengerlist = Users.get(newRoom.challenged).challengers;
 			if (challengerlist) {
 				var index = challengerlist.indexOf(newRoom.challenger);
