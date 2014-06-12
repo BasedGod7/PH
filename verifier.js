@@ -45,8 +45,8 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 	var Config = require('./config/config.js');
 	var crypto = require('crypto');
 
-	var keyalgo = Config.loginserverkeyalgo;
-	var pkey = Config.loginserverpublickey;
+	var keyalgo = Config.loginServer.keyAlgorithm;
+	var pkey = Config.loginServer.publicKey;
 
 	fakeProcess.client.on('message', function (message) {
 		var verifier = crypto.createVerify(keyalgo);

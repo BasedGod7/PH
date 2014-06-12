@@ -1,5 +1,5 @@
-//There are a few things you'll need to add if you want to use this file. You need to change the makechatroom command so 
-//that it resets the hangman status upon making a chatroom; otherwise trying to run hangman in the new room will crash 
+//There are a few things you'll need to add if you want to use this file. You need to change the makechatroom command so
+//that it resets the hangman status upon making a chatroom; otherwise trying to run hangman in the new room will crash
 //the server. Specifically, you'll need to add "hangman.reset(id)" somewhere in the code. Have fun! - piiiikachuuu
 
 exports.hangman = function(h) {
@@ -32,12 +32,12 @@ exports.hangman = function(h) {
 	}
 	return hangman;
 };
-	
-var cmds = {	
+
+var cmds = {
 	hangmanhelp: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<font size = 2>Una pequeña introducción al </font><font size = 3>Hangman:</font><br />' +
-						'El clásico juego, la idea básica del hangman es adivinar la palabra en la que alguien esta pensando antes de que el hombre sea "ahorcado". Los jugadores tienen 8 oportunidades antes de que esto pase<br />' + 
+						'El clásico juego, la idea básica del hangman es adivinar la palabra en la que alguien esta pensando antes de que el hombre sea "ahorcado". Los jugadores tienen 8 oportunidades antes de que esto pase<br />' +
 						'Los juegos pueden ser iniciados por Voice o rangos superiores incluyendo Room Voice, Room Mod, y Room Owner.<br />' +
 						'Los comandos son:<br />' +
 						'<ul><li>/hangman [palabra], [descripción] - Inicia el juego de hangman con la palabra especificada sobre un tema en específico Requiere: + % @ & ~</li>' +
@@ -50,17 +50,17 @@ var cmds = {
 						'Debido a cambios recientes, hangman puede ser jugado en múltiples chatrooms (exceptuando el lobby por ser muy grande).<br />' +
 						'Diviertete y siéntete libre de mandar un MP si encuentras un bug en el juego - Sweetie');
 	},
-	
+
 	hangman: function(target, room, user) {
 		if (target == "update" && this.can('hotpatch')) {
 			CommandParser.uncacheTree('./hangman.js');
 			hangman = require('./hangman.js').hangman(hangman);
 			return this.sendReply('Los scripts de hangman fueron actualizados.');
-		} 
+		}
 		if (target == "update" && !this.can('hotpatch')) {
 			return this.sendReply('No puedes actualizar los scripts de hangman.');
 		}
-		if (!user.can('broadcast', null, room)) {
+		if (!user.can('broadcast', room)) {
 			return this.sendReply('No tienes la suficiente autoridad para hacer esto.');
 		}
 		if(room.id === 'lobby') {
@@ -224,7 +224,7 @@ var cmds = {
 		if(room.id === 'lobby') {
 				return this.sendReply('|html|Por favor juega en otra parte. Es muy grande para el lobby.');
 		}
-		if (!user.can('broadcast', null, room)) {
+		if (!user.can('broadcast', room)) {
 			return this.sendReply('No tienes suficiente autoridad para hacer esto.');
 		}
 		if(hangman[room.id].hangman === false) {

@@ -34,8 +34,9 @@ function createTournament(room, format, generator, isRated, args, output) {
 		output.sendReply("The server is restarting soon, so a tournament cannot be created.");
 		return;
 	}
-	if (Tools.getFormat(format).effectType !== 'Format') {
-		output.sendReply(format + " is not a valid format.");
+	format = Tools.getFormat(format);
+	if (format.effectType !== 'Format') {
+		output.sendReply(format.id + " is not a valid format.");
 		output.sendReply("Valid formats: " + Object.keys(Tools.data.Formats).filter(function (f) { return Tools.data.Formats[f].effectType === 'Format'; }).join(", "));
 		return;
 	}
@@ -188,6 +189,11 @@ var Tournament = (function () {
 	};
 
 	Tournament.prototype.addUser = function (user, isAllowAlts, output) {
+		if (!user.named) {
+			output.sendReply('|tournament|error|UserNotNamed');
+			return;
+		}
+
 		if (!isAllowAlts) {
 			var users = {};
 			this.generator.getUsers().forEach(function (user) { users[user.name] = 1; });
@@ -671,7 +677,7 @@ CommandParser.commands.tournament = function (paramString, room, user) {
 		if (params.length < 2)
 			return this.sendReply("Usage: " + cmd + " <format>, <type> [, <comma-separated arguments>]");
 
-		createTournament(room, params.shift(), params.shift(), Config.istournamentsrated, params, this);
+		createTournament(room, params.shift(), params.shift(), Config.isTournamentsRated, params, this);
 	} else {
 		var tournament = getTournament(room.title);
 		if (!tournament)

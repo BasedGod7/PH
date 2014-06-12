@@ -102,20 +102,20 @@ global.reloadCustomAvatars = function() {
 
 		var user = toId(path.basename(file, ext));
 		newCustomAvatars[user] = file;
-		delete Config.customavatars[user];
+		delete Config.customAvatars[user];
 	});
 
 	// Make sure the manually entered avatars exist
-	for (var a in Config.customavatars)
-		if (typeof Config.customavatars[a] === 'number')
-			newCustomAvatars[a] = Config.customavatars[a];
+	for (var a in Config.customAvatars)
+		if (typeof Config.customAvatars[a] === 'number')
+			newCustomAvatars[a] = Config.customAvatars[a];
 		else
-			fs.exists('./config/avatars/' + Config.customavatars[a], (function(user, file, isExists) {
+			fs.exists('./config/avatars/' + Config.customAvatars[a], (function (user, file, isExists) {
 				if (isExists)
-					Config.customavatars[user] = file;
-			}).bind(null, a, Config.customavatars[a]));
+					Config.customAvatars[user] = file;
+			}).bind(null, a, Config.customAvatars[a]));
 
-	Config.customavatars = newCustomAvatars;
+	Config.customAvatars = newCustomAvatars;
 }
 
 var watchFile = function () {
@@ -126,7 +126,7 @@ var watchFile = function () {
 	}
 };
 
-if (Config.watchconfig) {
+if (Config.watchConfig) {
 	watchFile('./config/config.js', function (curr, prev) {
 		if (curr.mtime <= prev.mtime) return;
 		try {
@@ -169,13 +169,17 @@ global.ResourceMonitor = {
 		name = (name ? ': ' + name : '');
 		if (ip in this.connections && duration < 30 * 60 * 1000) {
 			this.connections[ip]++;
-			if (duration < 5 * 60 * 1000 && this.connections[ip] % 20 === 0) {
+			if (this.connections[ip] < 500 && duration < 5 * 60 * 1000 && this.connections[ip] % 20 === 0) {
 				this.log('[ResourceMonitor] IP ' + ip + ' has connected ' + this.connections[ip] + ' times in the last ' + duration.duration() + name);
-			} else if (this.connections[ip] % 60 === 0) {
+			} else if (this.connections[ip] < 500 && this.connections[ip] % 60 === 0) {
 				this.log('[ResourceMonitor] IP ' + ip + ' has connected ' + this.connections[ip] + ' times in the last ' + duration.duration() + name);
-			}
-			if (this.connections[ip] > 500) {
-				this.log('[ResourceMonitor] IP ' + ip + ' banned for connection flooding');
+			} else if (this.connections[ip] === 500) {
+				this.log('[ResourceMonitor] IP ' + ip + ' has been banned for connection flooding (' + this.connections[ip] + ' times in the last ' + duration.duration() + name + ')');
+				return true;
+			} else if (this.connections[ip] > 500) {
+				if (this.connections[ip] % 200 === 0) {
+					this.log('[ResourceMonitor] Banned IP ' + ip + ' has connected ' + this.connections[ip] + ' times in the last ' + duration.duration() + name);
+				}
 				return true;
 			}
 		} else {
@@ -384,24 +388,22 @@ try {
 
 global.Cidr = require('./cidr.js');
 
-if (Config.crashguard) {
-	// graceful crash - allow current battles to finish before restarting
-	var lastCrash = 0;
-	process.on('uncaughtException', function (err) {
-		var dateNow = Date.now();
-		var quietCrash = require('./crashlogger.js')(err, 'The main process');
-		quietCrash = quietCrash || ((dateNow - lastCrash) <= 1000 * 60 * 5);
-		lastCrash = Date.now();
-		if (quietCrash) return;
-		var stack = ("" + err.stack).escapeHTML().split("\n").slice(0, 2).join("<br />");
-		if (Rooms.lobby) {
-			Rooms.lobby.addRaw('<div class="broadcast-red"><b>THE SERVER HAS CRASHED:</b> ' + stack + '<br />Please restart the server.</div>');
-			Rooms.lobby.addRaw('<div class="broadcast-red">You will not be able to talk in the lobby or start new battles until the server restarts.</div>');
-		}
-		Config.modchat = 'crash';
-		Rooms.global.lockdown = true;
-	});
-}
+// graceful crash - allow current battles to finish before restarting
+var lastCrash = 0;
+process.on('uncaughtException', function (err) {
+	var dateNow = Date.now();
+	var quietCrash = require('./crashlogger.js')(err, 'The main process');
+	quietCrash = quietCrash || ((dateNow - lastCrash) <= 1000 * 60 * 5);
+	lastCrash = Date.now();
+	if (quietCrash) return;
+	var stack = ("" + err.stack).escapeHTML().split("\n").slice(0, 2).join("<br />");
+	if (Rooms.lobby) {
+		Rooms.lobby.addRaw('<div class="broadcast-red"><b>THE SERVER HAS CRASHED:</b> ' + stack + '<br />Please restart the server.</div>');
+		Rooms.lobby.addRaw('<div class="broadcast-red">You will not be able to talk in the lobby or start new battles until the server restarts.</div>');
+	}
+	Config.modchat = 'crash';
+	Rooms.global.lockdown = true;
+});
 
 /*********************************************************
  * Start networking processes to be connected to
@@ -441,9 +443,9 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 	Users.checkRangeBanned = Cidr.checker(rangebans);
 });
 
-reloadCustomAvatars();
-
 global.Spamroom = require('./spamroom.js');
+
+reloadCustomAvatars();
 
 global.tour = new (require('./tour.js').tour)();
 global.hangman = new (require('./hangman.js').hangman)();

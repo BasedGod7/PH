@@ -93,22 +93,13 @@ exports.tour = function(t) {
 			return false;
 		},
 		highauth: function(user) {
-			//room auth is not enough
-			if (!Config.tourhighauth && user.can('ban')) return true;
-			if (Config.tourhighauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourhighauth)) return true;
-			return false;
+			return user.can('ban');
 		},
 		midauth: function(user, room) {
-			if (!Config.tourmidauth && user.can('broadcast')) return true;
-			if (Config.tourmidauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourmidauth)) return true;
-			if (room.auth && room.auth[user.userid]) return true;
-			return false;
+			return user.can('broadcast');
 		},
 		lowauth: function(user, room) {
-			if (!Config.tourlowauth && user.can('broadcast')) return true;
-			if (Config.tourlowauth && Config.groupsranking.indexOf(user.group) >= Config.groupsranking.indexOf(Config.tourlowauth)) return true;
-			if (room.auth && room.auth[user.userid]) return true;
-			return false;
+			return user.can('broadcast');
 		},
 		remsg: function(apparent, useronly) {
 			if (!isFinite(apparent)) return '';
@@ -148,7 +139,7 @@ exports.tour = function(t) {
 			for (var i=0; i<players.length; i++) {
 				if (players[i] == uid) return false;
 			}
-			if (!Config.tourallowalts){
+			if (!Config.tourAllowAlts){
 				for (var i=0; i<players.length; i++) {
 					if (players[i] == uid) return false;
 				}
@@ -737,7 +728,7 @@ var cmds = {
 		if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 		if (tour[room.id] == undefined) return this.sendReply('No hay un torneo activo en esta sala.');
 		if (tour[room.id].status < 2) return this.sendReply('No hay un torneo fuera de la fase de inscripcion.');
-		if (Config.tourdqguard) {
+		if (Config.tourDqGuard) {
 			var stop = false;
 			for (var x in tour[room.id].round) {
 				if (tour[room.id].round[x][2] === -1) {
@@ -775,7 +766,7 @@ var cmds = {
 		if (!tour.midauth(user,room)) return this.sendReply('No tienes suficiente poder para utilizar este comando.');
 		if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 		if (tour[room.id] == undefined || tour[room.id].status != 2) return this.sendReply('No hay un torneo aca o esta en su fase de inscripcion. Reemplazar participantes solo es posible en la mitad del torneo.');
-		if (tour[room.id].roundNum > 1 && !Config.tourunlimitreplace) return this.sendReply('Debido a la configuracion actual, reemplazar participantes solo esta permitido en la primera ronda de un torneo.');
+		if (tour[room.id].roundNum > 1 && !Config.tourUnlimitReplace) return this.sendReply('Debido a la configuracion actual, reemplazar participantes solo esta permitido en la primera ronda de un torneo.');
 		if (!target) return this.sendReply('El comando correcto es: /replace reemplazado, sustituto.');
 		var t = tour.splint(target);
 		if (!t[1]) return this.sendReply('El comando correcto es: /replace reemplazado, sustituto.');
@@ -891,27 +882,21 @@ var cmds = {
 
 	toursettings: function(target, room, user) {
 		if (!tour.maxauth(user)) return this.sendReply('No tienes suficiente poder para utilizar este comando.');
-		if (target === 'replace on') return Config.tourunlimitreplace = true;
-		if (target === 'replace off') return Config.tourunlimitreplace = false;
-		if (target === 'alts on') return Config.tourallowalts = true;
-		if (target === 'alts off') return Config.tourallowalts = false;
-		if (target === 'dq on') return Config.tourdqguard = false;
-		if (target === 'dq off') return Config.tourdqguard = true;
-		if ((target.substr(0,6) === 'margin') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) >= 0) return Config.tourtimemargin = parseInt(target.substr(7));
-		if ((target.substr(0,6) === 'period') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) > 0) return Config.tourtimeperiod = parseInt(target.substr(7));
-		if (target.substr(0,7) === 'lowauth' && Config.groupsranking.indexOf(target.substr(8,1)) != -1) return Config.tourlowauth = target.substr(8,1);
-		if (target.substr(0,7) === 'midauth' && Config.groupsranking.indexOf(target.substr(8,1)) != -1) return Config.tourmidauth = target.substr(8,1);
-		if (target.substr(0,8) === 'highauth' && Config.groupsranking.indexOf(target.substr(9,1)) != -1) return Config.tourhighauth = target.substr(9,1);
+		if (target === 'replace on') return Config.tourUnlimitReplace = true;
+		if (target === 'replace off') return Config.tourUnlimitReplace = false;
+		if (target === 'alts on') return Config.tourAllowAlts = true;
+		if (target === 'alts off') return Config.tourAllowAlts = false;
+		if (target === 'dq on') return Config.tourDqGuard = false;
+		if (target === 'dq off') return Config.tourDqGuard = true;
+		if ((target.substr(0,6) === 'margin') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) >= 0) return Config.tourTimeMargin = parseInt(target.substr(7));
+		if ((target.substr(0,6) === 'period') && !isNaN(parseInt(target.substr(7))) && parseInt(target.substr(7)) > 0) return Config.tourTimePeriod = parseInt(target.substr(7));
 		if (target === 'view' || target === 'show' || target === 'display') {
 			var msg = '';
-			msg = msg + 'Es posible reemplazar participantes luego de la primera ronda? ' + new Boolean(Config.tourunlimitreplace) + '.<br>';
-			msg = msg + 'Puede un jugador participar en un torneo con varias cuentas? ' + new Boolean(Config.tourallowalts) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel bajo? ' + (!Config.tourlowauth ? '+' : (Config.tourlowauth === ' ' ? 'Ninguno' : Config.tourlowauth)) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel medio? ' + (!Config.tourmidauth ? '+' : (Config.tourmidauth === ' ' ? 'Ninguno, lo cual es poco recomendado' : Config.tourmidauth)) + '.<br>';
-			msg = msg + 'Cual es el rango requerido para utilizar comandos de torneo de nivel alto? ' + (!Config.tourhighauth ? '@' : (Config.tourhighauth === ' ' ? 'Ninguno, lo cual es muy poco recomendado' : Config.tourhighauth)) + '.<br>';
-			msg = msg + 'Es posible descalificar participantes si hay batallas en curso? ' + (!Config.tourdqguard) + '.<br>';
-			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia indidualmente hasta que ' + (!isNaN(Config.tourtimemargin) ? Config.tourtimemargin : 3) + ' se hayan unido.<br>';
-			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia en grupos de ' + (Config.tourtimeperiod ? Config.tourtimeperiod : 4) + ' participantes.';
+			msg = msg + 'Es posible reemplazar participantes luego de la primera ronda? ' + new Boolean(Config.tourUnlimitReplace) + '.<br>';
+			msg = msg + 'Puede un jugador participar en un torneo con varias cuentas? ' + new Boolean(Config.tourAllowAlts) + '.<br>';
+			msg = msg + 'Es posible descalificar participantes si hay batallas en curso? ' + (!Config.tourDqGuard) + '.<br>';
+			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia indidualmente hasta que ' + (!isNaN(Config.tourTimeMargin) ? Config.tourTimeMargin : 3) + ' se hayan unido.<br>';
+			msg = msg + 'En torneos con fase de registro cronometrada, el registro de jugadores se anuncia en grupos de ' + (Config.tourTimePeriod ? Config.tourTimePeriod : 4) + ' participantes.';
 			return this.sendReplyBox(msg);
 		}
 		return this.sendReply('Son argumentos validos para este comando: view, replace on/off, alts on/off, invalidate on/off, dq on/off, lowauth/midauth/highauth SIMBOLO, margin NUMERO, period NUMERO');

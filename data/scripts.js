@@ -134,12 +134,12 @@ exports.BattleScripts = {
 					targets.push(foeActive[i]);
 				}
 			}
+			if (move.selfdestruct && this.gen >= 5) {
+				this.faint(pokemon, pokemon, move);
+			}
 			if (!targets.length) {
 				this.attrLastMove('[notarget]');
 				this.add('-notarget');
-				if (move.selfdestruct && this.gen >= 5) {
-					this.faint(pokemon, pokemon, move);
-				}
 				return true;
 			}
 			if (targets.length > 1) move.spreadHit = true;
@@ -249,8 +249,11 @@ exports.BattleScripts = {
 			if (hits.length) {
 				// yes, it's hardcoded... meh
 				if (hits[0] === 2 && hits[1] === 5) {
-					var roll = this.random(6);
-					hits = [2, 2, 3, 3, 4, 5][roll];
+					if (this.gen >= 5) {
+						hits = [2, 2, 3, 3, 4, 5][this.random(6)];
+					} else {
+						hits = [2, 2, 2, 3, 3, 3, 4, 5][this.random(8)];
+					}
 				} else {
 					hits = this.random(hits[0], hits[1] + 1);
 				}
@@ -520,11 +523,11 @@ exports.BattleScripts = {
 		// okay, mega evolution is possible
 		pokemon.formeChange(template);
 		pokemon.baseTemplate = template; // mega evolution is permanent :o
-		pokemon.setAbility(template.abilities['0']);
-		pokemon.baseAbility = pokemon.ability;
 		pokemon.details = template.species + (pokemon.level === 100 ? '' : ', L' + pokemon.level) + (pokemon.gender === '' ? '' : ', ' + pokemon.gender) + (pokemon.set.shiny ? ', shiny' : '');
 		this.add('detailschange', pokemon, pokemon.details);
 		this.add('message', template.baseSpecies + " has Mega Evolved into Mega " + template.baseSpecies + "!");
+		pokemon.setAbility(template.abilities['0']);
+		pokemon.baseAbility = pokemon.ability;
 
 		side.megaEvo = 1;
 		for (var i = 0; i < side.pokemon.length; i++) side.pokemon[i].canMegaEvo = false;
@@ -1016,7 +1019,7 @@ exports.BattleScripts = {
 					if (setupType && hasMove['gigadrain']) rejected = true;
 					break;
 				case 'weatherball':
-					if (!hasMove['sunnyday']) rejected = true;
+					if (!hasMove['sunnyday'] && !hasMove['raindance']) rejected = true;
 					break;
 				case 'firepunch':
 					if (hasMove['flareblitz']) rejected = true;

@@ -16,7 +16,7 @@ var simulators = {};
 var SimulatorProcess = (function () {
 	function SimulatorProcess() {
 		global.battleEngineFakeProcess = new (require('./fake-process').FakeProcess)();
-		this.process = battleEngineFakeProcess.server; //require('child_process').fork('battle-engine.js');
+		this.process = battleEngineFakeProcess.server;
 		this.process.on('message', function (message) {
 			var lines = message.split('\n');
 			var sim = simulators[lines[0]];
@@ -31,7 +31,7 @@ var SimulatorProcess = (function () {
 	SimulatorProcess.prototype.active = true;
 	SimulatorProcess.processes = [];
 	SimulatorProcess.spawn = function (num) {
-		/*if (!num) num = Config.simulatorprocesses || 1;
+		/*if (!num) num = Config.simulatorProcesses || 1;
 		for (var i = this.processes.length; i < num; ++i) {
 			this.processes.push(new SimulatorProcess());
 		}*/

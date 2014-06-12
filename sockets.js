@@ -24,7 +24,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 	var workers = exports.workers = {};
 
 	var spawnWorker = exports.spawnWorker = function () {
-		var worker = fakeProcess.server; //cluster.fork({PSPORT: Config.port});
+		var worker = fakeProcess.server;
 		var id = worker.id;
 		workers[id] = worker;
 		worker.on('message', function (data) {
@@ -126,12 +126,10 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 	var Cidr = require('./cidr');
 
-	/*if (Config.crashguard) {
-		// graceful crash
-		process.on('uncaughtException', function (err) {
-			require('./crashlogger.js')(err, 'Socket process ' + cluster.worker.id + ' (' + process.pid + ')');
-		});
-	}*/
+	// graceful crash
+	/*process.on('uncaughtException', function (err) {
+		require('./crashlogger.js')(err, 'Socket process ' + cluster.worker.id + ' (' + process.pid + ')');
+	});*/
 
 	var app = require('http').createServer();
 	var appssl;
@@ -147,10 +145,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			var staticRequestHandler = function (request, response) {
 				request.resume();
 				request.addListener('end', function () {
-					if (Config.customhttpresponse &&
-							Config.customhttpresponse(request, response)) {
-						return;
-					}
+					if (Config.customHttpResponse && Config.customHttpResponse(request, response)) return;
 					var server;
 					if (request.url === '/custom.css') {
 						server = cssserver;
@@ -192,7 +187,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 			if (severity === 'error') console.log('ERROR: ' + message);
 		},
 		prefix: '/showdown',
-		websocket: !Config.disablewebsocket
+		websocket: !Config.disableWebsocket
 	});
 
 	var sockets = {};
@@ -221,7 +216,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 		}
 	};
 	var interval;
-	if (!Config.herokuhack) {
+	if (!Config.herokuHack) {
 		interval = setInterval(sweepClosedSockets, 1000 * 60 * 10);
 	}
 
@@ -293,7 +288,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 	});
 
 	// this is global so it can be hotpatched if necessary
-	var isTrustedProxyIp = Cidr.checker(Config.proxyip);
+	var isTrustedProxyIp = Cidr.checker(Config.proxyIps);
 	var socketCounter = 0;
 	server.on('connection', function (socket) {
 		if (!socket) {
@@ -327,7 +322,7 @@ var fakeProcess = new (require('./fake-process').FakeProcess)();
 
 		// console.log('CONNECT: ' + socket.remoteAddress + ' [' + socket.id + ']');
 		var interval;
-		if (Config.herokuhack) {
+		if (Config.herokuHack) {
 			// see https://github.com/sockjs/sockjs-node/issues/57#issuecomment-5242187
 			interval = setInterval(function () {
 				try {
