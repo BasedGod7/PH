@@ -209,6 +209,11 @@ exports.setWarResult = function (clanA, clanB, result) {
 	clans[clanAId].rating = elo.updateRating(clanAExpectedResult, result, clans[clanAId].rating);
 	clans[clanBId].rating = elo.updateRating(clanBExpectedResult, 1 - result, clans[clanBId].rating);
 
+	if (clans[clanAId].rating < 1000)
+		clans[clanAId].rating = 1000;
+	if (clans[clanBId].rating < 1000)
+		clans[clanBId].rating = 1000;
+
 	if (result === 1) {
 		++clans[clanAId].wins;
 		++clans[clanBId].losses;
