@@ -96,10 +96,10 @@ exports.tour = function(t) {
 			return user.can('ban');
 		},
 		midauth: function(user, room) {
-			return user.can('broadcast');
+			return user.can('broadcast', room);
 		},
 		lowauth: function(user, room) {
-			return user.can('broadcast');
+			return user.can('broadcast', room);
 		},
 		remsg: function(apparent, useronly) {
 			if (!isFinite(apparent)) return '';
