@@ -45,7 +45,7 @@ body {
 
 /* Menu */
 .menugroup {
-    background: 1px dotted #000;
+    border: 1px dotted #000;
 }
 
 .menugroup button.big {
@@ -83,7 +83,7 @@ body {
 .userlist {
     border-right: 1px solid #000;
     border-left: 1px solid #000;
-    background: rgba(260, 260, 260, 0.8);
+    background: rgba(230, 230, 230, 0.8);
 }
 
 .userlist li {
@@ -105,7 +105,7 @@ body {
 /* Chat-log */
 .chat-log-add {
     border-top: 1px solid #000;
-    background: rgba(260, 260, 260, 0.8);
+    background: rgba(230, 230, 230, 0.8);
 }
 
 /* Welcome Style */
