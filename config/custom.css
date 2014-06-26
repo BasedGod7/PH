@@ -1,104 +1,140 @@
+/*main background layout */
+body {
+    background: url(http://i.imgur.com/vGKr4CV.png) !important;
+}
+
+/*main image */
 .mainmenuwrapper {
-	color: rgb(11, 31, 63);
-	font-size: 11pt;
-	font-family: Verdana,Helvetica,Arial,sans-serif;
-	background: black url("http://i.imgur.com/AiugDMW.png") no-repeat scroll right top rgb(250, 180, 28);
+    background: url(http://i.imgur.com/5wE1shI.png) no-repeat right !important;
 }
-.chat-log {
-	font-size: 10pt;
-	background: rgb(229, 225, 247) url("http://i.imgur.com/El4xsJp.png") no-repeat scroll right top;
-	color: rgb(0, 0, 0);
-	overflow: auto;
+
+/* Tabbar rooms */
+.tabbar a.button.cur, .tabbar a.button.cur:hover {
+    color: #fff;
+    background: #4C4B6F;
+    border: dashed 1px #000;
 }
-.userlist
-.userlist li
-{
-	display: block;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	text-align: left;
+
+.tabbar a.button {
+    background: #E6D1E9;
+    border: dotted 1px #6B6B6B;
 }
-.userlist
-{
-	border-left: 1px solid #D5DDE4;
-	min-height: 100%;
-	background: #B7B7E7;
+
+.tabbar a.button:hover {
+    background: #f6e4e4;
 }
-.userlist li
-{
-	border-bottom: 1px solid #a066aa;
-	height: 19px;
-	font: 10pt Verdana, sans-serif;
-	white-space: nowrap;
+
+.maintabbarbottom {
+    background: #4C4B6F;
+    border: dashed 1px #000;
 }
-.userlist li em.group
-{
-	font-style: normal;
-	font-size: 8pt;
-	color: #a066aa;
-	display: block;
-	float: left;
-	text-align: center;
-	padding: 1px 0 0 1px;
-	width: 14px;
+
+/* Close and minimize button */
+.closebutton, .minimizebutton {
+    color:#9B869C;
 }
-.userlist li button
-{
-	box-sizing: border-box;
-	display: block;
-	height: auto;
-	background: transparent;
-	border: 0;
-	padding: 0;
-	margin: 0;
-	height: 19px;
-	width: 100%;
-	white-space: nowrap;
-	font: 10pt Verdana, sans-serif;
-	text-align: left;
-	cursor: pointer;
+
+.closebutton:hover, .minimizebutton:hover {
+    color: #9265bb;
 }
-.userlist li button:hover
-{
-	background: #62A9FA;
+
+/* Icon user */
+.icon-user {
+    color: #5F587A !important;
 }
-.userlist li button:active
-{
-	background: #62A9FA;
+
+/* Menu */
+.menugroup {
+    background: 1px dotted #000;
 }
-.userlist li.cur
-{
-	background: ##62A9FA;
+
+.menugroup button.big {
+    font-size: 10pt;
 }
-.userlist li.cur button,
-.userlist li.cur button:hover
-{
-	background: #62A9FA;
-	margin: 0 0 0 -1px;
-}
-#header {
-	background: url(http://i.imgur.com/MW5Ctmw.png);
-}
-.userbar {
-	border: 1px solid #b6b6b6;
-	padding: 5px;
-	background: #EBEBEB;
-	margin-top: -5px;
-}
-.ps-room {
-	background: rgb(212, 207, 255);
-}
+
 .menugroup .button {
-	background: #33278B;
+    background: #49404E;
+    border: solid 1px #000;
+    color: #fff;
+    border-color: hsl(0,0%,0%);
+    font-size: 8pt;
 }
+
 .menugroup .button:hover {
-	background: #250FC7;
+    background: #75657c;
 }
-.welcome-message {
-	background: url('http://hispano.xiaotai.org/welcome.png') center no-repeat;
-	background-color: #66669c;
+
+/* Footer links */
+.mainmenufooter {
+    color: #fff;
 }
+
+.mainmenufooter a {
+    text-decoration: none;
+    color: #B29CB4;
+}
+
+.mainmenufooter a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Userlist */
+.userlist {
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    background: rgba(260, 260, 260, 0.8);
+}
+
+.userlist li {
+    border-bottom: 1px dotted #A3A3A3;
+}
+
+.userlist li button:hover {
+    background: #fafafa;
+}
+
+.ps-room {
+    border: 0;
+}
+
+.userlist li em.group {
+    color: #000;
+}
+
+/* Chat-log */
+.chat-log-add {
+    border-top: 1px solid #000;
+    background: rgba(260, 260, 260, 0.8);
+}
+
+/* Welcome Style */
+.welcome {
+    background: url(http://i.imgur.com/3lBSg3c.png) center repeat-y;
+    color: #fff;
+    margin-top: -17px;
+}
+
+.welcome hr {
+    border: 1px dashed #fff;
+}
+
+.welcome button {
+    background: #575781;
+    color: #fff;
+    border: 1px solid #fff;
+    font-size: 10pt;
+    padding: 5px;
+}
+
+.welcome button:hover {
+    background: #212542;
+}
+
+#welcome-content {
+    width: 440px;
+}
+
 .league-info {
-	background: #b4ff94 url('http://hispano.xiaotai.org/league.png') top right no-repeat;
+    background: #b4ff94 url(http://hispano.xiaotai.org/league.png) top right no-repeat;
 }
