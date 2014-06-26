@@ -165,10 +165,10 @@ exports.tour = function(t) {
 			return true;
 		},
 		lideres: function() {
-			return ['nsaigonthrasher','2020victini2','spiritvirgo','lodshelian','ccrangerarthur','nickii','amroy','cssdedenneitor','sidaaaaa','ccmrpoke','smorales','chkaast'];
+			return ['fccamulos','Disponible','abtryuga','cusho','fcstriker','gardevoirw','pslightning','zezstarzez','sidaaaaa','quieropastelaa','smorales','adrielando','Disponible','Disponible'];
 		},
 		cargos: function() {
-			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
+			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Lider del Gimnasio Fuego','Lider del Gimnasio Dragón','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
 		},
 		altomando: function() {
 			return ['lodtyrana','shinygiratinao','basedhispano','jcaldern','lodmarcos'];
