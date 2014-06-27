@@ -360,6 +360,7 @@ var commands = exports.commands = {
 							"<a href=\"http://www.pokemon-hispano.comxa.com\"><button>Foro</button></a>" +
 							"<button name=\"send\" value=\"/reglas\">Reglas</button>" +
 							"<button name=\"send\" value=\"/lideres\">Lideres</button>" +
+							"<button name=\"send\" value=\"/stafflist\">Staff</button>" +
 							"<a href=\"https://www.facebook.com/groups/PokemonHispanoShowdown/\"><button>Facebook</button></a>" +
 							"<a href=\"http://www.twitch.tv/pokemonhispano/\"><button>Livestream</button></a>" +
 						"</div>" +
