@@ -258,35 +258,64 @@ var commands = exports.commands = {
 	liga: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		var path = 'http://pokemon-hispano.comxa.com/showthread.php?tid=';
-		var buffer = '';
-		buffer += '<b>CAMPEÓN DE LA LIGA POKÉMON HISPANO</b><br />';
-		buffer += 'N/A<hr />';
-		buffer += '<div class="alto-mando"><a href=' + path + 252 + '><button>ALTO MANDO</button></a><br /><br />';
-		buffer += '- (LoD)Tyrana: Dragon<br />';
-		buffer += '- Shiny Giratina-O: Agua<br />';
-		buffer += '- Based Hispano: Sunny<br />';
-		buffer += '- J Calderón: Psiquico<br />';
-		buffer += '- (LoD)Marcos: Acero<br /></div><hr />';
-		buffer += '<div class="lideres"><b>LÍDERES DE GIMNASIOS</b><br /><br />';
-		buffer += '<center><a href=' + path + 000 + '><button>FC CAMULOS: Normal</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>Disponible: Hielo</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>ADRIELANDRO: Agua</button></a></center> ';
-		buffer += '<center><a href=' + path + 514 + '><button>(ABT) Ryuga: Lucha</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>cusho: Bicho</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>FC Striker: Roca</button></a></center> ';
-		buffer += '<center><a href=' + path + 575 + '><button>Gardevoir>w: Hada</button></a>   ';
-		buffer += '<a href=' + path + 570 + '><button>P✘S Lightning: Volador</button></a>   ';
-		buffer += '<a href=' + path + 569 + '><button>ZeZStarZeZ: Fantasma</button></a></center> ';
-		buffer += '<center><a href=' + path + 539 + '><button>Sidaaaaa: Tierra</button></a>   ';
-		buffer += '<a href=' + path + 574 + '><button>Quiero Pastel A_A: Siniestro</button></a>   ';
-		buffer += '<a href=' + path + 532 + '><button>Smorales: Veneno</button></a></center>';
-		buffer += '<center><a href=' + path + 000 + '><button>Disponible: Fuego</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>Samey: Eléctrico</button></a>   ';
-		buffer += '<a href=' + path + 000 + '><button>FuruyaJCaos: Dragón</button></a></center></div><hr />';
-		buffer += '&gt;&nbsp;<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=250/">Cómo desafiar la liga.</a><br />';
-		buffer += '&gt;&nbsp;<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35/">Información detallada sobre la Liga Pokémon Hispano.</a><br /><br />';
-		buffer += '<b><font size="2">No se acepta nuevos líderes de gimnasio.</font></b>';
-		return this.sendReply('|raw|<center><img src="http://i.imgur.com/SU0aFTt.png" /></center><div class="league"><center><div id="league-content">' + buffer + '</div></center></div><center><img src="http://i.imgur.com/zqidpf4.png" /></center>');
+		return this.sendReply('|raw|' +
+			"<center>" +
+				"<img src=\"http://i.imgur.com/SU0aFTt.png\" />" +
+				"<div class=\"league\">" +
+					"<h4>CAMPEÓN DE LA LIGA POKÉMON HISPANO</h4>" +
+					"<p>N/A</p>" +
+					"<hr />" +
+					"<div class=\"alto-mando\">" +
+						"<a href=" + path + 252 + "><button>ALTO MANDO</button></a>" +
+						"<ul>" +
+							"<li>(LoD)Tyrana: Dragon</li>" +
+							"<li>Shiny Giratina-O: Agua</li>" +
+							"<li>Based Hispano: Sunny</li>" +
+							"<li>J Calderón: Psiquico</li>" +
+							"<li>(LoD)Marcos: Acero</li>" +
+						"</ul>" +
+					"</div>" +
+					"<hr />" +
+					"<div class=\"lideres\">" +
+						"<h4>LÍDERES DE GIMNASIOS</h4>" +
+							"<table>" +
+								"<tr>" +
+									"<td><a href=" + path + 000 + ">FC CAMULOS: Normal</a></td>" +
+									"<td><a href=" + path + 000 + ">Disponible: Hielo</a></td>" +
+									"<td><a href=" + path + 000 + ">ADRIELANDRO: Agua</a></td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td><a href=" + path + 514 + ">(ABT) Ryuga: Lucha</a></td>" +
+									"<td><a href=" + path + 000 + ">cusho: Bicho</a></td>" +
+									"<td><a href=" + path + 000 + ">FC Striker: Roca</a></td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td><a href=" + path + 575 + ">Gardevoir>w: Hada</a></td>" +
+									"<td><a href=" + path + 570 + ">P✘S Lightning: Volador</a></td>" +
+									"<td><a href=" + path + 569 + ">ZeZStarZeZ: Fantasma</a></td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td><a href=" + path + 539 + ">Sidaaaaa: Tierra</a></td>" +
+									"<td><a href=" + path + 574 + ">Quiero Pastel A_A: Siniestro</a></td>" +
+									"<td><a href=" + path + 532 + ">Smorales: Veneno</a></td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td><a href=" + path + 000 + ">Disponible: Fuego</a></td>" +
+									"<td><a href=" + path + 000 + ">Samey: Eléctrico</a></td>" +
+									"<td><a href=" + path + 000 + ">FuruyaJCaos: Dragón</a></td>" +
+								"</tr>" +
+							"</table>" +
+					"</div>" +
+					"<hr />" +
+					"<ul>" +
+						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=250/\">Cómo desafiar la liga.</a></li>" +
+						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=35/\">Información detallada sobre la Liga Pokémon Hispano.</a></li>" +
+					"</ul>" +
+					"<h3>No se acepta nuevos líderes de gimnasio.</h3>" +
+				"</div>" +
+				"<img src=\"http://i.imgur.com/zqidpf4.png\" />" +
+			"</center>"
+		);
 	},
 
 	opengym: 'abrirliga',

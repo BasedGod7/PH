@@ -234,38 +234,40 @@ body {
     background: url("http://i.imgur.com/j3gPbd8.png") center repeat-y;
     color: #fff;
     margin-top: -3px;
+    padding: 1px 15px;
+    width: 440px;
 }
 
 .league hr {
     border: 2px solid #fff;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
     width: 97%;
-    margin-left: 0;
 }
 
-.league button {
+.league button, .lideres td {
     border: 0;
-    border-left: 1px solid #fff;
     color: #fff;
     background: rgb(134, 119, 96);
     padding: 5px;
     font-weight: bold;
 }
 
-.league button:hover {
+.league button:hover, .lideres td:hover {
     background: rgb(175, 156, 105);
 }
 
 .league a {
     text-decoration: none;
     color: #fff;
-    font-style: italic;
     font-size: 10pt;
 }
 
 .league a:hover {
     text-decoration: underline;
+}
+
+.league ul {
+	text-align: left;
 }
 
 .alto-mando {
@@ -274,17 +276,13 @@ body {
 
 .alto-mando button {
     width: 97%;
-    border-left: 0 !important;
 }
 
-.lideres button {
+.lideres td {
     width: 30%;
     font-size: 9pt;
     margin-right: 3px;
     margin-top: 3px;
-}
-
-#league-content {
-    width: 440px;
-    padding-left: 5%;
+    border-left: 1px solid #fff;
+    text-align: center;
 }
