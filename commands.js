@@ -850,14 +850,25 @@ var commands = exports.commands = {
 		}
 	},
 
-	declare: function (target, room, user) {
+	declaregreen: 'declare',
+	declarered: 'declare',
+	declare: function (target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help declare');
 		if (!this.can('declare', room)) return false;
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="broadcast-blue"><b>' + Tools.escapeHTML(target) + '</b></div>');
-		this.logModCommand(user.name + " declared " + target);
+		if (cmd === 'declare') {
+			this.add('|raw|<div class="broadcast-blue"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		}
+		else if (cmd === 'declarered') {
+			this.add('|raw|<div class="broadcast-red"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		}
+		else if (cmd === 'declaregreen') {
+			this.add('|raw|<div class="broadcast-green"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		}
+
+		this.logModCommand(user.name + " declarou " + target);
 	},
 
 	htmldeclare: function (target, room, user) {
