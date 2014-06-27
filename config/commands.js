@@ -286,7 +286,7 @@ var commands = exports.commands = {
 		buffer += '&gt;&nbsp;<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=250/">Cómo desafiar la liga.</a><br />';
 		buffer += '&gt;&nbsp;<a href="http://pokemon-hispano.comxa.com/showthread.php?tid=35/">Información detallada sobre la Liga Pokémon Hispano.</a><br /><br />';
 		buffer += '<b><font size="2">No se acepta nuevos líderes de gimnasio.</font></b>';
-		return this.sendReply('|raw|<center><img src="http://i.imgur.com/SU0aFTt.png" /></center><div class="league"><div id="league-content">' + buffer + '</div></div><center><img src="http://i.imgur.com/zqidpf4.png" /></center>');
+		return this.sendReply('|raw|<center><img src="http://i.imgur.com/SU0aFTt.png" /></center><div class="league"><center><div id="league-content">' + buffer + '</div></center></div><center><img src="http://i.imgur.com/zqidpf4.png" /></center>');
 	},
 
 	opengym: 'abrirliga',
