@@ -24,10 +24,6 @@ body {
     border: solid 1px #000;
 }
 
-.tabbar a.button:hover {
-    background: rgb(246, 228, 228);
-}
-
 .maintabbarbottom {
     background: #4C4B6F;
     border: solid 1px #000000;
@@ -179,7 +175,7 @@ body {
 }
 
 .ps-popup a:hover {
-    background: rgb(224, 0, 0);
+    color: rgb(224, 0, 0);
     text-decoration: none;
 }
 
