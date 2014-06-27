@@ -1,3 +1,8 @@
+/* Header */
+#header {
+    background: url(http://i.imgur.com/XkjakIM.png);
+}
+
 /*main background layout */
 body {
     background: url(http://i.imgur.com/vGKr4CV.png) !important;
@@ -16,26 +21,25 @@ body {
 }
 
 .tabbar a.button {
-    background: #E6D1E9;
-    border: dotted 1px #6B6B6B;
+    border: solid 1px #000;
 }
 
 .tabbar a.button:hover {
-    background: #f6e4e4;
+    background: rgb(246, 228, 228);
 }
 
 .maintabbarbottom {
     background: #4C4B6F;
-    border: dashed 1px #000;
+    border: solid 1px #000000;
 }
 
 /* Close and minimize button */
 .closebutton, .minimizebutton {
-    color:#9B869C;
+    color: #9187BB;
 }
 
 .closebutton:hover, .minimizebutton:hover {
-    color: #9265bb;
+    color: rgb(216, 205, 205);
 }
 
 /* Icon user */
@@ -56,12 +60,12 @@ body {
     background: #49404E;
     border: solid 1px #000;
     color: #fff;
-    border-color: hsl(0,0%,0%);
+    border-color: hsl(0, 0%, 0%);
     font-size: 8pt;
 }
 
 .menugroup .button:hover {
-    background: #75657c;
+    background: rgb(117, 101, 124);
 }
 
 /* Footer links */
@@ -82,7 +86,6 @@ body {
 /* Userlist */
 .userlist {
     border-right: 1px solid #000;
-    border-left: 1px solid #000;
     background: rgba(230, 230, 230, 0.8);
 }
 
@@ -108,11 +111,108 @@ body {
     background: rgba(230, 230, 230, 0.8);
 }
 
-/* Welcome Style */
+/* Announce */
+.message-announce {
+    background: #4F3F5A;
+    font-style: italic;
+}
+
+/* Declare Color */
+.broadcast-blue {
+    background: #8FA6B3;
+    color: #000;
+    border: 2px solid #000;
+    padding: 5px;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 10pt;
+}
+
+.broadcast-red {
+    background: #ec5c4d;
+    color: #000;
+    border: 2px solid #000;
+    padding: 5px;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 10pt;
+}
+
+.broadcast-green {
+    background: #559955;
+    color: #000;
+    border: 2px solid #000;
+    padding: 5px;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 10pt;
+}
+
+/* PM Messages */
+.pm-window h3 {
+    background: rgba(68, 49, 70, 0.9);
+    color: #fff;
+    border: 1px solid #000000;
+}
+
+.pm-window h3:hover {
+    color: #FFE5FE;    
+}
+
+.pm-log-add {
+    border: 1px solid #000000;
+    background: rgba(68, 49, 70, 0.9);
+}
+
+.pm-window.focused h3, .pm-window.focused h3:hover {
+    color: #463949;
+    background: #baa7bf;
+    border: 1px solid #000;
+}
+
+/* Popup */
+.ps-popup {
+    border: 2px solid #000000;
+    background: #F5F5F5;
+}
+
+.ps-popup a {    
+    color: rgb(107, 32, 32);
+    text-decoration: none;
+}
+
+.ps-popup a:hover {
+    background: rgb(224, 0, 0);
+    text-decoration: none;
+}
+
+/* Battle Background */
+.backdrop {
+    background: url(http://i.imgur.com/g8C3QlK.png) !important;
+}
+
+/* Infobox */
+.infobox {
+    border: 1px dotted #6688AA;    
+    padding: 5px;
+}
+
+/* Roomlist */
+.roomlist a.ilink {
+    border: 0;
+    padding: 5px;
+    color: #fff;
+    background: rgb(88, 88, 88);
+}    
+
+.roomlist a.ilink:hover {
+    background: rgb(138, 138, 138);
+    border: 0;
+    color: #fff;    
+}
+
+/* Welcome Message */
 .welcome {
     background: url(http://i.imgur.com/3lBSg3c.png) center repeat-y;
     color: #fff;
-    margin-top: -17px;
+    margin-top: -3px;
 }
 
 .welcome hr {
@@ -120,7 +220,7 @@ body {
 }
 
 .welcome button {
-    background: #575781;
+    background: rgb(87, 87, 129);
     color: #fff;
     border: 1px solid #fff;
     font-size: 10pt;
@@ -128,13 +228,69 @@ body {
 }
 
 .welcome button:hover {
-    background: #212542;
+    background: rgb(33, 37, 66);
 }
 
 #welcome-content {
     width: 440px;
 }
 
-.league-info {
-    background: #b4ff94 url(http://hispano.xiaotai.org/league.png) top right no-repeat;
+/* Liga */
+.league {
+    background: url("http://i.imgur.com/j3gPbd8.png") center repeat-y;
+    color: #fff;
+    margin-top: -3px;
+}
+
+.league hr {
+    border: 2px solid #fff;    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 97%;
+    margin-left: 0;
+}
+
+.league button {
+    border: 0;
+    border-left: 1px solid #fff;
+    color: #fff;
+    background: rgb(134, 119, 96);
+    padding: 5px;
+    font-weight: bold;
+}
+
+.league button:hover {
+    background: rgb(175, 156, 105);
+}
+
+.league a {
+    text-decoration: none;
+    color: #fff;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.league a:hover {
+    text-decoration: underline;
+}
+
+.alto-mando {
+    font-size: 10pt;    
+}
+
+.alto-mando button {
+    width: 97%;    
+    border-left: 0 !important;
+}
+
+.lideres button {
+    width: 30%;
+    font-size: 9pt;
+    margin-right: 3px;    
+    margin-top: 3px;
+}
+
+#league-content {
+    width: 440px;
+    padding-left: 5%;
 }
