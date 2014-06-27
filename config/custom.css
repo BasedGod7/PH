@@ -149,7 +149,7 @@ body {
 }
 
 .pm-window h3:hover {
-    color: #FFE5FE;    
+    color: #FFE5FE;
 }
 
 .pm-log-add {
@@ -169,7 +169,7 @@ body {
     background: #F5F5F5;
 }
 
-.ps-popup a {    
+.ps-popup a {
     color: rgb(107, 32, 32);
     text-decoration: none;
 }
@@ -186,7 +186,7 @@ body {
 
 /* Infobox */
 .infobox {
-    border: 1px dotted #6688AA;    
+    border: 1px dotted #6688AA;
     padding: 5px;
 }
 
@@ -196,12 +196,12 @@ body {
     padding: 5px;
     color: #fff;
     background: rgb(88, 88, 88);
-}    
+}
 
 .roomlist a.ilink:hover {
     background: rgb(138, 138, 138);
     border: 0;
-    color: #fff;    
+    color: #fff;
 }
 
 /* Welcome Message */
@@ -209,6 +209,8 @@ body {
     background: url(http://i.imgur.com/3lBSg3c.png) center repeat-y;
     color: #fff;
     margin-top: -3px;
+    padding: 1px 15px;
+    width: 440px;
 }
 
 .welcome hr {
@@ -227,10 +229,6 @@ body {
     background: rgb(33, 37, 66);
 }
 
-#welcome-content {
-    width: 440px;
-}
-
 /* Liga */
 .league {
     background: url("http://i.imgur.com/j3gPbd8.png") center repeat-y;
@@ -239,7 +237,7 @@ body {
 }
 
 .league hr {
-    border: 2px solid #fff;    
+    border: 2px solid #fff;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 97%;
@@ -271,18 +269,18 @@ body {
 }
 
 .alto-mando {
-    font-size: 10pt;    
+    font-size: 10pt;
 }
 
 .alto-mando button {
-    width: 97%;    
+    width: 97%;
     border-left: 0 !important;
 }
 
 .lideres button {
     width: 30%;
     font-size: 9pt;
-    margin-right: 3px;    
+    margin-right: 3px;
     margin-top: 3px;
 }
 
