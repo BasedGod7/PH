@@ -102,9 +102,13 @@ body {
 }
 
 /* Chat-log */
+.chat-log {
+    background: url("http://i.imgur.com/fUIKhpT.png");
+}
+
 .chat-log-add {
     border-top: 1px solid #000;
-    background: rgba(230, 230, 230, 0.8);
+    background: #E6E6E6;
 }
 
 /* Announce */
