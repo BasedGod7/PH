@@ -254,6 +254,37 @@ var commands = exports.commands = {
 		}
 	},
 
+	roomintro: function (target, room, user) {
+		if (!target) {
+			if (!this.canBroadcast()) return;
+			var re = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
+			if (!room.introMessage) return this.sendReply("This room does not have an introduction set.");
+			this.sendReplyBox(room.introMessage);
+			if (!this.broadcasting && user.can('roomintro', room)) {
+				this.sendReply("Source:");
+				this.sendReplyBox('<code>' + Tools.escapeHTML(room.introMessage) + '</code>');
+			}
+			return;
+		}
+		if (!this.can('roomintro', room)) return false;
+		if (!this.canHTML(target)) return;
+		if (!/</.test(target)) {
+			// not HTML, do some simple URL linking
+			var re = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
+			target = target.replace(re, '<a href="$1">$1</a>');
+		}
+
+		if (!target.trim()) target = '';
+		room.introMessage = target;
+		this.sendReply("(The room introduction has been changed to:)");
+		this.sendReplyBox(target);
+
+		if (room.chatRoomData) {
+			room.chatRoomData.introMessage = room.introMessage;
+			Rooms.global.writeChatRoomData();
+		}
+	},
+
 	roomdemote: 'roompromote',
 	roompromote: function (target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help roompromote');
@@ -320,6 +351,103 @@ var commands = exports.commands = {
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
 
+	roomauth: function (target, room, user, connection) {
+		if (!room.auth) return this.sendReply("/roomauth - This room isn't designed for per-room moderation and therefore has no auth list.");
+
+		var rankLists = {};
+		for (var u in room.auth) {
+			if (!rankLists[room.auth[u]]) rankLists[room.auth[u]] = [];
+			rankLists[room.auth[u]].push(u);
+		}
+
+		var buffer = [];
+		Object.keys(rankLists).sort(function (a, b) {
+			return Config.groups.bySymbol[b].rank - Config.groups.bySymbol[a].rank;
+		}).forEach(function (r) {
+			buffer.push(Config.groups.bySymbol[r].name + "s (" + r + "):\n" + rankLists[r].sort().join(", "));
+		});
+
+		if (!buffer.length) {
+			buffer = "This room has no auth.";
+		}
+		connection.popup(buffer.join("\n\n"));
+	},
+
+	rb: 'roomban',
+	roomban: function (target, room, user, connection) {
+		if (!target) return this.parse('/help roomban');
+		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
+
+		target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+		var name = this.targetUsername;
+		var userid = toId(name);
+
+		if (!userid || !targetUser) return this.sendReply("User '" + name + "' does not exist.");
+		if (!this.can('ban', targetUser, room)) return false;
+		if (!room.bannedUsers || !room.bannedIps) {
+			return this.sendReply("Room bans are not meant to be used in room " + room.id + ".");
+		}
+		if (room.bannedUsers[userid] || room.bannedIps[targetUser.latestIp]) return this.sendReply("User " + targetUser.name + " is already banned from room " + room.id + ".");
+		room.bannedUsers[userid] = true;
+		for (var ip in targetUser.ips) {
+			room.bannedIps[ip] = true;
+		}
+		targetUser.popup("" + user.name + " has banned you from the room " + room.id + ". To appeal the ban, PM the moderator that banned you or a room owner." + (target ? " (" + target + ")" : ""));
+		this.addModCommand("" + targetUser.name + " was banned from room " + room.id + " by " + user.name + "." + (target ? " (" + target + ")" : ""));
+		var alts = targetUser.getAlts();
+		if (alts.length) {
+			this.privateModCommand("(" + targetUser.name + "'s alts were also banned from room " + room.id + ": " + alts.join(", ") + ")");
+			for (var i = 0; i < alts.length; ++i) {
+				var altId = toId(alts[i]);
+				this.add('|unlink|' + altId);
+				room.bannedUsers[altId] = true;
+				Users.getExact(altId).leaveRoom(room.id);
+			}
+		}
+		this.add('|unlink|' + this.getLastIdOf(targetUser));
+		targetUser.leaveRoom(room.id);
+	},
+
+	unroomban: 'roomunban',
+	roomunban: function (target, room, user, connection) {
+		if (!target) return this.parse('/help roomunban');
+		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
+
+		target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+		var name = this.targetUsername;
+		var userid = toId(name);
+		var success;
+
+		if (!userid || !targetUser) return this.sendReply("User '" + name + "' does not exist.");
+		if (!this.can('ban', targetUser, room)) return false;
+		if (!room.bannedUsers || !room.bannedIps) {
+			return this.sendReply("Room bans are not meant to be used in room " + room.id + ".");
+		}
+		if (room.bannedUsers[userid]) {
+			delete room.bannedUsers[userid];
+			success = true;
+		}
+		for (var ip in targetUser.ips) {
+			if (room.bannedIps[ip]) {
+				delete room.bannedIps[ip];
+				success = true;
+			}
+		}
+		if (!success) return this.sendReply("User " + targetUser.name + " is not banned from room " + room.id + ".");
+
+		targetUser.popup("" + user.name + " has unbanned you from the room " + room.id + ".");
+		this.addModCommand("" + targetUser.name + " was unbanned from room " + room.id + " by " + user.name + ".");
+		var alts = targetUser.getAlts();
+		if (!alts.length) return;
+		for (var i = 0; i < alts.length; ++i) {
+			var altId = toId(alts[i]);
+			if (room.bannedUsers[altId]) delete room.bannedUsers[altId];
+		}
+		this.privateModCommand("(" + targetUser.name + "'s alts were also unbanned from room " + room.id + ": " + alts.join(", ") + ")");
+	},
+
 	autojoin: function (target, room, user, connection) {
 		Rooms.global.autojoinRooms(user, connection);
 	},
@@ -371,93 +499,6 @@ var commands = exports.commands = {
 				"</center>"
 			);
 		}
-	},
-
-	rb: 'roomban',
-	roomban: function (target, room, user, connection) {
-		if (!target) return this.parse('/help roomban');
-		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
-
-		target = this.splitTarget(target, true);
-		var targetUser = this.targetUser;
-		var name = this.targetUsername;
-		var userid = toId(name);
-
-		if (!userid || !targetUser) return this.sendReply("User '" + name + "' does not exist.");
-		if (!this.can('ban', targetUser, room)) return false;
-		if (!room.bannedUsers || !room.bannedIps) {
-			return this.sendReply("Room bans are not meant to be used in room " + room.id + ".");
-		}
-		room.bannedUsers[userid] = true;
-		for (var ip in targetUser.ips) {
-			room.bannedIps[ip] = true;
-		}
-		targetUser.popup("" + user.name + " has banned you from the room " + room.id + ". To appeal the ban, PM the moderator that banned you or a room owner." + (target ? " (" + target + ")" : ""));
-		this.addModCommand("" + targetUser.name + " was banned from room " + room.id + " by " + user.name + "." + (target ? " (" + target + ")" : ""));
-		var alts = targetUser.getAlts();
-		if (alts.length) {
-			this.addModCommand("" + targetUser.name + "'s alts were also banned from room " + room.id + ": " + alts.join(", "));
-			for (var i = 0; i < alts.length; ++i) {
-				var altId = toId(alts[i]);
-				this.add('|unlink|' + altId);
-				room.bannedUsers[altId] = true;
-			}
-		}
-		this.add('|unlink|' + this.getLastIdOf(targetUser));
-		targetUser.leaveRoom(room.id);
-	},
-
-	unroomban: 'roomunban',
-	roomunban: function (target, room, user, connection) {
-		if (!target) return this.parse('/help roomunban');
-		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
-
-		target = this.splitTarget(target, true);
-		var targetUser = this.targetUser;
-		var name = this.targetUsername;
-		var userid = toId(name);
-		var success;
-
-		if (!userid || !targetUser) return this.sendReply("User '" + name + "' does not exist.");
-		if (!this.can('ban', targetUser, room)) return false;
-		if (!room.bannedUsers || !room.bannedIps) {
-			return this.sendReply("Room bans are not meant to be used in room " + room.id + ".");
-		}
-		if (room.bannedUsers[userid]) {
-			delete room.bannedUsers[userid];
-			success = true;
-		}
-		for (var ip in targetUser.ips) {
-			if (room.bannedIps[ip]) {
-				delete room.bannedIps[ip];
-				success = true;
-			}
-		}
-		if (!success) return this.sendReply("User " + targetUser.name + " is not banned from room " + room.id + ".");
-
-		targetUser.popup("" + user.name + " has unbanned you from the room " + room.id + ".");
-		this.addModCommand("" + targetUser.name + " was unbanned from room " + room.id + " by " + user.name + ".");
-		var alts = targetUser.getAlts();
-		if (!alts.length) return;
-		for (var i = 0; i < alts.length; ++i) {
-			var altId = toId(alts[i]);
-			if (room.bannedUsers[altId]) delete room.bannedUsers[altId];
-		}
-		this.addModCommand("" + targetUser.name + "'s alts were also unbanned from room " + room.id + ": " + alts.join(", "));
-	},
-
-	roomauth: function (target, room, user, connection) {
-		if (!room.auth) return this.sendReply("/roomauth - This room isn't designed for per-room moderation and therefore has no auth list.");
-		var buffer = [];
-		for (var u in room.auth) {
-			buffer.push(room.auth[u] + u);
-		}
-		if (buffer.length > 0) {
-			buffer = buffer.join(", ");
-		} else {
-			buffer = "This room has no auth.";
-		}
-		connection.popup(buffer);
 	},
 
 	leave: 'part',
@@ -558,7 +599,7 @@ var commands = exports.commands = {
 		targetUser.popup("" + user.name + " has muted you for 7 minutes. " + target);
 		this.addModCommand("" + targetUser.name + " was muted by " + user.name + " for 7 minutes." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
-		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also muted: " + alts.join(", "));
+		if (alts.length) this.privateModCommand("(" + targetUser.name + "'s alts were also muted: " + alts.join(", ") + ")");
 		this.add('|unlink|' + this.getLastIdOf(targetUser));
 
 		targetUser.mute(room.id, 7 * 60 * 1000);
@@ -585,7 +626,7 @@ var commands = exports.commands = {
 		targetUser.popup("" + user.name + " has muted you for 60 minutes. " + target);
 		this.addModCommand("" + targetUser.name + " was muted by " + user.name + " for 60 minutes." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
-		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also muted: " + alts.join(", "));
+		if (alts.length) this.privateModCommand("(" + targetUser.name + "'s alts were also muted: " + alts.join(", ") + ")");
 		this.add('|unlink|' + this.getLastIdOf(targetUser));
 
 		targetUser.mute(room.id, 60 * 60 * 1000, true);
@@ -631,7 +672,7 @@ var commands = exports.commands = {
 
 		this.addModCommand("" + targetUser.name + " was locked from talking by " + user.name + "." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
-		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also locked: " + alts.join(", "));
+		if (alts.length) this.privateModCommand("(" + targetUser.name + "'s alts were also locked: " + alts.join(", ") + ")");
 		this.add('|unlink|' + this.getLastIdOf(targetUser));
 
 		targetUser.lock();
@@ -677,7 +718,7 @@ var commands = exports.commands = {
 		this.addModCommand("" + targetUser.name + " was banned by " + user.name + "." + (target ? " (" + target + ")" : ""), " (" + targetUser.latestIp + ")");
 		var alts = targetUser.getAlts();
 		if (alts.length) {
-			this.addModCommand("" + targetUser.name + "'s alts were also banned: " + alts.join(", "));
+			this.privateModCommand("(" + targetUser.name + "'s alts were also banned: " + alts.join(", ") + ")");
 			for (var i = 0; i < alts.length; ++i) {
 				this.add('|unlink|' + toId(alts[i]));
 			}
@@ -721,6 +762,7 @@ var commands = exports.commands = {
 			return this.parse('/help banip');
 		}
 		if (!this.can('rangeban')) return false;
+		if (Users.bannedIps[target] === '#ipban') return this.sendReply("The IP " + (target.charAt(target.length - 1) === '*' ? "range " : "") + target + " has already been temporarily banned.");
 
 		Users.bannedIps[target] = '#ipban';
 		this.addModCommand("" + user.name + " temporarily banned the " + (target.charAt(target.length - 1) === '*' ? "IP range" : "IP") + ": " + target);
@@ -966,7 +1008,7 @@ var commands = exports.commands = {
 		// Specific case for modlog command. Room can be indicated with a comma, lines go after the comma.
 		// Otherwise, the text is defaulted to text search in current room's modlog.
 		var roomId = room.id;
-		var roomLogs = {};
+		var hideIps = !user.can('ban');
 
 		if (target.indexOf(',') > -1) {
 			var targets = target.split(',');
@@ -999,6 +1041,7 @@ var commands = exports.commands = {
 			filename = 'logs/modlog/modlog_' + roomId + '.txt';
 		}
 
+		var roomLogs = {};
 		// Seek for all input rooms for the lines or text
 		command = 'tail -' + lines + ' ' + filename;
 		var grepLimit = 100;
@@ -1013,6 +1056,9 @@ var commands = exports.commands = {
 				connection.popup("/modlog empty on " + roomNames + " or erred - modlog does not support Windows");
 				console.log("/modlog error: " + error);
 				return false;
+			}
+			if (stdout && hideIps) {
+				stdout = stdout.replace(/\([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\)/g, '');
 			}
 			if (lines) {
 				if (!stdout) {
@@ -1103,7 +1149,7 @@ var commands = exports.commands = {
 			return this.sendReply("Battle hotpatching is not supported with the single process hack.");
 
 		} else if (target === 'formats') {
-			/*try {
+			try {
 				// uncache the tools.js dependency tree
 				CommandParser.uncacheTree('./tools.js');
 				// reload tools.js
@@ -1111,17 +1157,17 @@ var commands = exports.commands = {
 				// rebuild the formats list
 				Rooms.global.formatListText = Rooms.global.getFormatListText();
 				// respawn validator processes
-				TeamValidator.ValidatorProcess.respawn();
+				//TeamValidator.ValidatorProcess.respawn();
+				battleProtoCache = {};
 				// respawn simulator processes
-				Simulator.SimulatorProcess.respawn();
+				//Simulator.SimulatorProcess.respawn();
 				// broadcast the new formats list to clients
 				Rooms.global.send(Rooms.global.formatListText);
 
 				return this.sendReply("Formats have been hotpatched.");
 			} catch (e) {
 				return this.sendReply("Something failed while trying to hotpatch formats: \n" + e.stack);
-			}*/
-			return this.sendReply("Formats hotpatching is not supported with the single process hack.");
+			}
 
 		} else if (target === 'learnsets') {
 			try {

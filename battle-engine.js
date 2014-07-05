@@ -10,9 +10,9 @@
  * @license MIT license
  */
 
-require('sugar');
+//require('sugar');
 
-global.Config = require('./config/config.js');
+//global.Config = require('./config/config.js');
 
 // graceful crash - allow current battles to finish before restarting
 /*process.on('uncaughtException', function (err) {
@@ -27,22 +27,22 @@ global.Config = require('./config/config.js');
  * If an object with an ID is passed, its ID will be returned.
  * Otherwise, an empty string will be returned.
  */
-global.toId = function (text) {
+/*global.toId = function (text) {
 	if (text && text.id) text = text.id;
 	else if (text && text.userid) text = text.userid;
 
 	return string(text).toLowerCase().replace(/[^a-z0-9]+/g, '');
-};
+};*/
 
 /**
  * Validates a username or Pokemon nickname
  */
-global.toName = function (name) {
+/*global.toName = function (name) {
 	name = string(name);
 	name = name.replace(/[\|\s\[\]\,]+/g, ' ').trim();
 	if (name.length > 18) name = name.substr(0, 18).trim();
 	return name;
-};
+};*/
 
 /**
  * Safely ensures the passed variable is a string
@@ -50,12 +50,12 @@ global.toName = function (name) {
  * If we're expecting a string and being given anything that isn't a string
  * or a number, it's safe to assume it's an error, and return ''
  */
-global.string = function (str) {
+/*global.string = function (str) {
 	if (typeof str === 'string' || typeof str === 'number') return '' + str;
 	return '';
-};
+};*/
 
-global.Tools = require('./tools.js');
+//global.Tools = require('./tools.js');
 
 var Battles = {};
 
@@ -745,12 +745,12 @@ var BattlePokemon = (function () {
 	};
 	// returns the amount of damage actually dealt
 	BattlePokemon.prototype.faint = function (source, effect) {
-		if (this.fainted) return 0;
+		if (this.fainted || this.status === 'fnt') return 0;
 		var d = this.hp;
 		this.hp = 0;
 		this.switchFlag = false;
 		this.status = 'fnt';
-		//this.fainted = true;
+		// this.fainted = true;
 		this.battle.faintQueue.push({
 			target: this,
 			source: source,
@@ -953,7 +953,7 @@ var BattlePokemon = (function () {
 		return false;
 	};
 	BattlePokemon.prototype.takeItem = function (source) {
-		if (!this.hp || !this.isActive) return false;
+		if (!this.isActive) return false;
 		if (!this.item) return false;
 		if (!source) source = this;
 		var item = this.getItem();
@@ -994,17 +994,18 @@ var BattlePokemon = (function () {
 	BattlePokemon.prototype.setAbility = function (ability, source, effect, noForce) {
 		if (!this.hp) return false;
 		ability = this.battle.getAbility(ability);
-		if (noForce && this.ability === ability.id) {
+		var oldAbility = this.ability;
+		if (noForce && oldAbility === ability.id) {
 			return false;
 		}
 		if (ability.id in {illusion:1, multitype:1, stancechange:1}) return false;
-		if (this.ability in {multitype:1, stancechange:1}) return false;
+		if (oldAbility in {multitype:1, stancechange:1}) return false;
 		this.ability = ability.id;
 		this.abilityData = {id: ability.id, target: this};
 		if (ability.id) {
 			this.battle.singleEvent('Start', ability, this.abilityData, this, source, effect);
 		}
-		return true;
+		return oldAbility;
 	};
 	BattlePokemon.prototype.getAbility = function () {
 		return this.battle.getAbility(this.ability);
@@ -1338,7 +1339,7 @@ var Battle = (function () {
 	var Battle = {};
 
 	Battle.construct = (function () {
-		var battleProtoCache = {};
+		global.battleProtoCache = {};
 		return function (roomid, formatarg, rated) {
 			var battle = Object.create((function () {
 				if (battleProtoCache[formatarg] !== undefined) {
@@ -2935,17 +2936,17 @@ var Battle = (function () {
 
 		var sourceLoc = -(source.position + 1);
 		var isFoe = (targetLoc > 0);
-		var isAdjacent = (isFoe ? Math.abs(-(numSlots + 1 - targetLoc) - sourceLoc) <= 1 : Math.abs(targetLoc - sourceLoc) <= 1);
+		var isAdjacent = (isFoe ? Math.abs(-(numSlots + 1 - targetLoc) - sourceLoc) <= 1 : Math.abs(targetLoc - sourceLoc) === 1);
 		var isSelf = (sourceLoc === targetLoc);
 
 		switch (targetType) {
 		case 'randomNormal':
 		case 'normal':
-			return isAdjacent && !isSelf;
+			return isAdjacent;
 		case 'adjacentAlly':
-			return isAdjacent && !isSelf && !isFoe;
-		case 'adjacentAllyOrSelf':
 			return isAdjacent && !isFoe;
+		case 'adjacentAllyOrSelf':
+			return isAdjacent && !isFoe || isSelf;
 		case 'adjacentFoe':
 			return isAdjacent && isFoe;
 		case 'any':
