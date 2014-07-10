@@ -449,3 +449,11 @@ reloadCustomAvatars();
 
 global.tour = new (require('./tour.js').tour)();
 global.hangman = new (require('./hangman.js').hangman)();
+
+
+/*********************************************************
+* Load custom files
+*********************************************************/
+     
+global.Core = require('./core.js').core;
+global.Components = require('./components.js');
