@@ -290,3 +290,32 @@ body {
     border-left: 1px solid #fff;
     text-align: center;
 }
+
+/* Tienda */
+
+.shop {
+	background: url("http://i.imgur.com/qSLGtMy.png") center repeat-y;
+	color: #fff;
+	margin-top: -4px;
+	width: 100%;
+}
+
+.shop table {
+	width: 438px;
+}
+
+.shop td {
+	height: 25px;	
+}
+
+.shop button {
+	width=100%;
+	height=100%;
+	border: 0px;
+	background: #457779;
+	color: #fff;
+}
+
+.shop button:hover {
+	background: rgb(114, 148, 147);
+}
