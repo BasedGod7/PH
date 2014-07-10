@@ -271,7 +271,7 @@ var commands = exports.commands = {
 							"<li>(LoD)Tyrana: Dragon</li>" +
 							"<li>Shiny Giratina-O: Agua</li>" +
 							"<li>Based Hispano: Sunny</li>" +
-							"<li>J Calderón: Psiquico</li>" +
+							"<li>Osco N C Major: Psiquico</li>" +
 							"<li>(LoD)Marcos: Acero</li>" +
 						"</ul>" +
 					"</div>" +
@@ -280,14 +280,14 @@ var commands = exports.commands = {
 						"<h4>LÍDERES DE GIMNASIOS</h4>" +
 							"<table>" +
 								"<tr>" +
-									"<td><a href=" + path + 000 + ">FC CAMULOS: Normal</a></td>" +
+									"<td><a href=" + path + 590 + ">FC CAMULOS: Normal</a></td>" +
 									"<td><a href=" + path + 000 + ">Disponible: Hielo</a></td>" +
-									"<td><a href=" + path + 000 + ">ADRIELANDRO: Agua</a></td>" +
+									"<td><a href=" + path + 566 + ">ADRIELANDRO: Agua</a></td>" +
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 514 + ">(ABT) Ryuga: Lucha</a></td>" +
-									"<td><a href=" + path + 000 + ">cusho: Bicho</a></td>" +
-									"<td><a href=" + path + 000 + ">FC Striker: Roca</a></td>" +
+									"<td><a href=" + path + 505 + ">cusho: Bicho</a></td>" +
+									"<td><a href=" + path + 591 + ">FC Striker: Roca</a></td>" +
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 575 + ">Gardevoir>w: Hada</a></td>" +
@@ -300,9 +300,9 @@ var commands = exports.commands = {
 									"<td><a href=" + path + 532 + ">Smorales: Veneno</a></td>" +
 								"</tr>" +
 								"<tr>" +
-									"<td><a href=" + path + 000 + ">Disponible: Fuego</a></td>" +
-									"<td><a href=" + path + 000 + ">Samey: Eléctrico</a></td>" +
-									"<td><a href=" + path + 000 + ">FuruyaJCaos: Dragón</a></td>" +
+									"<td><a href=" + path + 588 + ">FC Juanxzs: Fuego</a></td>" +
+									"<td><a href=" + path + 583 + ">Samey: Eléctrico</a></td>" +
+									"<td><a href=" + path + 582 + ">FuruyaJCaos: Dragón</a></td>" +
 								"</tr>" +
 							"</table>" +
 					"</div>" +
@@ -311,7 +311,7 @@ var commands = exports.commands = {
 						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=250/\">Cómo desafiar la liga.</a></li>" +
 						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=35/\">Información detallada sobre la Liga Pokémon Hispano.</a></li>" +
 					"</ul>" +
-					"<h3>No se acepta nuevos líderes de gimnasio.</h3>" +
+					"<h3>Battle Sages Approaching....</h3>" +
 				"</div>" +
 				"<img src=\"http://i.imgur.com/zqidpf4.png\" />" +
 			"</center>"
