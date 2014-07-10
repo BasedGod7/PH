@@ -241,3 +241,4 @@ var components = exports.components = {
         user.updateIdentity();
         this.sendReply('Tu simbolo se ha restablecido.');
     },
+};
