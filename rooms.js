@@ -54,6 +54,7 @@ var GlobalRoom = (function () {
 
 		this.autojoin = []; // rooms that users autojoin upon connecting
 		this.staffAutojoin = []; // rooms that staff autojoin upon connecting
+		this.adminAutojoin = []; // rooms that admin autojoin upon connecting
 		for (var i = 0; i < this.chatRoomData.length; i++) {
 			if (!this.chatRoomData[i] || !this.chatRoomData[i].title) {
 				console.log('ERROR: Room number ' + i + ' has no data.');
@@ -65,6 +66,7 @@ var GlobalRoom = (function () {
 			this.chatRooms.push(room);
 			if (room.autojoin) this.autojoin.push(id);
 			if (room.staffAutojoin) this.staffAutojoin.push(id);
+			if (room.adminAutojoin) this.adminAutojoin.push(id);
 		}
 
 		// this function is complex in order to avoid several race conditions
@@ -396,6 +398,11 @@ var GlobalRoom = (function () {
 		if (user.can('staff')) {
 			for (var i = 0; i < this.staffAutojoin.length; i++) {
 				user.joinRoom(this.staffAutojoin[i], connection);
+			}
+		}
+		if (user.can('hotpatch')) {
+			for (var i = 0; i < this.adminAutojoin.length; i++) {
+				user.joinRoom(this.adminAutojoin[i], connection);
 			}
 		}
 	};
