@@ -449,4 +449,3 @@ reloadCustomAvatars();
 
 global.tour = new (require('./tour.js').tour)();
 global.hangman = new (require('./hangman.js').hangman)();
-global.Bot = require('./bot.js');
