@@ -678,6 +678,47 @@ var Tournament = (function () {
 			generator: this.generator.name,
 			bracketData: this.getBracketData()
 		}));
+		data = {
+            results: this.generator.getResults().map(usersToNames),
+            bracketData: this.getBracketData()
+        };
+        data = data['results'].toString();
+
+        runnerUp = false;
+
+        if (data.indexOf(',') >= 0) {
+            data = data.split(',');
+            winner = data[0];
+            if (data[1]) runnerUp = data[1];
+        } else {
+            winner = data;
+        }
+
+        tourSize = this.generator.users.size;
+
+        if (this.room.isOfficial && tourSize >= 4) {
+            firstMoney = Math.round(tourSize / 5);
+            secondMoney = Math.round(firstMoney / 4);
+            firstBuck = 'PokeDolar';
+            secondBuck = 'PokeDolar';
+            if (firstMoney > 1) firstBuck = 'PokeDolares';
+            if (secondMoney > 1) secondBuck = 'PokeDolares';
+
+            // annouces the winner/runnerUp
+            this.room.add('|raw|<hr /><center><strong>' + Tools.escapeHTML(winner) + ' ha ganado ' + firstMoney + ' ' + firstBuck + ' por ganar el torneo!</strong></center>');
+            if (runnerUp) this.room.add('|raw|<hr /><center><strong>' + Tools.escapeHTML(runnerUp) + ' también ha ganado ' + secondMoney + '&nbsp;' + secondBuck + ' por ser lo sub campeon!</strong></center>');
+
+            var wid = toId(winner); // winner's userid
+            var rid = toId(runnerUp); // runnerUp's userid
+
+            // file i/o
+            var winnerMoney = Number(Core.stdin('money', wid));
+            Core.stdout('money', wid, (winnerMoney + firstMoney), function () {
+                if (runnerUp) {
+                    var runnerUpMoney = Number(Core.stdin('money', rid));  
+                } 
+            });
+        }
 		this.isEnded = true;
 		delete exports.tournaments[toId(this.room.id)];
 	};
