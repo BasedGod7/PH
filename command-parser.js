@@ -253,6 +253,8 @@ var parse = exports.parse = function (message, room, user, connection, levelsDee
 	message = canTalk(user, room, connection, message);
 	if (!message) return false;
 
+	if (!Bot.parse.processChatData(user, room, connection, message)) return false;
+
 	return message;
 };
 
