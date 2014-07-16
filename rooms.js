@@ -313,6 +313,7 @@ var GlobalRoom = (function () {
 			}
 		}
 		this.searchers.push(newSearch);
+		getRoom('lobby').add("||Se esta buscando una batalla " + Tools.getFormat(newSearch.formatid).name + " en ladder.");
 	};
 	GlobalRoom.prototype.send = function (message, user) {
 		if (user) {
