@@ -267,14 +267,14 @@ var GlobalRoom = (function () {
 			time: new Date().getTime()
 		};
 		var self = this;
-		user.doWithMMR(formatid, function (mmr, error) {
+		/*user.doWithMMR(formatid, function (mmr, error) {
 			if (error) {
 				user.popup("Connection to ladder server failed with error: " + error + "; please try again later");
 				return;
 			}
-			newSearch.rating = mmr;
+			newSearch.rating = mmr;*/
 			self.addSearch(newSearch, user);
-		});
+		//});
 	};
 	GlobalRoom.prototype.matchmakingOK = function (search1, search2, user1, user2) {
 		// users must be different
@@ -314,7 +314,12 @@ var GlobalRoom = (function () {
 			}
 		}
 		this.searchers.push(newSearch);
-		getRoom('lobby').add("||Se esta buscando una batalla " + Tools.getFormat(newSearch.formatid).name + " en ladder.");
+
+		if (!this.pastSearchTimes) this.pastSearchTimes = {};
+		if (!this.pastSearchTimes[newSearch.formatid] || Date.now() > this.pastSearchTimes[newSearch.formatid] + (30).seconds()) {
+			getRoom('lobby').add("|raw|<em>Se esta buscando una batalla <strong><font color=\"blue\">" + Tools.getFormat(newSearch.formatid).name + "</font></strong> en ladder.</em>");
+		}
+		this.pastSearchTimes[newSearch.formatid] = Date.now();
 	};
 	GlobalRoom.prototype.send = function (message, user) {
 		if (user) {
