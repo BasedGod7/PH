@@ -285,12 +285,12 @@ var commands = exports.commands = {
 									"<td><a href=" + path + 566 + ">ADRIELANDRO: Agua</a></td>" +
 								"</tr>" +
 								"<tr>" +
-									"<td><a href=" + path + 514 + ">(ABT) Ryuga: Lucha</a></td>" +
+									"<td><a href=" + path + 563 + ">(ABT) Ryuga: Lucha</a></td>" +
 									"<td><a href=" + path + 505 + ">cusho: Bicho</a></td>" +
 									"<td><a href=" + path + 591 + ">FC Striker: Roca</a></td>" +
 								"</tr>" +
 								"<tr>" +
-									"<td><a href=" + path + 575 + ">Gardevoir>w: Hada</a></td>" +
+									"<td><a href=" + path + 575 + ">Sonia Nevermind: Hada</a></td>" +
 									"<td><a href=" + path + 570 + ">P✘S Lightning: Volador</a></td>" +
 									"<td><a href=" + path + 569 + ">ZeZStarZeZ: Fantasma</a></td>" +
 								"</tr>" +
@@ -308,7 +308,7 @@ var commands = exports.commands = {
 					"</div>" +
 					"<hr />" +
 					"<ul>" +
-						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=250/\">Cómo desafiar la liga.</a></li>" +
+						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=529/\">Cómo desafiar la liga.</a></li>" +
 						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=35/\">Información detallada sobre la Liga Pokémon Hispano.</a></li>" +
 					"</ul>" +
 					"<h3>Battle Sages Approaching....</h3>" +

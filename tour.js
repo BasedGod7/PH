@@ -165,7 +165,7 @@ exports.tour = function(t) {
 			return true;
 		},
 		lideres: function() {
-			return ['fccamulos','Disponible','abtryuga','cusho','fcstriker','gardevoirw','pslightning','zezstarzez','sidaaaaa','quieropastelaa','smorales','adrielandro','fcjuanxzs','furuyajcaos','samey'];
+			return ['fccamulos','Disponible','abtryuga','cusho','fcstriker','sonianvrmind','pslightning','zezstarzez','sidaaaaa','quieropastelaa','smorales','adrielandro','fcjuanxzs','furuyajcaos','samey'];
 		},
 		cargos: function() {
 			return ['Lider del Gimnasio Normal','Lider del Gimnasio Hielo','Lider del Gimnasio Lucha','Lider del Gimnasio Bicho','Lider del Gimnasio Roca','Lider del Gimnasio Hada','Lider del Gimnasio Volador','Lider del Gimnasio Fantasma','Lider del Gimnasio Tierra','Lider del Gimnasio Siniestro','Lider del Gimnasio Veneno','Lider del Gimnasio Agua','Lider del Gimnasio Fuego','Lider del Gimnasio Dragón','Lider del Gimnasio Electrico','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Miembro del Alto Mando','Campeon'];
