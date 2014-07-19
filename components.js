@@ -468,7 +468,7 @@ var components = exports.components = {
     },
  
     clearall: function (target, room, user) {
-        if (user.userid !== 'mrloser') return this.sendReply('/clearall - Access denied.');
+        if (!this.can('makeroom')) return this.sendReply('/clearall - Access denied.');
         var len = room.log.length,
             users = [];
         while (len--) {
