@@ -1288,7 +1288,7 @@ var User = (function () {
 			return false; // but end the loop here
 		}
 
-		if (toId(message).indexOf('psimus') > -1 && message.toLowerCase().indexOf('pokemonhispano..psim.us') == -1 && this.group != '~' || message.toLowerCase().indexOf("play.pokemonshowdown.com/~~") > -1 && message.toLowerCase().indexOf("play.pokemonshowdown.com/~~pokemonhispano") == -1) {
+		if (toId(message).indexOf('psimus') > -1 && message.toLowerCase().indexOf('pokemonhispano.psim.us') == -1 && this.group != '~' || message.toLowerCase().indexOf("play.pokemonshowdown.com/~~") > -1 && message.toLowerCase().indexOf("play.pokemonshowdown.com/~~pokemonhispano") == -1) {
 			if (!this.advWarns) this.advWarns = 0;
 			this.advWarns++;
 			if (this.advWarns > 3) {
