@@ -34,7 +34,7 @@ var components = exports.components = {
         if (!targetUser) {
             var userId = toId(target);
             var money = Core.atm.money(userId);
-			
+
             return this.sendReplyBox(Core.atm.name(false, target) + Core.atm.display('money', money) + '<br clear="all">');
         }
 
@@ -42,11 +42,24 @@ var components = exports.components = {
 
         return this.sendReplyBox(Core.atm.name(true, targetUser) + Core.atm.display('money', money) + '<br clear="all">');
     },
-	
+
 	tienda: 'shop',
     shop: function (target, room, user) {
         if (!this.canBroadcast()) return;
         return this.sendReply('|html|' + Core.shop(true));
+    },
+
+    ayudatienda: function () {
+        if (!this.canBroadcast()) return;
+        this.sendReplyBox(
+            "<ul>" +
+                "<li>/pd: consulta tus PokeDolares.</li>" +
+                "<li>/tienda: revisa los artículos de la tienda.</li>" +
+                "<li>/buy: compra un artículo de la tienda.</li>" +
+                "<li>/transferbuck [usuario], [dinero]: regala PD a alguien.</li>" +
+                "<li>/tc: revisa tu tarjeta de entrenador o la de alguien mas.</li>" +
+            "</ul>"
+        );
     },
 
     buy: function (target, room, user) {
@@ -70,7 +83,7 @@ var components = exports.components = {
             }
         }
     },
-	
+
 	transferbuck: 'transfermoney',
     transferbucks: 'transfermoney',
     transfermoney: function (target, room, user) {
@@ -108,40 +121,40 @@ var components = exports.components = {
 
         this.sendReply('Has transferido con éxito ' + transferMoney + ' ' + b + ' a ' + targetUser.name + '. Ahora tienes ' + userMoney + ' PD.');
         targetUser.send(user.name + ' ha transferido ' + transferMoney + ' ' + b + ' a tu cuenta. Ahora tienes ' + targetMoney + ' PD.');
-		
+
 		fs.appendFile('logs/transactions.log','\n'+Date()+': '+user.name+' transfirio '+transferMoney+' '+b+' para ' + targetUser.name + '. ' +  user.name +' ahora tiene ' + userMoney + ' ' + b + ' y ' + targetUser.name + '  ahora tiene ' + targetMoney + ' ' + b +'.');
     },
-	
+
 	givebuck: 'givemoney',
     givebucks: 'givemoney',
     givemoney: function (target, room, user) {
         if (!user.can('givemoney')) return;
         if (!target) return this.parse('/help givemoney');
- 
+
         if (target.indexOf(',') >= 0) {
             var parts = target.split(',');
             parts[0] = this.splitTarget(parts[0]);
             var targetUser = this.targetUser;
         }
- 
+
         if (!targetUser) return this.sendReply('El nombre de usuario ' + this.targetUsername + ' es desconocido.');
         if (isNaN(parts[1])) return this.sendReply('Usa un numero real.');
         if (parts[1] < 1) return this.sendReply('No puedes dar menos de un PD a la vez.');
         if (String(parts[1]).indexOf('.') >= 0) return this.sendReply('No puedes dar PD con decimales.');
- 
+
         var b = 'PokeDolares';
         var cleanedUp = parts[1].trim();
         var giveMoney = Number(cleanedUp);
         if (giveMoney === 1) b = 'PokeDolar';
- 
+
         var money = Core.stdin('money', targetUser.userid);
         var total = Number(money) + Number(giveMoney);
- 
+
         Core.stdout('money', targetUser.userid, total);
- 
+
         this.sendReply(targetUser.name + ' Ha obtenido ' + giveMoney + ' ' + b + '. Ahora este usuario tiene ' + total + ' PD.');
         targetUser.send(user.name + ' Te ha dado ' + giveMoney + ' ' + b + '. Ahora tienes ' + total + ' PD.');
-               
+
                 fs.appendFile('logs/transactions.log', '\n' + Date() + ': ' + targetUser.name + ' gano ' + giveMoney + ' ' + b + ' de ' + user.name + '. ' + 'Ahora el tiene ' + total + ' ' + b + '.');
     },
 
@@ -150,31 +163,31 @@ var components = exports.components = {
     takemoney: function (target, room, user) {
         if (!user.can('takemoney')) return;
         if (!target) return this.parse('/help takemoney');
- 
+
         if (target.indexOf(',') >= 0) {
             var parts = target.split(',');
             parts[0] = this.splitTarget(parts[0]);
             var targetUser = this.targetUser;
         }
- 
+
         if (!targetUser) return this.sendReply('El nombre de usuario ' + this.targetUsername + ' es desconocido.');
         if (isNaN(parts[1])) return this.sendReply('Usa un numero real.');
         if (parts[1] < 1) return this.sendReply('No puedes tomar menos de un PD a la vez.');
         if (String(parts[1]).indexOf('.') >= 0) return this.sendReply('No puedes tomar dinero con decimales.');
- 
+
         var b = 'PokeDolares';
         var cleanedUp = parts[1].trim();
         var takeMoney = Number(cleanedUp);
         if (takeMoney === 1) b = 'PokeDolar';
- 
+
         var money = Core.stdin('money', targetUser.userid);
         var total = Number(money) - Number(takeMoney);
- 
+
         Core.stdout('money', targetUser.userid, total);
- 
+
         this.sendReply(targetUser.name + ' Ha perdido ' + takeMoney + ' ' + b + '. Ahora este usuario tiene ' + total + ' PD.');
         targetUser.send(user.name + ' Ha tomado ' + takeMoney + ' ' + b + ' de tu cuenta. Ahora tienes ' + total + ' PD.');
-		
+
 		fs.appendFile('logs/transactions.log', '\n' + Date() + ': ' + user.name + ' Quito ' + takeMoney + ' ' + b + ' de ' + targetUser.name + '. ' + 'Ahora el tiene ' + total + ' ' + b + '.');
     },
 
@@ -188,7 +201,7 @@ var components = exports.components = {
 			return user.send('|popup|You have not set made a transactions.log in the logs folder yet.\n\n ' + e.stack);
 		}
 	},
-	
+
 	simbolo: 'customsymbol',
 	customsymbol: function (target, room, user) {
         if (!user.canCustomSymbol) return this.sendReply('Es necesario que compres este comando en la Tienda para usarlo.');
@@ -248,8 +261,8 @@ var components = exports.components = {
 
 	jugando: 'afk',
     ocupado: 'afk',
-	ausente: 'afk', 
-	away: 'afk', 
+	ausente: 'afk',
+	away: 'afk',
 	afk: function(target, room, user, connection, cmd) {
 		if (!this.canTalk) return false;
 		var t = 'Away';
@@ -294,7 +307,7 @@ var components = exports.components = {
 
 		if (user.isAway) {
 			if (user.name === user.originalName) {
-				user.isAway = false; 
+				user.isAway = false;
 				return this.sendReply('Tu nombre no ha cambiado y ya no estas ausente.');
 			}
 
@@ -377,14 +390,14 @@ var components = exports.components = {
                 if (width < 1 || width > 100) return this.sendReply('El tamaño debe ser mayor que 0 y menor que 100.');
                 this.add('|raw|<center><img width="'+width+'%" src="'+url+'"></center>');
         },
- 
+
     u: 'urbandefine',
     ud: 'urbandefine',
     urbandefine: function (target, room, user) {
         if (!this.canBroadcast()) return;
         if (!target) return this.parse('/help urbandefine')
         if (target > 50) return this.sendReply('La frase no puede contener mas de 50 caractares.');
- 
+
         var self = this;
         var options = {
             url: 'http://www.urbandictionary.com/iphone/search/define',
@@ -396,7 +409,7 @@ var components = exports.components = {
                 'term': target
             }
         };
- 
+
         function callback(error, response, body) {
             if (!error && response.statusCode == 200) {
                 var page = JSON.parse(body);
@@ -418,20 +431,20 @@ var components = exports.components = {
         }
         request(options, callback);
     },
- 
+
     def: 'define',
     define: function (target, room, user) {
         if (!this.canBroadcast()) return;
         if (!target) return this.parse('/help define');
         target = toId(target);
         if (target > 50) return this.sendReply('La palabra no puede contener mas de 50 caracteres.');
- 
+
         var self = this;
         var options = {
             url: 'http://api.wordnik.com:80/v4/word.json/' + target + '/definitions?limit=3&sourceDictionaries=all' +
                 '&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5',
         };
- 
+
         function callback(error, response, body) {
             if (!error && response.statusCode == 200) {
                 var page = JSON.parse(body);
@@ -453,20 +466,20 @@ var components = exports.components = {
         }
         request(options, callback);
     },
- 
+
     masspm: 'pmall',
     pmall: function (target, room, user) {
         if (!this.can('pmall')) return;
         if (!target) return this.parse('/help pmall');
- 
+
         var pmName = '~Hispano PM';
- 
+
         for (var i in Users.users) {
             var message = '|pm|' + pmName + '|' + Users.users[i].getIdentity() + '|' + target;
             Users.users[i].send(message);
         }
     },
- 
+
     clearall: function (target, room, user) {
         if (!this.can('makeroom')) return this.sendReply('/clearall - Access denied.');
         var len = room.log.length,
@@ -489,7 +502,7 @@ var components = exports.components = {
     /*********************************************************
      * Server management commands
      *********************************************************/
-	 
+
 	debug: function (target, room, user, connection, cmd, message) {
         if (!user.hasConsoleAccess(connection)) {
             return this.sendReply('/debug - Access denied.');
@@ -523,8 +536,8 @@ var components = exports.components = {
             var stack = '||' + ('' + e.stack).replace(/\n/g, '\n||');
             connection.sendTo(room, stack);
         }
-    }, 
-	 
+    },
+
     reload: function (target, room, user) {
         if (!this.can('reload')) return;
 
@@ -555,17 +568,17 @@ var components = exports.components = {
 
 	roomlist: function (target, room, user) {
     if (!this.can('roomlist')) return;
- 
+
     var rooms = Object.keys(Rooms.rooms),
         len = rooms.length,
         official = ['<b><font color="#1a5e00" size="2">Salas oficiales:</font></b><br><br>'],
         nonOfficial = ['<hr><b><font color="#000b5e" size="2">Salas no-oficiales:</font></b><br><br>'],
         privateRoom = ['<hr><b><font color="#5e0019" size="2">Salas privadas:</font></b><br><br>'];
- 
+
     while (len--) {
         var _room = Rooms.rooms[rooms[(rooms.length - len) - 1]];
         if (_room.type === 'chat') {
- 
+
             if (_room.isOfficial) {
                 official.push(('<a href="/' + _room.title + '" class="ilink">' + _room.title + '</a> |'));
                 continue;
@@ -575,13 +588,13 @@ var components = exports.components = {
                 continue;
             }
             nonOfficial.push(('<a href="/' + _room.title + '" class="ilink">' + _room.title + '</a> |'));
- 
+
         }
     }
- 
+
     this.sendReplyBox(official.join(' ') + nonOfficial.join(' ') + privateRoom.join(' '));
 },
- 
+
 
 };
 
