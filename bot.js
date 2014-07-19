@@ -10,7 +10,7 @@
  */
 
 var config = {
-    name: 'Hispano Bot',
+    name: 'Ηіѕpanο Bοt',
     userid: function () {
         return toId(this.name);
     },
