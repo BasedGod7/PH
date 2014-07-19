@@ -1300,7 +1300,7 @@ var User = (function () {
 			}
 			Users.messageSeniorStaff(this.name+'  trató de hacer publicidad. Sala: '+room.id+'. Mensaje: '+message);
 			connection.sendTo(room, '|raw|<strong class="message-throttle-notice">Publicidad detectada, tu mensaje no se ha enviado, los Administradores han sido notificados.<br />Otro intento de hacer publicidad resultara en un lock</strong>');
-			connection.user.popup('Publicidad detectada, tu mensaje no se ha enviado, los Administradores han sido notificados.\nOtro intento de hacer publicidad resultara en un lock');	
+			connection.user.popup('Publicidad detectada, tu mensaje no se ha enviado, los Administradores han sido notificados.\nOtro intento de hacer publicidad resultara en un lock');
 			return false;
 		}
 
@@ -1429,7 +1429,7 @@ var Connection = (function () {
 Users.User = User;
 Users.Connection = Connection;
 
-function messageSeniorStaff (message) {
+Users.messageSeniorStaff = function (message) {
 	if (!message) return false;
 	for (var u in Users.users) {
 		if (Users.users[u].group == '&' || Users.users[u].group == '~') {
@@ -1437,8 +1437,6 @@ function messageSeniorStaff (message) {
 		}
 	}
 }
-
-exports.messageSeniorStaff = messageSeniorStaff;
 
 /*********************************************************
  * Locks and bans
