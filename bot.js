@@ -14,15 +14,12 @@ var config = {
     userid: function () {
         return toId(this.name);
     },
-    group: '@',
+    group: '#',
     join: true,
     rooms: ['lobby'],
     punishvals: {
         1: 'warn',
         2: 'mute',
-        3: 'hourmute',
-        4: 'roomban',
-        5: 'ban'
     },
     privaterooms: ['staff'],
     hosting: {},
