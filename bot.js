@@ -15,7 +15,6 @@ var config = {
         return toId(this.name);
     },
     group: '#',
-    join: true,
     rooms: ['lobby'],
     punishvals: {
         1: 'warn',
@@ -53,28 +52,18 @@ function joinServer() {
             bot.group = config.group;
 
             if (config.join === true) {
-                for (var all in Rooms.rooms) {
-                    if (all != 'global') {
-                        bot.roomCount[all] = 1;
-                    }
-                }
                 Users.users[bot.userid] = bot;
-                for (var allRoom in Rooms.rooms) {
-                    if (allRoom != 'global') {
-                        Rooms.rooms[allRoom].users[Users.users[bot.userid]] = Users.users[bot.userid];
+                for (var room in Rooms.rooms) {
+                    if (room != 'global') {
+                        bot.roomCount[room] = 1;
+                        Rooms.rooms[room].users[Users.users[bot.userid]] = Users.users[bot.userid];
                     }
                 }
             } else {
-                for (var index in config.rooms) {
-                    if (index != 'global') {
-                        bot.roomCount[joinRooms[index]] = 1;
-                    }
-                }
                 Users.users[bot.userid] = bot;
-                for (var jIndex in config.rooms) {
-                    if (jIndex != 'global') {
-                        Rooms.rooms[jIndex].users[Users.users[bot.userid]] = Users.users[bot.userid];
-                    }
+                for (var index in config.rooms) {
+                    bot.roomCount[config.rooms[index]] = 1;
+                    Rooms.rooms[config.rooms[index]].users[Users.users[bot.userid]] = Users.users[bot.userid];
                 }
             }
             delete Users.users[i];
