@@ -1288,6 +1288,22 @@ var User = (function () {
 			return false; // but end the loop here
 		}
 
+		if (toId(message).indexOf('psimus') > -1 && message.toLowerCase().indexOf('pokemonhispano..psim.us') == -1 && this.group != '~' || message.toLowerCase().indexOf("play.pokemonshowdown.com/~~") > -1 && message.toLowerCase().indexOf("play.pokemonshowdown.com/~~pokemonhispano") == -1) {
+			if (!this.advWarns) this.advWarns = 0;
+			this.advWarns++;
+			if (this.advWarns > 3) {
+				this.lock();
+				fs.appendFile('logs/modlog/modlog_staff.txt','[' + (new Date().toJSON()) + '] (staff) '+this.name+' fue automaticamente bloqueado por tratar de hacer publicidad.\n');
+				connection.sendTo(room, '|raw|<strong class="message-throttle-notice">Has sido lockeado por intentar hacer publicidad.');
+				Users.messageSeniorStaff(this.name+' foi bloqueado por tentar divulgar outro server 3 vezes. Sala: '+room.id+'. Mensagem: '+message);
+				return false;
+			}
+			Users.messageSeniorStaff(this.name+'  trató de hacer publicidad. Sala: '+room.id+'. Mensaje: '+message);
+			connection.sendTo(room, '|raw|<strong class="message-throttle-notice">Publicidad detectada, tu mensaje no se ha enviado, los Administradores han sido notificados.<br />Otro intento de hacer publicidad resultara en un lock</strong>');
+			connection.user.popup('Publicidad detectada, tu mensaje no se ha enviado, los Administradores han sido notificados.\nOtro intento de hacer publicidad resultara en un lock');	
+			return false;
+		}
+
 		if (this.chatQueueTimeout) {
 			if (!this.chatQueue) this.chatQueue = []; // this should never happen
 			if (this.chatQueue.length >= THROTTLE_BUFFER_LIMIT-1) {
@@ -1412,6 +1428,17 @@ var Connection = (function () {
 
 Users.User = User;
 Users.Connection = Connection;
+
+function messageSeniorStaff (message) {
+	if (!message) return false;
+	for (var u in Users.users) {
+		if (Users.users[u].group == '&' || Users.users[u].group == '~') {
+			Users.users[u].send('|pm|~Peligro|'+Users.users[u].group+Users.users[u].name+'|'+message);
+		}
+	}
+}
+
+exports.messageSeniorStaff = messageSeniorStaff;
 
 /*********************************************************
  * Locks and bans
