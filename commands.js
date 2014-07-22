@@ -1134,8 +1134,8 @@ var commands = exports.commands = {
 				global.hangman = new (require('./hangman.js').hangman)(hangman);
 
 				var runningTournaments = Tournaments.tournaments;
-				CommandParser.uncacheTree('./tournaments/middleend.js');
-				Tournaments = require('./tournaments/middleend.js');
+				CommandParser.uncacheTree('./tournaments');
+				Tournaments = require('./tournaments');
 				Tournaments.tournaments = runningTournaments;
 
 				return this.sendReply("Chat commands have been hot-patched.");
@@ -1147,8 +1147,8 @@ var commands = exports.commands = {
 
 			try {
 				var runningTournaments = Tournaments.tournaments;
-				CommandParser.uncacheTree('./tournaments/middleend.js');
-				Tournaments = require('./tournaments/middleend.js');
+				CommandParser.uncacheTree('./tournaments');
+				Tournaments = require('./tournaments');
 				Tournaments.tournaments = runningTournaments;
 				return this.sendReply("Tournaments have been hot-patched.");
 			} catch (e) {

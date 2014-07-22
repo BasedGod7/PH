@@ -371,7 +371,7 @@ global.CommandParser = require('./command-parser.js');
 
 global.Simulator = require('./simulator.js');
 
-global.Tournaments = require('./tournaments/middleend.js');
+global.Tournaments = require('./tournaments');
 
 global.Clans = require('./clans.js');
 
