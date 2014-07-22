@@ -1079,8 +1079,8 @@ var commands = exports.commands = {
 				CommandParser = require('./command-parser.js');
 
 				var runningTournaments = Tournaments.tournaments;
-				CommandParser.uncacheTree('./tournaments/middleend.js');
-				Tournaments = require('./tournaments/middleend.js');
+				CommandParser.uncacheTree('./tournaments');
+				Tournaments = require('./tournaments');
 				Tournaments.tournaments = runningTournaments;
 
 				return this.sendReply("Chat commands have been hot-patched.");
@@ -1092,8 +1092,8 @@ var commands = exports.commands = {
 
 			try {
 				var runningTournaments = Tournaments.tournaments;
-				CommandParser.uncacheTree('./tournaments/middleend.js');
-				Tournaments = require('./tournaments/middleend.js');
+				CommandParser.uncacheTree('./tournaments');
+				Tournaments = require('./tournaments');
 				Tournaments.tournaments = runningTournaments;
 				return this.sendReply("Tournaments have been hot-patched.");
 			} catch (e) {
