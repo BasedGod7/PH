@@ -761,6 +761,7 @@ var commands = exports.commands = {
 	 * Moderating: Other
 	 *********************************************************/
 
+	mn: 'modnote',
 	modnote: function (target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help modnote');
 		if (target.length > MAX_REASON_LENGTH) {
