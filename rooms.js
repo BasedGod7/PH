@@ -634,7 +634,7 @@ var BattleRoom = (function () {
 				}
 				var p1rating, p2rating;
 				// update rankings
-				this.push('|raw|Ladder updating...');
+				this.push('|raw|Actualizando ladder...');
 				var self = this;
 				LoginServer.request('ladderupdate', {
 					p1: p1,
@@ -647,7 +647,7 @@ var BattleRoom = (function () {
 						return;
 					}
 					if (!data) {
-						self.addRaw('Ladder (probably) updated, but score could not be retrieved (' + error + ').');
+						self.addRaw('Ladder (posiblemente) actualizado, pero el resultado no ha podido ser recuperado. (' + error + ').');
 						self.update();
 						// log the battle anyway
 						if (!Tools.getFormat(self.format).noLog) {
@@ -655,7 +655,7 @@ var BattleRoom = (function () {
 						}
 						return;
 					} else if (data.errorip) {
-						self.addRaw("This server's request IP " + data.errorip + " is not a registered server.");
+						self.addRaw("Este servidor solicita IP " + data.errorip + " No es un servidor registrado.");
 						return;
 					} else {
 						try {
@@ -666,15 +666,15 @@ var BattleRoom = (function () {
 
 							var oldacre = Math.round(data.p1rating.oldacre);
 							var acre = Math.round(data.p1rating.acre);
-							var reasons = '' + (acre - oldacre) + ' for ' + (p1score > 0.99 ? 'winning' : (p1score < 0.01 ? 'losing' : 'tying'));
+							var reasons = '' + (acre - oldacre) + ' por ' + (p1score > 0.99 ? 'ganar' : (p1score < 0.01 ? 'perder' : 'empatar'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw(Tools.escapeHTML(p1) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw('Pantaje de ' + Tools.escapeHTML(p1) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							oldacre = Math.round(data.p2rating.oldacre);
 							acre = Math.round(data.p2rating.acre);
-							reasons = '' + (acre - oldacre) + ' for ' + (p1score > 0.99 ? 'losing' : (p1score < 0.01 ? 'winning' : 'tying'));
+							reasons = '' + (acre - oldacre) + ' por ' + (p1score > 0.99 ? 'ganar' : (p1score < 0.01 ? 'perder' : 'empatar'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw(Tools.escapeHTML(p2) + '\'s rating: ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw('Pantaje de ' + Tools.escapeHTML(p2) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							Users.get(p1).cacheMMR(rated.format, data.p1rating);
 							Users.get(p2).cacheMMR(rated.format, data.p2rating);
@@ -800,7 +800,7 @@ var BattleRoom = (function () {
 		this.resetUser = '';
 
 		if (rooms.global.lockdown) {
-			this.add('The battle was not restarted because the server is preparing to shut down.');
+			this.add('La batalla no pudo volver a empezar porque el servidor se está preparando para el apagado.');
 			return;
 		}
 
@@ -875,18 +875,18 @@ var BattleRoom = (function () {
 				var inactiveTicksLeft = ticksLeft[inactiveSide];
 				var inactiveUser = this.battle.getPlayer(inactiveSide);
 				if (inactiveTicksLeft % 3 === 0 || inactiveTicksLeft <= 4) {
-					this.send('|inactive|' + (inactiveUser ? inactiveUser.name : 'Player ' + (inactiveSide + 1)) + ' has ' + (inactiveTicksLeft * 10) + ' seconds left.');
+					this.send('|inactive|' + (inactiveUser ? inactiveUser.name : 'Jugador ' + (inactiveSide + 1)) + ' tiene ' + (inactiveTicksLeft * 10) + ' segundos restantes.');
 				}
 			} else {
 				// both sides are inactive
 				var inactiveUser0 = this.battle.getPlayer(0);
 				if (ticksLeft[0] % 3 === 0 || ticksLeft[0] <= 4) {
-					this.send('|inactive|' + (inactiveUser0 ? inactiveUser0.name : 'Player 1') + ' has ' + (ticksLeft[0] * 10) + ' seconds left.', inactiveUser0);
+					this.send('|inactive|' + (inactiveUser0 ? inactiveUser0.name : 'Jugador 1') + ' tiene ' + (ticksLeft[0] * 10) + ' segundos restantes.', inactiveUser0);
 				}
 
 				var inactiveUser1 = this.battle.getPlayer(1);
 				if (ticksLeft[1] % 3 === 0 || ticksLeft[1] <= 4) {
-					this.send('|inactive|' + (inactiveUser1 ? inactiveUser1.name : 'Player 2') + ' has ' + (ticksLeft[1] * 10) + ' seconds left.', inactiveUser1);
+					this.send('|inactive|' + (inactiveUser1 ? inactiveUser1.name : 'Jugador 2') + ' tiene ' + (ticksLeft[1] * 10) + ' segundos restantes.', inactiveUser1);
 				}
 			}
 			this.resetTimer = setTimeout(this.kickInactive.bind(this), 10 * 1000);
@@ -898,7 +898,7 @@ var BattleRoom = (function () {
 			else if (ticksLeft[1]) inactiveSide = 0;
 		}
 
-		this.forfeit(this.battle.getPlayer(inactiveSide), ' lost due to inactivity.', inactiveSide);
+		this.forfeit(this.battle.getPlayer(inactiveSide), ' Derrota por inactividad', inactiveSide);
 		this.resetUser = '';
 
 		if (this.parentid) {
@@ -907,16 +907,16 @@ var BattleRoom = (function () {
 	};
 	BattleRoom.prototype.requestKickInactive = function (user, force) {
 		if (this.resetTimer) {
-			if (user) this.send('|inactive|The inactivity timer is already counting down.', user);
+			if (user) this.send('|inactive|El contador de inactividad ya está haciendo la cuenta atrás.', user);
 			return false;
 		}
 		if (user) {
 			if (!force && this.battle.getSlot(user) < 0) return false;
 			this.resetUser = user.userid;
-			this.send('|inactive|Battle timer is now ON: inactive players will automatically lose when time\'s up. (requested by ' + user.name + ')');
+			this.send('|inactive|El reloj de batalla está ENCENDIDO: los jugadores inactivos perderán automáticamente cuando el tiempo se agote. (Solicitado por ' + user.name + ')');
 		} else if (user === false) {
 			this.resetUser = '~';
-			this.add('|inactive|Battle timer is ON: inactive players will automatically lose when time\'s up.');
+			this.add('|inactive|El reloj de batalla está ENCENDIDO: los jugadores inactivos perderán automáticamente cuando el tiempo se agote.');
 		}
 
 		// a tick is 10 seconds
@@ -941,12 +941,12 @@ var BattleRoom = (function () {
 		if (inactiveSide != 1) {
 			// side 0 is inactive
 			var ticksLeft0 = Math.min(this.sideTicksLeft[0] + 1, maxTicksLeft);
-			this.send('|inactive|You have ' + (ticksLeft0 * 10) + ' seconds to make your decision.', this.battle.getPlayer(0));
+			this.send('|inactive|Tiens ' + (ticksLeft0 * 10) + ' segundos para hacer tú decisión.', this.battle.getPlayer(0));
 		}
 		if (inactiveSide != 0) {
 			// side 1 is inactive
 			var ticksLeft1 = Math.min(this.sideTicksLeft[1] + 1, maxTicksLeft);
-			this.send('|inactive|You have ' + (ticksLeft1 * 10) + ' seconds to make your decision.', this.battle.getPlayer(1));
+			this.send('|inactive|Tienes ' + (ticksLeft1 * 10) + ' segundos para hacer tú decisión.', this.battle.getPlayer(1));
 		}
 
 		this.resetTimer = setTimeout(this.kickInactive.bind(this), 10 * 1000);
@@ -965,7 +965,7 @@ var BattleRoom = (function () {
 		if (this.resetTimer) {
 			clearTimeout(this.resetTimer);
 			this.resetTimer = null;
-			this.send('|inactiveoff|Battle timer is now OFF.');
+			this.send('|inactiveoff|El reloj de batalla ahora está apagado.');
 			return true;
 		}
 		return false;
@@ -991,7 +991,7 @@ var BattleRoom = (function () {
 					}
 
 					if (changed) {
-						this.send('|inactive|' + (inactiveUser ? inactiveUser.name : 'Player ' + (inactiveSide + 1)) + ' disconnected and has a minute to reconnect!');
+						this.send('|inactive|' + (inactiveUser ? inactiveUser.name : 'Jugador ' + (inactiveSide + 1)) + ' desconectado y tiene 1 minuto para reconectar!');
 						return true;
 					}
 				}
@@ -1012,7 +1012,7 @@ var BattleRoom = (function () {
 
 				if (changed !== false) {
 					var user = this.battle.getPlayer(changed);
-					this.send('|inactive|' + (user ? user.name : 'Player ' + (changed + 1)) + ' reconnected and has ' + (this.sideTurnTicks[changed] * 10) + ' seconds left!');
+					this.send('|inactive|' + (user ? user.name : 'Jugador ' + (changed + 1)) + ' reconectado y tiene ' + (this.sideTurnTicks[changed] * 10) + ' segundos restantes');
 					return true;
 				}
 			}
@@ -1061,7 +1061,7 @@ var BattleRoom = (function () {
 		var resend = joining || !this.battle.playerTable[oldid];
 		if (this.battle.playerTable[oldid]) {
 			if (this.rated) {
-				this.add('|message|' + user.name + ' forfeited by changing their name.');
+				this.add('|message|' + user.name + ' descalificado por cambiar su nombre.');
 				this.battle.lose(oldid);
 				this.battle.leave(oldid);
 				resend = false;
@@ -1112,7 +1112,7 @@ var BattleRoom = (function () {
 			} else if (this.rated.p2 === user.userid) {
 				slot = 1;
 			} else {
-				user.popup("This is a rated battle; your username must be " + this.rated.p1 + " or " + this.rated.p2 + " to join.");
+				user.popup("Esta es una batalla calificada; tu nombre de usuario debe ser " + this.rated.p1 + " o " + this.rated.p2 + " para unirte.");
 				return false;
 			}
 		}
@@ -1437,7 +1437,7 @@ var ChatRoom = (function () {
 		if (this.modchat) {
 			if (html) html += '<br /><br />';
 			html += '<div class="broadcast-red">';
-			html += 'Must be rank ' + this.modchat + ' or higher to talk right now.';
+			html += 'Debe tener rango ' + this.modchat + ' debe ser rango o superior para poder hablar ahora';
 			html += '</div>';
 		}
 

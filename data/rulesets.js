@@ -229,7 +229,7 @@ exports.BattleFormats = {
 		effectType: 'Rule',
 		onStart: function () {
 			if (Config.potd) {
-				this.add('rule', "Pokemon of the Day: " + this.getTemplate(Config.potd).name);
+				this.add('rule', "Pokémon del día: " + this.getTemplate(Config.potd).name);
 			}
 		}
 	},
@@ -298,24 +298,24 @@ exports.BattleFormats = {
 		validateSet: function (set) {
 			var template = this.getTemplate(set.species || set.name);
 			if (template.prevo) {
-				return [set.species + " isn't the first in its evolution family."];
+				return [set.species + " No es el primero en su familia evolutiva."];
 			}
 			if (!template.nfe) {
-				return [set.species + " doesn't have an evolution family."];
+				return [set.species + " No tiene familia evolutiva."];
 			}
 		}
 	},
 	speciesclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Species Clause: Limit one of each Pokémon');
+			this.add('rule', 'Cláusula de especie: Limita uno de cada pokémon');
 		},
 		validateTeam: function (team, format) {
 			var speciesTable = {};
 			for (var i = 0; i < team.length; i++) {
 				var template = this.getTemplate(team[i].species);
 				if (speciesTable[template.num]) {
-					return ["You are limited to one of each Pokémon by Species Clause.", "(You have more than one " + template.name + ")"];
+					return ["No puedes repetir pokémon por la cláusula de especies.", "(Tú tienes más de uno " + template.name + ")"];
 				}
 				speciesTable[template.num] = true;
 			}
@@ -324,7 +324,7 @@ exports.BattleFormats = {
 	itemclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Item Clause: Limit one of each item');
+			this.add('rule', 'Cláusula de item: Limit one of each item');
 		},
 		validateTeam: function (team, format) {
 			var itemTable = {};
@@ -332,7 +332,7 @@ exports.BattleFormats = {
 				var item = toId(team[i].item);
 				if (!item) continue;
 				if (itemTable[item]) {
-					return ["You are limited to one of each item by Item Clause.", "(You have more than one " + this.getItem(item).name + ")"];
+					return ["Tú estás limitado a un objeto por la cláusula de objetos.", "(Tú tienes más de uno " + this.getItem(item).name + ")"];
 				}
 				itemTable[item] = true;
 			}
@@ -341,7 +341,7 @@ exports.BattleFormats = {
 	abilityclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Ability Clause: Limit two of each ability');
+			this.add('rule', 'Cláusula de habilidad: Limita dos de cada');
 		},
 		validateTeam: function (team, format) {
 			var abilityTable = {};
@@ -350,7 +350,7 @@ exports.BattleFormats = {
 				if (!ability) continue;
 				if (ability in abilityTable) {
 					if (abilityTable[ability] >= 2) {
-						return ["You are limited to two of each ability by the Ability Clause.", "(You have more than two " + this.getAbility(ability).name + ")"];
+						return ["Tú estás limitado a dos de cada habilidad por la cláusula de habilidades.", "(Tú tienes más de dos " + this.getAbility(ability).name + ")"];
 					}
 					abilityTable[ability]++;
 				} else {
@@ -362,7 +362,7 @@ exports.BattleFormats = {
 	ohkoclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'OHKO Clause: OHKO moves are banned');
+			this.add('rule', 'Cláusula de Golpe Fulminante: Los movimientos fulminantes (OHKO) estan prohibidos');
 		},
 		validateSet: function (set) {
 			var problems = [];
@@ -380,7 +380,7 @@ exports.BattleFormats = {
 		name: 'Evasion Abilities Clause',
 		banlist: ['Sand Veil', 'Snow Cloak'],
 		onStart: function () {
-			this.add('rule', 'Evasion Abilities Clause: Evasion abilities are banned');
+			this.add('rule', 'Cláusula de habilidad de evasion: Las habilidades de evasion estan baneadas');
 		}
 	},
 	evasionmovesclause: {
@@ -388,7 +388,7 @@ exports.BattleFormats = {
 		name: 'Evasion Moves Clause',
 		banlist: ['Minimize', 'Double Team'],
 		onStart: function () {
-			this.add('rule', 'Evasion Moves Clause: Evasion moves are banned');
+			this.add('rule', 'Cláusula de Movimientos Evasivos: Los movimientos de evasion estan prohibidos');
 		}
 	},
 	endlessbattleclause: {
@@ -396,7 +396,7 @@ exports.BattleFormats = {
 		name: 'Endless Battle Clause',
 		banlist: ['Leppa Berry + Recycle', 'Harvest + Leppa Berry', 'Shadow Tag + Leppa Berry + Trick'],
 		onStart: function () {
-			this.add('rule', 'Endless Battle Clause: Forcing endless battles is banned');
+			this.add('rule', 'Cláusula de Batallas Eternas: Forzar batallas eternas está prohibido');
 		}
 	},
 	moodyclause: {
@@ -404,7 +404,7 @@ exports.BattleFormats = {
 		name: 'Moody Clause',
 		banlist: ['Moody'],
 		onStart: function () {
-			this.add('rule', 'Moody Clause: Moody is banned');
+			this.add('rule', 'Cláusula de Moody: Moody está baneado');
 		}
 	},
 	swaggerclause: {
@@ -412,14 +412,14 @@ exports.BattleFormats = {
 		name: 'Swagger Clause',
 		banlist: ['Swagger'],
 		onStart: function () {
-			this.add('rule', 'Swagger Clause: Swagger is banned');
+			this.add('rule', 'Cláusula de Swagger: Se prohibe el uso de Swagger');
 		}
 	},
 	batonpassclause: {
 		effectType: 'Banlist',
 		name: 'Baton Pass Clause',
 		onStart: function () {
-			this.add('rule', 'Baton Pass Clause: Limit one Pokémon knowing Baton Pass');
+			this.add('rule', 'Cláusula de Baton Pass: Se prohíbe más de 1 Pokémon con Baton Pass');
 		},
 		validateTeam: function (team, format) {
 			var problems = [];
@@ -427,7 +427,7 @@ exports.BattleFormats = {
 			for (var i = 0; i < team.length; i++) {
 				if (team[i].moves.indexOf('Baton Pass') > -1) BPcount++;
 				if (BPcount > 1) {
-					problems.push("You are limited to one Pokémon with the move Baton Pass by the Baton Pass Clause.");
+					problems.push("Tú estás limitado a usar 1 pokémon con el movimiento Baton Pass por la Cláusula Baton Pass.");
 					break;
 				}
 			}
@@ -438,14 +438,14 @@ exports.BattleFormats = {
 		effectType: 'Rule',
 		name: 'HP Percentage Mod',
 		onStart: function () {
-			this.add('rule', 'HP Percentage Mod: HP is reported as percentages');
+			this.add('rule', 'Modo de Porcentaje de HP: El HP es reportado como porcentaje');
 			this.reportPercentages = true;
 		}
 	},
 	sleepclausemod: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Sleep Clause Mod: Limit one foe put to sleep');
+			this.add('rule', 'Mod de cláusula de dormir: límite de 1 pokémon del oponente durmiendo');
 		},
 		onSetStatus: function (status, target, source) {
 			if (source && source.side === target.side) {
@@ -457,7 +457,7 @@ exports.BattleFormats = {
 					if (pokemon.status === 'slp') {
 						if (!pokemon.statusData.source ||
 							pokemon.statusData.source.side !== pokemon.side) {
-							this.add('-message', 'Sleep Clause Mod activated.');
+							this.add('-message', 'Mod de cláusula de congelamiento, activado.');
 							return false;
 						}
 					}
@@ -468,7 +468,7 @@ exports.BattleFormats = {
 	freezeclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Freeze Clause: Limit one foe frozen');
+			this.add('rule', 'Cláusula de congelamiento: Límite de 1 pokémon del oponente congelado');
 		},
 		onSetStatus: function (status, target, source) {
 			if (source && source.side === target.side) {
@@ -478,7 +478,7 @@ exports.BattleFormats = {
 				for (var i = 0; i < target.side.pokemon.length; i++) {
 					var pokemon = target.side.pokemon[i];
 					if (pokemon.status === 'frz') {
-						this.add('-message', 'Freeze Clause activated.');
+						this.add('-message', 'Cláusula de congelamiento activada.');
 						return false;
 					}
 				}
@@ -488,7 +488,7 @@ exports.BattleFormats = {
 	sametypeclause: {
 		effectType: 'Rule',
 		onStart: function () {
-			this.add('rule', 'Same Type Clause: Pokémon in a team must share a type');
+			this.add('rule', 'Cláusula del mismo tipo: Pokémon de el mismo equipo, deben compartir el mismo tipo');
 		},
 		validateTeam: function (team, format) {
 			var typeTable = {};
@@ -509,7 +509,7 @@ exports.BattleFormats = {
 					return;
 				}
 			}
-			return ["Your team must share a type."];
+			return ["Tu equipo debe compartir un tipo."];
 		}
 	}
 };
