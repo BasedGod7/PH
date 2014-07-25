@@ -281,7 +281,7 @@ var commands = exports.commands = {
 							"<table>" +
 								"<tr>" +
 									"<td><a href=" + path + 590 + ">FC CAMULOS: Normal</a></td>" +
-									"<td><a href=" + path + 000 + ">Disponible: Hielo</a></td>" +
+									"<td><a href=" + path + 000 + ">FC Vulcano 3000: Hielo</a></td>" +
 									"<td><a href=" + path + 566 + ">ADRIELANDRO: Agua</a></td>" +
 								"</tr>" +
 								"<tr>" +
@@ -291,7 +291,7 @@ var commands = exports.commands = {
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 575 + ">Sonia Nevermind: Hada</a></td>" +
-									"<td><a href=" + path + 570 + ">P✘S Lightning: Volador</a></td>" +
+									"<td><a href=" + path + 570 + ">Miranda L.: Volador</a></td>" +
 									"<td><a href=" + path + 569 + ">ZeZStarZeZ: Fantasma</a></td>" +
 								"</tr>" +
 								"<tr>" +
