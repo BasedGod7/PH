@@ -668,13 +668,13 @@ var BattleRoom = (function () {
 							var acre = Math.round(data.p1rating.acre);
 							var reasons = '' + (acre - oldacre) + ' por ' + (p1score > 0.99 ? 'ganar' : (p1score < 0.01 ? 'perder' : 'empatar'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw('Pantaje de ' + Tools.escapeHTML(p1) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw('Puntaje de ' + Tools.escapeHTML(p1) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							oldacre = Math.round(data.p2rating.oldacre);
 							acre = Math.round(data.p2rating.acre);
-							reasons = '' + (acre - oldacre) + ' por ' + (p1score > 0.99 ? 'ganar' : (p1score < 0.01 ? 'perder' : 'empatar'));
+							reasons = '' + (acre - oldacre) + ' por ' + (p2score > 0.99 ? 'ganar' : (p2score < 0.01 ? 'perder' : 'empatar'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
-							self.addRaw('Pantaje de ' + Tools.escapeHTML(p2) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
+							self.addRaw('Puntaje de ' + Tools.escapeHTML(p2) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
 							Users.get(p1).cacheMMR(rated.format, data.p1rating);
 							Users.get(p2).cacheMMR(rated.format, data.p2rating);
