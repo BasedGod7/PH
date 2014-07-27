@@ -588,6 +588,19 @@ exports.Formats = [
 		searchShow: false,
 		ruleset: ['Pokemon', 'Standard NEXT', 'Team Preview'],
 		banlist: ['Uber']
+		
+	},
+
+	// Tiers Pokémon Hispano
+	///////////////////////////////////////////////////////////////////
+
+	{
+		name: "Hispano Pokebank XY",
+		section: "Tiers Pokémon Hispano",
+
+		ruleset: ['Pokemon', 'Standard', 'Team Preview'],
+		banlist: ['Uber', 'Soul Dew']
+	
 	},
 
 	// BW2 Singles
