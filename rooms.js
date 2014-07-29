@@ -672,7 +672,7 @@ var BattleRoom = (function () {
 
 							oldacre = Math.round(data.p2rating.oldacre);
 							acre = Math.round(data.p2rating.acre);
-							reasons = '' + (acre - oldacre) + ' por ' + (p2score > 0.99 ? 'ganar' : (p2score < 0.01 ? 'perder' : 'empatar'));
+							reasons = '' + (acre - oldacre) + ' por ' + (p1score > 0.99 ? 'perder' : (p1score < 0.01 ? 'ganar' : 'empatar'));
 							if (reasons.substr(0, 1) !== '-') reasons = '+' + reasons;
 							self.addRaw('Puntaje de ' + Tools.escapeHTML(p2) + ': ' + oldacre + ' &rarr; <strong>' + acre + '</strong><br />(' + reasons + ')');
 
