@@ -595,12 +595,15 @@ exports.Formats = [
 	///////////////////////////////////////////////////////////////////
 
 	{
-		name: "Hispano Pokebank XY",
+		name: "Hispano OU",
 		section: "Tiers Pokémon Hispano",
 
 		ruleset: ['Pokemon', 'Standard', 'Team Preview'],
-		banlist: ['Uber', 'Soul Dew']
-	
+		banlist: [
+			'Arceus', 'Soul Dew', 'Darkrai', 'Deoxys', 'Deoxys-A', 'Dialga', 'Giratina', 'Giratina-O', 'Groudon',
+			'Ho-Oh', 'Kyogre', 'Kyurem-W', 'Lugia', 'Mewtwo', 'Palkia', 'Rayquaza', 'Reshiram', 'Shaymin-S', 'Xerneas',
+			'Yveltal', 'Zekrom'
+		]
 	},
 
 	// BW2 Singles
