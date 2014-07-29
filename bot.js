@@ -15,6 +15,7 @@ var config = {
         return toId(this.name);
     },
     group: '#',
+    customavatars: 'hispanobot.gif',
     rooms: ['lobby'],
     punishvals: {
         1: 'warn',
@@ -50,6 +51,7 @@ function joinServer() {
             bot.authenticated = true;
             bot.userid = config.userid();
             bot.group = config.group;
+            bot.avatar = config.customavatars;
 
             if (config.join === true) {
                 Users.users[bot.userid] = bot;
