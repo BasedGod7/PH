@@ -424,7 +424,7 @@ var cmds = {
 		tour[rid].status = 1;
 		tour[rid].players = new Array();
 
-		Rooms.rooms[rid].addRaw('<hr /><h2><font color="green">' + Tools.escapeHTML(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="green">.</font></h2><b><font color="blueviolet">Jugadores:</font></b> ' + targets[1] + '<br /><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
+		Rooms.rooms[rid].addRaw('<center><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" width=199 /></center><hr /><h2><font color="SteelBlue">' + Tools.escapeHTML(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="SteelBlue">.</font></h2><b><font color="SkyBlue">Jugadores:</font></b> ' + targets[1] + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
 		if (tour.timers[rid]) Rooms.rooms[rid].addRaw('<i>El torneo empezara en ' + tour.timers[rid].time + ' minuto' + (tour.timers[rid].time == 1 ? '' : 's') + '.<i>');
 	},
 
@@ -598,7 +598,7 @@ var cmds = {
 		if (tour[room.id] == undefined || !tour[room.id].status) return this.sendReply('No hay un torneo activo en esta sala.');
 		if (tour[room.id].status == 1) {
 			tour.reportdue(room);
-			room.addRaw('<hr /><h2><font color="green">Inscribanse al torneo de formato ' + Tools.data.Formats[tour[room.id].tier].name + '. Digita </font> <font color="red">/j</font> <font color="green">para ingresar.</font></h2><b><font color="blueviolet">JUGADORES:</font></b> ' + (tour[room.id].size === 'Infinity' ? 'ILIMITADOS' : tour[room.id].size) + '<br /><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + '<hr />');
+			room.addRaw('<center><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" width=199 /></center><hr /><h2><font color="SteelBlue">Inscribanse al torneo de formato ' + Tools.data.Formats[tour[room.id].tier].name + '. Digita </font> <font color="red">/j</font> <font color="SteelBlue">para ingresar.</font></h2><b><font color="SkyBlue">JUGADORES:</font></b> ' + (tour[room.id].size === 'Infinity' ? 'ILIMITADOS' : tour[room.id].size) + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + '<hr />');
 		} else {
 			var c = tour[room.id];
 			var unfound = [];
@@ -675,14 +675,14 @@ var cmds = {
 			if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 			if (tour[room.id] == undefined) return this.sendReply('No hay un torneo activo en una sala.');
 			if (tour[room.id].status < 2) return this.sendReply('No hay torneos fuera de la fase de inscripcion.');
-			var html = '<hr /><h3><font color="green">Ronda '+ tour[room.id].roundNum + '!</font></h3><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<hr /><center><small><font color=red>Red</font> = descalificado, <font color=green>Green</font> = paso a la siguiente ronda, <a class='ilink'><b>URL</b></a> = combatiendo</small><center>";
+			var html = '<hr /><h3><font color="SteelBlue">Ronda '+ tour[room.id].roundNum + '!</font></h3><font color="Steelblue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<center><img src=\"http://s8.postimg.org/h46j3hahh/logohispano.png\" width=199 /></center><hr /><center><small><font color=red>Red</font> = descalificado, <font color=green>Green</font> = paso a la siguiente ronda, <a class='ilink'><b>URL</b></a> = combatiendo</small><center>";
 			var r = tour[room.id].round;
 			var firstMatch = false;
 			for (var i in r) {
 				if (!r[i][1]) {
 					//bye
 					var byer = tour.username(r[i][0]);
-					html += "<font color=\"red\">" + clean(byer) + " ha pasado a la siguiente ronda.</font><br />";
+					html += "<font color=\"MediumSlateBlue\">" + clean(byer) + " ha pasado a la siguiente ronda.</font><br />";
 				} else {
 					if (r[i][2] == undefined) {
 						//haven't started
