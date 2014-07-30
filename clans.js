@@ -40,11 +40,11 @@ exports.getRating = function (clan) {
 
 exports.ratingToName = function (rating) {
 	if (rating > 1500)
-		return "Gold";
+		return "Destacado";
 	else if (rating > 1200)
-		return "Silver";
+		return "Experto";
 	else
-		return "Bronze";
+		return "Nuevo";
 };
 
 exports.createClan = function (name) {
