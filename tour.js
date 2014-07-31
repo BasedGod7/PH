@@ -266,14 +266,14 @@ exports.tour = function(t) {
 		},
 		startRaw: function(i) {
 			var room = Rooms.rooms[i];
-			var html = '<hr /><h3><font color="green">Ronda '+ tour[room.id].roundNum +'!</font></h3><font color="blue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<hr /><center>";
+			var html = '<hr /><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" /><h3><font color="SteelBlue">Ronda '+ tour[room.id].roundNum +'!</font></h3><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<hr /><center>";
 			var round = tour[room.id].round;
 			var firstMatch = false;
 			for (var i in round) {
 				if (!round[i][1]) {
 						var p1n = tour.username(round[i][0]);
 						if (p1n.substr(0, 6) === 'Guest ') p1n = round[i][0];
-						html += "<font color=\"red\">" + clean(p1n) + " ha pasado a la siguiente ronda.</font><br />";
+						html += "<font color=\"MediumSlateBlue\">" + clean(p1n) + " ha pasado a la siguiente ronda.</font><br />";
 				}
 				else {
 					var p1n = tour.username(round[i][0]);
@@ -298,10 +298,10 @@ exports.tour = function(t) {
 			var firstMatch = false;
 			if (w.length == 1) {
 				//end tour
-				Rooms.rooms[rid].addRaw('<h2><font color="green">Felicidades <font color="black">' + tour.username(w[0]) + '</font>! has ganado el torneo de formato ' + Tools.data.Formats[tour[rid].tier].name + ' !</font></h2>' + '<br><font color="blue"><b>Segundo Lugar:</b></font> ' + tour.username(l[0]) + '<hr />');
+				Rooms.rooms[rid].addRaw('<img src="http://s8.postimg.org/h46j3hahh/logohispano.png" align="center"><h2><font color="SteelBlue">Felicidades <font color="black">' + tour.username(w[0]) + '</font>! has ganado el torneo de formato ' + Tools.data.Formats[tour[rid].tier].name + ' !</font></h2>' + '<br><font color="blue"><b>Segundo Lugar:</b></font> ' + tour.username(l[0]) + '<hr />');
 				tour[rid].status = 0;
 			} else {
-				var html = '<hr /><h3><font color="green">Ronda '+ tour[rid].roundNum +'!</font></h3><font color="blue"><b>Formato:</b></font> ' + Tools.data.Formats[tour[rid].tier].name + "<hr /><center>";
+				var html = '<hr /><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" align="center"><h3><font color="SteelBlue">Ronda '+ tour[rid].roundNum +'!</font></h3><font color="RoyalBlue"><b>Formato:</b></font> ' + Tools.data.Formats[tour[rid].tier].name + "<hr /><center>";
 				var pBye = new Array();
 				var pNorm = new Array();
 				var p = new Array();
@@ -424,7 +424,7 @@ var cmds = {
 		tour[rid].status = 1;
 		tour[rid].players = new Array();
 
-		Rooms.rooms[rid].addRaw('<center><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" width=199 /></center><hr /><h2><font color="SteelBlue">' + Tools.escapeHTML(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="SteelBlue">.</font></h2><b><font color="SkyBlue">Jugadores:</font></b> ' + targets[1] + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
+		Rooms.rooms[rid].addRaw('<hr /><h2><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" align="center"><font color="SteelBlue">' + Tools.escapeHTML(user.name) + ' ha iniciado un torneo de tier ' + Tools.data.Formats[tempTourTier].name + '. Si deseas unirte digita </font> <font color="red">/j</font> <font color="steelblue">.</font></h2><b><font color="blueviolet">Jugadores:</font></b> ' + targets[1] + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tempTourTier].name + '<hr /><br /><font color="red"><b>Recuerda que debes mantener tu nombre durante todo el torneo.</b></font>');
 		if (tour.timers[rid]) Rooms.rooms[rid].addRaw('<i>El torneo empezara en ' + tour.timers[rid].time + ' minuto' + (tour.timers[rid].time == 1 ? '' : 's') + '.<i>');
 	},
 
@@ -598,7 +598,7 @@ var cmds = {
 		if (tour[room.id] == undefined || !tour[room.id].status) return this.sendReply('No hay un torneo activo en esta sala.');
 		if (tour[room.id].status == 1) {
 			tour.reportdue(room);
-			room.addRaw('<center><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" width=199 /></center><hr /><h2><font color="SteelBlue">Inscribanse al torneo de formato ' + Tools.data.Formats[tour[room.id].tier].name + '. Digita </font> <font color="red">/j</font> <font color="SteelBlue">para ingresar.</font></h2><b><font color="SkyBlue">JUGADORES:</font></b> ' + (tour[room.id].size === 'Infinity' ? 'ILIMITADOS' : tour[room.id].size) + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + '<hr />');
+			room.addRaw('<hr /><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" align="center"><h2><font color="SteelBlue">Inscribanse al torneo de formato ' + Tools.data.Formats[tour[room.id].tier].name + '. Digita </font> <font color="red">/j</font> <font color="SteelBlue">para ingresar.</font></h2><b><font color="SkyBlue">JUGADORES:</font></b> ' + (tour[room.id].size === 'Infinity' ? 'ILIMITADOS' : tour[room.id].size) + '<br /><font color="RoyalBlue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + '<hr />');
 		} else {
 			var c = tour[room.id];
 			var unfound = [];
@@ -675,7 +675,7 @@ var cmds = {
 			if (room.decision) return this.sendReply('Prof. Oak: No es un buen momento para usar este comando. No puedes utilizarlo en salas de batalla.');
 			if (tour[room.id] == undefined) return this.sendReply('No hay un torneo activo en una sala.');
 			if (tour[room.id].status < 2) return this.sendReply('No hay torneos fuera de la fase de inscripcion.');
-			var html = '<hr /><h3><font color="SteelBlue">Ronda '+ tour[room.id].roundNum + '!</font></h3><font color="Steelblue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<center><img src=\"http://s8.postimg.org/h46j3hahh/logohispano.png\" width=199 /></center><hr /><center><small><font color=red>Red</font> = descalificado, <font color=green>Green</font> = paso a la siguiente ronda, <a class='ilink'><b>URL</b></a> = combatiendo</small><center>";
+			var html = '<hr /><h3><img src="http://s8.postimg.org/h46j3hahh/logohispano.png" align="center"><font color="SteelBlue">Ronda '+ tour[room.id].roundNum + '!</font></h3><font color="Steelblue"><b>FORMATO:</b></font> ' + Tools.data.Formats[tour[room.id].tier].name + "<hr /><center><small><font color=red>Rojo</font> = descalificado, <font color=\"Azul\">Blue</font> = paso a la siguiente ronda, <a class='ilink'><b>URL</b></a> = combatiendo</small><center>";
 			var r = tour[room.id].round;
 			var firstMatch = false;
 			for (var i in r) {
@@ -704,9 +704,9 @@ var cmds = {
 						html += tabla + "<tr><td align=right><b>" + link(clean(p1n)) + "</b></td><td><b>&nbsp;" + link("VS") + "&nbsp;</b></td><td><b>" + link(clean(p2n)) + "</b></td></tr>";
 					} else {
 						//match completed
-						var p1 = "red"; var p2 = "green";
+						var p1 = "red"; var p2 = "Blue";
 						if (r[i][2] == r[i][0]) {
-							p1 = "green"; p2 = "red";
+							p1 = "Blue"; p2 = "red";
 						}
 						var p1n = tour.username(r[i][0]);
 						var p2n = tour.username(r[i][1]);
