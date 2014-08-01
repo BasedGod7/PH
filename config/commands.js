@@ -333,7 +333,7 @@ var commands = exports.commands = {
 			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
 			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
 		} else {
-			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+			return this.sendReply('<b><font color="red">Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
 		}
 	},
 
@@ -351,7 +351,7 @@ var commands = exports.commands = {
 			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta  disponible para  desafios.</b>');
 			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ',  Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta disponible para   desafios.</b>');
 		} else {
-			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
+			return this.sendReply('<b><font color="red">Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
 		}
 	},
 
