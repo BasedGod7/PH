@@ -325,32 +325,13 @@ var commands = exports.commands = {
 		var auxelite = tour.altomando().indexOf(user.userid);
 		if (auxlider > -1) {
 			user.gymopen = true;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
 			return this.sendReply('Ahora estas disponible para desafios. Utiliza el comando /retos para ver quienes quieren luchar contra ti y en que orden.');
 		} else if (auxelite > -1) {
 			user.gymopen = true;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-		} else {
-			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
-		}
-	},
-
-	opengym: 'abrirliga',
-	abrirgimnasio: 'abrirliga',
-	abrirliga: function (target, room, user) {
-		var auxlider = tour.lideres().indexOf(user.userid);
-		var auxelite = tour.altomando().indexOf(user.userid);
-		if (auxlider > -1) {
-			user.gymopen = true;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', esta disponible para desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-			return this.sendReply('Ahora estas disponible para desafios. Utiliza el comando /retos para ver quienes quieren luchar contra ti y en que orden.');
-		} else if (auxelite > -1) {
-			user.gymopen = true;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, esta disponible para  desafios.</b> Utiliza el comando /retarlider ' + user.name + ' si quieres luchar contra el.');
 		} else {
 			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
 		}
@@ -363,12 +344,12 @@ var commands = exports.commands = {
 		var auxelite = tour.altomando().indexOf(user.userid);
 		if (auxlider > -1) {
 			user.gymopen = false;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para  desafios.</b>');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para desafios.</b>');
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para  desafios.</b>');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ', ' + tour.cargos()[auxlider] + ', ya no esta disponible para desafios.</b>');
 		} else if (auxelite > -1) {
 			user.gymopen = false;
-			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b>' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta  disponible para  desafios.</b>');
-			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b>' + user.name + ',  Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta disponible para   desafios.</b>');
+			if (Rooms.rooms.lobby) Rooms.rooms.lobby.addRaw('<b><font color="#6E1333">' + user.name + ', Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta  disponible para  desafios.</b>');
+			if (Rooms.rooms.ligapokemonhispano) Rooms.rooms.ligapokemonhispano.addRaw('<b><font color="#6E1333">' + user.name + ',  Miembro del Alto Mando de la Liga Pokemon Hispano, ya no esta disponible para   desafios.</b>');
 		} else {
 			return this.sendReply('Desde cuando eres lider? Verifica si tu ID esta registrado ante la Liga con el comando /lideresid. Tu ID actual es ' + user.userid);
 		}
