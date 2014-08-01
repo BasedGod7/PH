@@ -457,7 +457,7 @@ exports.BattleFormats = {
 					if (pokemon.status === 'slp') {
 						if (!pokemon.statusData.source ||
 							pokemon.statusData.source.side !== pokemon.side) {
-							this.add('-message', 'Mod de cláusula de congelamiento, activado.');
+							this.add('-message', 'Mod de cláusula de dormir, activado.');
 							return false;
 						}
 					}
