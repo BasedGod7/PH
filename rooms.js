@@ -603,6 +603,10 @@ var BattleRoom = (function () {
 					'<strong>' + Tools.escapeHTML(war[0]) + ':</strong> ' + warEnd.oldRatings[0] + " &rarr; " + warEnd.newRatings[0] + " (" + Clans.ratingToName(warEnd.newRatings[0]) + ")<br />" +
 					'<strong>' + Tools.escapeHTML(war[1]) + ':</strong> ' + warEnd.oldRatings[1] + " &rarr; " + warEnd.newRatings[1] + " (" + Clans.ratingToName(warEnd.newRatings[1]) + ")"
 				);
+				for (var m in warEnd.matchups) {
+					Core.stdout('money', toId(warEnd.matchups[m].from), +Core.stdin('money', toId(warEnd.matchups[m].from)) + Math.floor(warEnd.result * Object.size(warEnd.matchups) / 4));
+					Core.stdout('money', toId(warEnd.matchups[m].to), +Core.stdin('money', toId(warEnd.matchups[m].to)) + Math.floor((1 - warEnd.result) * Object.size(warEnd.matchups) / 4));
+				}
 			}
 		}
 
@@ -631,6 +635,8 @@ var BattleRoom = (function () {
 				var winner = Users.get(winnerid);
 				if (winner && !winner.authenticated) {
 					this.send('|askreg|' + winner.userid, winner);
+				} else {
+					Core.stdout('money', winnerid, +Core.stdin('money', winnerid) + 1);
 				}
 				var p1rating, p2rating;
 				// update rankings

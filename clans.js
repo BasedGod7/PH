@@ -293,10 +293,12 @@ exports.isWarEnded = function (clan) {
 	var oldRatings = [clans[warringClans[0]].rating, clans[warringClans[1]].rating];
 	var newRatings = exports.setWarResult(warringClans[0], warringClans[1], result);
 
-	delete pendingWars[clanId];
-	return {
+	var results = {
 		result: result,
+		matchups: pendingWars[clanId],
 		oldRatings: oldRatings,
 		newRatings: newRatings
 	};
+	delete pendingWars[clanId];
+	return results;
 };
