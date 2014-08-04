@@ -86,12 +86,12 @@ var core = exports.core = {
 
     shop: function (showDisplay) {
         var shop = [
-            ['Simbolo', 'Un simbolo personalizado junto a tu nick.', 5],
+            ['Simbolo', 'Un simbolo personalizado junto a tu nick.', 15],
             ['Declare', 'Puedes hacer un declare en el server', 30],
-			['Cambio', 'Compras la capacidad de cambiar tu avatar personalizado o tarjeta de entrenador.', 35],
-            ['Avatar', 'Un avatar personalizado.', 50],
-            ['Trainer', 'Tarjeta de entrenador.', 60],
-            ['Chatroom', 'Una sala de chat.', 100]
+			['Cambio', 'Compras la capacidad de cambiar tu avatar personalizado o tarjeta de entrenador.', 50],
+            ['Avatar', 'Un avatar personalizado.', 75],
+            ['Trainer', 'Tarjeta de entrenador.', 80],
+            ['Chatroom', 'Una sala de chat.', 125]
         ];
 
         if (showDisplay === false) {

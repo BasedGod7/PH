@@ -257,7 +257,7 @@ var commands = exports.commands = {
 	lideres: 'liga',
 	liga: function (target, room, user) {
 		if (!this.canBroadcast()) return;
-		var path = 'http://pokemon-hispano.comxa.com/showthread.php?tid=';
+		var path = 'http://pokemon-hispano.comxa.com/showthread.php?tid=623';
 		return this.sendReply('|raw|' +
 			"<center>" +
 				"<img src=\"http://i.imgur.com/SU0aFTt.png\" />" +
@@ -270,8 +270,8 @@ var commands = exports.commands = {
 						"<ul>" +
 							"<li>(LoD)Tyrana: Dragon</li>" +
 							"<li>Shiny Giratina-O: Agua</li>" +
-							"<li>Based Hispano: Sunny</li>" +
-							"<li>Osco N C Major: Psiquico</li>" +
+							"<li>Based God: Sunny</li>" +
+							"<li>Riuoker-: Psiquico</li>" +
 							"<li>(LoD)Marcos: Acero</li>" +
 						"</ul>" +
 					"</div>" +
@@ -286,13 +286,13 @@ var commands = exports.commands = {
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 563 + ">(ABT) Ryuga: Lucha</a></td>" +
-									"<td><a href=" + path + 505 + ">cusho: Bicho</a></td>" +
+									"<td><a href=" + path + 000 + ">cusho: Bicho</a></td>" +
 									"<td><a href=" + path + 591 + ">FC Striker: Roca</a></td>" +
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 575 + ">Sonia Nevermind: Hada</a></td>" +
 									"<td><a href=" + path + 570 + ">Miranda L.: Volador</a></td>" +
-									"<td><a href=" + path + 569 + ">ZeZStarZeZ: Fantasma</a></td>" +
+									"<td><a href=" + path + 000 + ">Kaido: Fantasma</a></td>" +
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 539 + ">Sidaaaaa: Tierra</a></td>" +
@@ -301,7 +301,7 @@ var commands = exports.commands = {
 								"</tr>" +
 								"<tr>" +
 									"<td><a href=" + path + 588 + ">FC Juanxzs: Fuego</a></td>" +
-									"<td><a href=" + path + 583 + ">Samey: Eléctrico</a></td>" +
+									"<td><a href=" + path + 583 + ">PokeDramaFan: Eléctrico</a></td>" +
 									"<td><a href=" + path + 582 + ">FuruyaJCaos: Dragón</a></td>" +
 								"</tr>" +
 							"</table>" +
@@ -309,7 +309,7 @@ var commands = exports.commands = {
 					"<hr />" +
 					"<ul>" +
 						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=529/\">Cómo desafiar la liga.</a></li>" +
-						"<li><a href=\"http://pokemon-hispano.comxa.com/showthread.php?tid=35/\">Información detallada sobre la Liga Pokémon Hispano.</a></li>" +
+						"<li><a href=\"http://www.pokemon-hispano.comxa.com/showthread.php?tid=626/\">Información detallada sobre la Liga Pokémon Hispano.</a></li>" +
 					"</ul>" +
 					"<h3>Battle Sages Approaching....</h3>" +
 				"</div>" +
@@ -1911,16 +1911,16 @@ var commands = exports.commands = {
 		this.sendReplyBox(
 			"Comandos básicos<br />" +
 			"/clan [Nombre del Clan] - Muestra la información de un clan.<br />" +
-			"/clanes - Muestra la informacion de todos los clanes registrados.<br />" +
+			"/clanes - Muestra la información de todos los clanes registrados.<br />" +
 			"Comandos Administrativos<br />" +
 			"/crearclan &lt;name> - Crea un clan.<br />" +
 			"/borrarclan &lt;name> - Borra un clan.<br />" +
 			"/anadirmiembro &lt;clan>, &lt;user> - Añade un miembro a un clan.<br />" +
-			"/eliminarmiembro &lt;clan>, &lt;user> - Remueve un miembro de un clan.<br />" +
+			"/borrarmiembro &lt;clan>, &lt;user> - Remueve un miembro de un clan.<br />" +
 			"Comandos de Guerras<br />" +
 			"/cwdisponible - Marca como disponible a un usuario para participar en guerras de clanes.<br />" +
-			"/crearwar &lt;clan 1>, &lt;clan 2> - Starts a war between two clans<br />" +
-			"/finwar &lt;clan> - Ends a clan war forcibly<br />" +
+			"/crearwar &lt;clan 1>, &lt;clan 2> - Empieza una guerra entre dos clanes.<br />" +
+			"/finwar &lt;clan> - Termina una guerra forzadamente<br />" +
 			"/cwbatallas &lt;clan> - Muestra batallas de la guerra que no han iniciado.<br />"
 		);
 	},
