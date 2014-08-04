@@ -607,6 +607,12 @@ var BattleRoom = (function () {
 					Core.stdout('money', toId(warEnd.matchups[m].from), +Core.stdin('money', toId(warEnd.matchups[m].from)) + Math.floor(warEnd.result * Object.size(warEnd.matchups) / 4));
 					Core.stdout('money', toId(warEnd.matchups[m].to), +Core.stdin('money', toId(warEnd.matchups[m].to)) + Math.floor((1 - warEnd.result) * Object.size(warEnd.matchups) / 4));
 				}
+				if (Math.floor(warEnd.result * Object.size(warEnd.matchups) / 4) > 0) {
+					room.add("Each member of " + Tools.escapeHTML(war[0]) + " has won " + Math.floor(warEnd.result * Object.size(warEnd.matchups) / 4) + " PD.");
+				}
+				if (Math.floor((1 - warEnd.result) * Object.size(warEnd.matchups) / 4) > 0) {
+					room.add("Each member of " + Tools.escapeHTML(war[1]) + " has won " + Math.floor(warEnd.result * Object.size(warEnd.matchups) / 4) + " PD.");
+				}
 			}
 		}
 
@@ -637,6 +643,7 @@ var BattleRoom = (function () {
 					this.send('|askreg|' + winner.userid, winner);
 				} else {
 					Core.stdout('money', winnerid, +Core.stdin('money', winnerid) + 1);
+					this.send("Tú Ganaste 1 PD", winner);
 				}
 				var p1rating, p2rating;
 				// update rankings
