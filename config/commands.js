@@ -266,7 +266,7 @@ var commands = exports.commands = {
 					"<p>N/A</p>" +
 					"<hr />" +
 					"<div class=\"alto-mando\">" +
-						"<a href=" + path + 252 + "><button>ALTO MANDO</button></a>" +
+						"<a href=" + path + 623 + "><button>ALTO MANDO</button></a>" +
 						"<ul>" +
 							"<li>(LoD)Tyrana: Dragon</li>" +
 							"<li>Shiny Giratina-O: Agua</li>" +
